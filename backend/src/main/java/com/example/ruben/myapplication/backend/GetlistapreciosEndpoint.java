@@ -116,6 +116,7 @@ public class GetlistapreciosEndpoint {
 
         }
         listapreciosBean mlistapreciosBean= new listapreciosBean();
+        mlistapreciosBean.setData(dia);
         //mlistapreciosBean.setListaPrecios(precios_todas_tarifas_juntos);
         return mlistapreciosBean;
     }

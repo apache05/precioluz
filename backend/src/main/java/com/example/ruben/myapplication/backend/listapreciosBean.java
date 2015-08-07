@@ -9,11 +9,18 @@ import java.util.List;
 public class listapreciosBean {
     private List <Float> mlista_precios= new ArrayList<>();
 
+    private String myData;
+
+    public String getData() {
+        return myData;
+    }
+    public void setData(String data) {
+        myData = data;
+    }
     public void setListaPrecios(List<Float> lista_precios){
         mlista_precios=lista_precios;
     }
     public List <Float> getListaPrecios(){
         return mlista_precios;
     }
-    public String getauxi(){return "un Bean";}
 }

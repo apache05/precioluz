@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cronentries>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>cron</web-resource-name>
+            <url-pattern>/cron/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <cron>
+        <url>/cron.getPreciosHoy</url>
+        <description>Descarga los precios del dia siguiente</description>
+        <schedule>every day 20:20</schedule>
+    </cron>
+</cronentries>
