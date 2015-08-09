@@ -46,6 +46,14 @@
     <orderEntry type="library" exported="" name="appengine-api-1.0-sdk-1.9.18" level="project" />
     <orderEntry type="library" exported="" name="_Users_ruben_Dropbox_Cursos_y_manuales_android_ejercicios_hechos_PrecioLuz_backend_build_libs_jxl2_jar" level="project" />
     <orderEntry type="library" exported="" name="jxl" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ruben_Dropbox_Cursos_y_manuales_android_ejercicios_hechos_PrecioLuz_backend_libs_appengine_gcs_client_0_4_4_jar" level="project" />
+    <orderEntry type="library" exported="" name="joda-time-2.8.1" level="project" />
+    <orderEntry type="library" exported="" name="appengine-api-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="guava-18.0" level="project" />
+    <orderEntry type="library" exported="" name="appengine-gcs-client-0.3.8" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ruben_Dropbox_Cursos_y_manuales_android_ejercicios_hechos_PrecioLuz_backend_libs_commons_io_2_4_javadoc_jar" level="project" />
+    <orderEntry type="library" exported="" name="_Users_ruben_Dropbox_Cursos_y_manuales_android_ejercicios_hechos_PrecioLuz_backend_libs_file_utils_jar" level="project" />
+    <orderEntry type="library" exported="" name="commons-io-2.4" level="project" />
     <orderEntry type="library" exported="" name="backend.backend-android-endpoints" level="project" />
   </component>
 </module>

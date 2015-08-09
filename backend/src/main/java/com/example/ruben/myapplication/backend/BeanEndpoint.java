@@ -3,11 +3,21 @@ package com.example.ruben.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.appengine.tools.cloudstorage.GcsFileOptions;
+import com.google.appengine.tools.cloudstorage.GcsFilename;
+import com.google.appengine.tools.cloudstorage.GcsOutputChannel;
+import com.google.appengine.tools.cloudstorage.GcsInputChannel;
+
+import com.google.appengine.tools.cloudstorage.GcsService;
+import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
+import com.google.appengine.tools.cloudstorage.NonRetriableException;
+import com.google.appengine.tools.cloudstorage.RetryParams;
+
 
 import java.util.Random;
 import java.util.logging.Logger;
-
 import javax.inject.Named;
+
 
 /**
  * An endpoint class we are exposing
@@ -23,22 +33,11 @@ import javax.inject.Named;
         )
 )
 public class BeanEndpoint {
-    private static final Logger logger = Logger.getLogger(BeanEndpoint.class.getName());
-
 
     @ApiMethod(name = "getBean")
     public Bean getBean(@Named ("fecha") String fecha) {
-        // TODO: Implement this function
-        logger.info("Calling getBean method");
-        Float[] lista_precios= new Float[72];
-
-        Random rnd = new Random();
-        for (int i=0; i<72; i++){
-            lista_precios[i] = rnd.nextFloat();
-        }
-        Bean un_Bean= new Bean();
-        un_Bean.setListapreciostodastarifas(lista_precios);
-        return un_Bean;
+        Bean un_bean= new Bean();
+        return un_bean;
     }
 
     /**
@@ -49,8 +48,6 @@ public class BeanEndpoint {
      */
     @ApiMethod(name = "insertBean")
     public Bean insertBean(Bean bean) {
-        // TODO: Implement this function
-        logger.info("Calling insertBean method");
         return bean;
     }
 }
