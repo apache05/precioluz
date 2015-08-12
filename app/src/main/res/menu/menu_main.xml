@@ -1,6 +1,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/tarifa_20A"
+        android:title="@string/tarifa_20A"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/tarifa_20DHA"
+        android:title="@string/tarifa_20DHA"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/tarifa_20DHS"
+        android:title="@string/tarifa_20DHS"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/hace_una_semana"
+        android:title="@string/precios_hace_una_semana"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/hace_un_año"
+        android:title="@string/precios_hace_un_año"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>

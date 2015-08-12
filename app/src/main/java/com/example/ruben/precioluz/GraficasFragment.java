@@ -55,36 +55,41 @@ public class GraficasFragment extends Fragment {
 
         // Save the parameters
         Bundle bundle = new Bundle();
-        bundle.putString(TITULO, titulo);
-        bundle.putFloat(PRECIO0, precio.get(0));
-        bundle.putFloat(PRECIO1, precio.get(1));
-        bundle.putFloat(PRECIO2, precio.get(2));
-        bundle.putFloat(PRECIO3, precio.get(3));
-        bundle.putFloat(PRECIO4, precio.get(4));
-        bundle.putFloat(PRECIO5, precio.get(5));
-        bundle.putFloat(PRECIO6, precio.get(6));
-        bundle.putFloat(PRECIO7, precio.get(7));
-        bundle.putFloat(PRECIO8, precio.get(8));
-        bundle.putFloat(PRECIO9, precio.get(9));
-        bundle.putFloat(PRECIO10, precio.get(10));
-        bundle.putFloat(PRECIO11, precio.get(11));
-        bundle.putFloat(PRECIO12, precio.get(12));
-        bundle.putFloat(PRECIO13, precio.get(13));
-        bundle.putFloat(PRECIO14, precio.get(14));
-        bundle.putFloat(PRECIO15, precio.get(15));
-        bundle.putFloat(PRECIO16, precio.get(16));
-        bundle.putFloat(PRECIO17, precio.get(17));
-        bundle.putFloat(PRECIO18, precio.get(18));
-        bundle.putFloat(PRECIO19, precio.get(19));
-        bundle.putFloat(PRECIO20, precio.get(20));
-        bundle.putFloat(PRECIO21, precio.get(21));
-        bundle.putFloat(PRECIO22, precio.get(22));
-        bundle.putFloat(PRECIO23, precio.get(23));
+
+        if (precio.size() != 0){
+            bundle.putString(TITULO, titulo);
+            bundle.putFloat(PRECIO0, precio.get(0));
+            bundle.putFloat(PRECIO1, precio.get(1));
+            bundle.putFloat(PRECIO2, precio.get(2));
+            bundle.putFloat(PRECIO3, precio.get(3));
+            bundle.putFloat(PRECIO4, precio.get(4));
+            bundle.putFloat(PRECIO5, precio.get(5));
+            bundle.putFloat(PRECIO6, precio.get(6));
+            bundle.putFloat(PRECIO7, precio.get(7));
+            bundle.putFloat(PRECIO8, precio.get(8));
+            bundle.putFloat(PRECIO9, precio.get(9));
+            bundle.putFloat(PRECIO10, precio.get(10));
+            bundle.putFloat(PRECIO11, precio.get(11));
+            bundle.putFloat(PRECIO12, precio.get(12));
+            bundle.putFloat(PRECIO13, precio.get(13));
+            bundle.putFloat(PRECIO14, precio.get(14));
+            bundle.putFloat(PRECIO15, precio.get(15));
+            bundle.putFloat(PRECIO16, precio.get(16));
+            bundle.putFloat(PRECIO17, precio.get(17));
+            bundle.putFloat(PRECIO18, precio.get(18));
+            bundle.putFloat(PRECIO19, precio.get(19));
+            bundle.putFloat(PRECIO20, precio.get(20));
+            bundle.putFloat(PRECIO21, precio.get(21));
+            bundle.putFloat(PRECIO22, precio.get(22));
+            bundle.putFloat(PRECIO23, precio.get(23));
+        }else{
+            bundle=null;
+        }
+
         fragment.setArguments(bundle);
         fragment.setRetainInstance(true);
 
         return fragment;
-
     }
 
     @Override
@@ -137,8 +142,8 @@ public class GraficasFragment extends Fragment {
         int PADDING_TEXTVIEW_RIGHT_IN_ONE_PANE_MODE=getPixels(0);
         int PADDING_TEXTVIEW_BOTTOM_IN_ONE_PANE_MODE=getPixels(0);
 
-        int ESCALA_IN_TWO_PANE_MODE=800; //Altura de las barras
-        int ESCALA_IN_ONE_PANE_MODE=400;
+        int ESCALA_IN_TWO_PANE_MODE=6000; //Altura de las barras
+        int ESCALA_IN_ONE_PANE_MODE=3200;
 
         int ANCHURA_IN_TWO_PANE_MODE= getPixels(16); //Anchura de las barras
         int ANCHURA_IN_ONE_PANE_MODE=getPixels(7);
@@ -185,10 +190,8 @@ public class GraficasFragment extends Fragment {
                     Gravity.CENTER);
             TextView_titulo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, TAMAÑO_TITULO_IN_ONE_PANE_MODE);
         }
-        
 
         return rootView;
-
     }
     private void formatea_barras(ViewGroup rootView,
                                  int escala,
@@ -203,8 +206,6 @@ public class GraficasFragment extends Fragment {
                                  int tamaño_letra,
                                  int gravity_leyenda
                                  ){
-
-
         LinearLayout.LayoutParams mLayoutParams_grafico= new LinearLayout.LayoutParams(getPixels(anchura+2), LinearLayout.LayoutParams.MATCH_PARENT);
 
         ImageView barra0= (ImageView) rootView.findViewById(R.id.barra0);
@@ -500,8 +501,7 @@ public class GraficasFragment extends Fragment {
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, r.getDisplayMetrics());
     }
     private boolean isInTwoPaneMode() {
-
         return getActivity().findViewById(R.id.main_layout) == null;
-
     }
 }
+
