@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
-    <color name="yellow">#FFFF00</color>
     <color name="fuchsia">#FF00FF</color>
     <color name="red">#FF0000</color>
     <color name="silver">#C0C0C0</color>
@@ -156,4 +155,32 @@
     <color name="DarkBlue">#00008B</color>
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
+    <color name="trans">#00000000 </color>
+
+    <color name="_0">#EE0000</color>
+    <color name="_1">#EE1100</color>
+    <color name="_2">#EE2200</color>
+    <color name="_3">#EE3300</color>
+    <color name="_4">#EE4400</color>
+    <color name="_5">#EE5500</color>
+    <color name="_6">#EE6600</color>
+    <color name="_7">#EE7700</color>
+    <color name="_8">#EE8800</color>
+    <color name="_9">#EE9900</color>
+    <color name="_10">#EEBB00</color>
+    <color name="_11">#EEaa00</color>
+    <color name="_12">#EEaa00</color>
+    <color name="_13">#BBaa00</color>
+    <color name="_14">#99aa00</color>
+    <color name="_15">#88aa00</color>
+    <color name="_16">#77aa00</color>
+    <color name="_17">#66aa00</color>
+    <color name="_18">#55aa00</color>
+    <color name="_19">#44aa00</color>
+    <color name="_20">#33aa00</color>
+    <color name="_21">#22aa77</color>
+    <color name="_22">#11aa77</color>
+    <color name="_23">#00aa77</color>
+
+
 </resources>

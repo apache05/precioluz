@@ -34,6 +34,14 @@
     <string name="tarifa_20A">2.0 A</string>
     <string name="tarifa_20DHA">2.0 DHA</string>
     <string name="tarifa_20DHS">2.0 DHS</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="titulo_sobre_precioluz">Sobre PrecioLuz</string>
+    <string name="texto_sobre_precioluz">PrecioLuz es un programa que muestra el precio de la electricidad en cada hora del día. El precio de la luz del día siguiente está disponible a partir de las 20:15h</string>
     <string name="barra"></string>
+    <string name="ok">Ok</string>
+    <string name="cancelar">Cancelar</string>
     <string name="title_activity_opciones">OpcionesActivity</string>
+
+
+
 </resources>
