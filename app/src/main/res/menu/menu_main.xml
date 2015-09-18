@@ -1,6 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
     <item
         android:id="@+id/tarifa_20A"
         android:title="@string/tarifa_20A"
@@ -27,14 +28,13 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
-        android:id="@+id/actualizar"
-        android:title="@string/actualizar"
+        android:id="@+id/actualizar_app"
+        android:title="@string/actualizar_app"
         android:orderInCategory="100"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/sobre"
-        android:title="@string/titulo_sobre_precioluz"
+   <item
+        android:id="@+id/valorar"
+        android:title="@string/valorar"
         android:orderInCategory="100"
-        app:showAsAction="never" />
-
+        app:showAsAction="never"/>
 </menu>

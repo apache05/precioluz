@@ -3,34 +3,26 @@
     android:id="@+id/graficas_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-
-    <!-- *************************  ESTO SON LAS FLECHITAS Y EL TITULO DE ARRIBA *************************-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="15dp"
-        >
-        <ImageView
-            style="@style/felchitas"
-            android:src="@drawable/anterior"
-            android:id="@+id/flechita_izquierda"
-           />
-        <TextView
-            android:id="@+id/precios"
-            style="@style/titulo" />
-        <ImageView
-            android:src="@drawable/siguiente"
-            style="@style/felchitas"
-            android:id="@+id/flechita_derecha"
-            />
-    </LinearLayout>
+    <!-- *************************  ESTO ES EL TITULO DE ARRIBA *************************-->
+    <TextView
+        android:id="@+id/precios"
+        style="@style/titulo" />
 
     <!-- ************************* ESTO ES LA GRAFICA  *************************-->
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/flecha_izquierda"
+            android:id="@+id/flechita_izquierda"
+            style="@style/felchita_izquierda"/>
+        <ImageView
+            android:src="@drawable/flecha_derecha"
+            android:id="@+id/flechita_derecha"
+            style="@style/felchita_derecha"/>
+        <LinearLayout
         android:id="@+id/grafica"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,47 +30,41 @@
         android:gravity="center_horizontal"
         android:paddingBottom="10dp">
             <RelativeLayout
-                android:id="@+id/grafico0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="bottom">
-                    <!-- *************************   LA BARRA DE LA GRAFICA ************************* -->
-                    <ImageView
-                        style="@style/precio_hoy"
-                        android:id="@+id/barra0"
-                        android:src="@drawable/rectangulo" />
-                    <!-- *************************  EL PRECIO DEL AÑO PASADO  ************************* -->
-                    <ImageView
-                        style="@style/precio_hace_un_año"
-                        android:layout_below="@+id/barra0"
-                        android:id="@+id/rayita_anyo_pasado_00"
-                        android:src="@drawable/rayita_ano_anterior"/>
-                    <!-- *************************   EL PRECIO DE LA SEMANA PASADA ************************* -->
-                    <ImageView
-                        style="@style/precio_hace_una_semana"
-                        android:layout_below="@+id/barra0"
-                        android:id="@+id/rayita_semana_pasada_00"
-                        android:src="@drawable/rayita_semana_anterior"/>
-                    <!-- *************************   LEYENDA  ************************* -->
-                    <TextView
-                        style="@style/leyenda"
-                        android:id="@+id/texto_precio0"
-                        android:layout_below="@+id/barra0"
-                        />
-                    <!-- *************************  LA HORA  ************************* -->
-                    <TextView
-                        style="@style/horas"
-                        android:id="@+id/texto0"
-                        android:text="@string/h00_01"
-                        android:layout_below="@+id/texto_precio0"/>
+                style="@style/graficas"
+                android:id="@+id/grafico0">
+
+                <!-- *************************   LA BARRA DE LA GRAFICA ************************* -->
+                <ImageView
+                    style="@style/precio_hoy"
+                    android:id="@+id/barra0"
+                    android:src="@drawable/rectangulo" />
+                <!-- *************************  EL PRECIO DEL AÑO PASADO  ************************* -->
+                <ImageView
+                    style="@style/precio_hace_un_año"
+                    android:id="@+id/rayita_anyo_pasado_00"
+                    android:src="@drawable/rayita_ano_anterior"/>
+                <!-- *************************   EL PRECIO DE LA SEMANA PASADA ************************* -->
+                <ImageView
+                    style="@style/precio_hace_una_semana"
+                    android:id="@+id/rayita_semana_pasada_00"
+                    android:src="@drawable/rayita_semana_anterior"/>
+                <!-- *************************   LEYENDA  ************************* -->
+                <TextView
+                    style="@style/leyenda"
+                    android:id="@+id/texto_precio0"
+                    android:layout_alignBottom="@id/barra0"
+                    />
+                <!-- *************************  LA HORA  ************************* -->
+                <TextView
+                    style="@style/horas"
+                    android:id="@+id/texto0"
+                    android:text="@string/h00_01"
+                    android:layout_below="@id/barra0"/>
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
+
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra1"
@@ -87,17 +73,15 @@
                 <ImageView
                     style="@style/precio_hace_un_año"
                     android:id="@+id/rayita_anyo_pasado_01"
-                    android:layout_below="@+id/barra1"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra1"
                     android:id="@+id/rayita_semana_pasada_01"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio1"
-                    android:layout_below="@+id/barra1"
+                    android:layout_alignBottom="@id/barra1"
                     />
                 <TextView
                     style="@style/horas"
@@ -108,10 +92,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra2"
@@ -119,18 +100,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra2"
                     android:id="@+id/rayita_anyo_pasado_02"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra2"
                     android:id="@+id/rayita_semana_pasada_02"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio2"
-                    android:layout_below="@+id/barra2"
+                    android:layout_alignBottom="@id/barra2"
                     />
                 <TextView
                     style="@style/horas"
@@ -141,10 +120,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra3"
@@ -152,18 +128,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra3"
                     android:id="@+id/rayita_anyo_pasado_03"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra3"
                     android:id="@+id/rayita_semana_pasada_03"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio3"
-                    android:layout_below="@+id/barra3"
+                    android:layout_alignBottom="@+id/barra3"
                     />
                 <TextView
                     style="@style/horas"
@@ -174,10 +148,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra4"
@@ -185,18 +156,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra4"
                     android:id="@+id/rayita_anyo_pasado_04"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra4"
                     android:id="@+id/rayita_semana_pasada_04"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio4"
-                    android:layout_below="@+id/barra4"
+                    android:layout_alignBottom="@+id/barra4"
                     />
                 <TextView
                     style="@style/horas"
@@ -207,10 +176,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra5"
@@ -218,18 +184,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra5"
                     android:id="@+id/rayita_anyo_pasado_05"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra5"
                     android:id="@+id/rayita_semana_pasada_05"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio5"
-                    android:layout_below="@+id/barra5"
+                    android:layout_alignBottom="@+id/barra5"
                     />
                 <TextView
                     style="@style/horas"
@@ -240,10 +204,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra6"
@@ -251,18 +212,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra6"
                     android:id="@+id/rayita_anyo_pasado_06"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra6"
                     android:id="@+id/rayita_semana_pasada_06"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio6"
-                    android:layout_below="@+id/barra6"
+                    android:layout_alignBottom="@+id/barra6"
                     />
                 <TextView
                     style="@style/horas"
@@ -273,10 +232,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
 
                 <ImageView
                     style="@style/precio_hoy" 
@@ -285,18 +241,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra7"
                     android:id="@+id/rayita_anyo_pasado_07"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra7"
                     android:id="@+id/rayita_semana_pasada_07"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio7"
-                    android:layout_below="@+id/barra7"
+                    android:layout_alignBottom="@+id/barra7"
                     />
                 <TextView
                     style="@style/horas"
@@ -307,10 +261,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra8"
@@ -318,18 +269,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra8"
                     android:id="@+id/rayita_anyo_pasado_08"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra8"
                     android:id="@+id/rayita_semana_pasada_08"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio8"
-                    android:layout_below="@+id/barra8"
+                    android:layout_alignBottom="@+id/barra8"
                     />
                 <TextView
                     style="@style/horas"
@@ -340,10 +289,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra9"
@@ -351,18 +297,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra9"
                     android:id="@+id/rayita_anyo_pasado_09"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra9"
                     android:id="@+id/rayita_semana_pasada_09"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio9"
-                    android:layout_below="@+id/barra9"
+                    android:layout_alignBottom="@+id/barra9"
                     />
                 <TextView
                     style="@style/horas"
@@ -373,10 +317,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra10"
@@ -384,18 +325,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra10"
                     android:id="@+id/rayita_anyo_pasado_10"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra10"
                     android:id="@+id/rayita_semana_pasada_10"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio10"
-                    android:layout_below="@+id/barra10"
+                    android:layout_alignBottom="@+id/barra10"
                     />
                 <TextView
                     style="@style/horas"
@@ -406,10 +345,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
 
                 <ImageView
                     style="@style/precio_hoy"
@@ -418,18 +354,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra11"
                     android:id="@+id/rayita_anyo_pasado_11"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra11"
                     android:id="@+id/rayita_semana_pasada_11"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio11"
-                    android:layout_below="@+id/barra11"
+                    android:layout_alignBottom="@+id/barra11"
                     />
                 <TextView
                     style="@style/horas"
@@ -440,10 +374,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra12"
@@ -451,18 +382,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra12"
                     android:id="@+id/rayita_anyo_pasado_12"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra12"
                     android:id="@+id/rayita_semana_pasada_12"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio12"
-                    android:layout_below="@+id/barra12"
+                    android:layout_alignBottom="@+id/barra12"
                     />
                 <TextView
                     style="@style/horas"
@@ -473,10 +402,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra13"
@@ -484,18 +410,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra13"
                     android:id="@+id/rayita_anyo_pasado_13"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra13"
                     android:id="@+id/rayita_semana_pasada_13"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio13"
-                    android:layout_below="@+id/barra13"
+                    android:layout_alignBottom="@+id/barra13"
                     />
                 <TextView
                     style="@style/horas"
@@ -506,10 +430,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra14"
@@ -517,18 +438,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra14"
                     android:id="@+id/rayita_anyo_pasado_14"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra14"
                     android:id="@+id/rayita_semana_pasada_14"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio14"
-                    android:layout_below="@+id/barra14"
+                    android:layout_alignBottom="@+id/barra14"
                     />
                 <TextView
                     style="@style/horas"
@@ -539,10 +458,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra15"
@@ -550,18 +466,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra15"
                     android:id="@+id/rayita_anyo_pasado_15"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra15"
                     android:id="@+id/rayita_semana_pasada_15"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio15"
-                    android:layout_below="@+id/barra15"
+                    android:layout_alignBottom="@+id/barra15"
                     />
                 <TextView
                     style="@style/horas"
@@ -572,10 +486,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra16"
@@ -583,18 +494,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra16"
                     android:id="@+id/rayita_anyo_pasado_16"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra16"
                     android:id="@+id/rayita_semana_pasada_16"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio16"
-                    android:layout_below="@+id/barra16"
+                    android:layout_alignBottom="@+id/barra16"
                     />
                 <TextView
                     style="@style/horas"
@@ -605,10 +514,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra17"
@@ -616,18 +522,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra17"
                     android:id="@+id/rayita_anyo_pasado_17"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra17"
                     android:id="@+id/rayita_semana_pasada_17"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio17"
-                    android:layout_below="@+id/barra17"
+                    android:layout_alignBottom="@+id/barra17"
                     />
                 <TextView
                     style="@style/horas"
@@ -638,10 +542,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra18"
@@ -649,18 +550,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra18"
                     android:id="@+id/rayita_anyo_pasado_18"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra18"
                     android:id="@+id/rayita_semana_pasada_18"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio18"
-                    android:layout_below="@+id/barra18"
+                    android:layout_alignBottom="@+id/barra18"
                     />
                 <TextView
                     style="@style/horas"
@@ -672,10 +571,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra19"
@@ -683,18 +579,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra19"
                     android:id="@+id/rayita_anyo_pasado_19"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra19"
                     android:id="@+id/rayita_semana_pasada_19"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio19"
-                    android:layout_below="@+id/barra19"
+                    android:layout_alignBottom="@+id/barra19"
                     />
                 <TextView
                     style="@style/horas"
@@ -705,10 +599,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra20"
@@ -716,18 +607,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra20"
                     android:id="@+id/rayita_anyo_pasado_20"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra20"
                     android:id="@+id/rayita_semana_pasada_20"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio20"
-                    android:layout_below="@+id/barra20"
+                    android:layout_alignBottom="@+id/barra20"
                     />
                 <TextView
                     style="@style/horas"
@@ -738,10 +627,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra21"
@@ -749,18 +635,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra21"
                     android:id="@+id/rayita_anyo_pasado_21"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra21"
                     android:id="@+id/rayita_semana_pasada_21"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio21"
-                    android:layout_below="@+id/barra21"
+                    android:layout_alignBottom="@+id/barra21"
                     />
                 <TextView
                     style="@style/horas"
@@ -771,10 +655,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra22"
@@ -782,18 +663,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra22"
                     android:id="@+id/rayita_anyo_pasado_22"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra22"
                     android:id="@+id/rayita_semana_pasada_22"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio22"
-                    android:layout_below="@+id/barra22"
+                    android:layout_alignBottom="@+id/barra22"
                     />
                 <TextView
                     style="@style/horas"
@@ -804,10 +683,7 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/grafico23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="bottom">
+                style="@style/graficas">
                 <ImageView
                     style="@style/precio_hoy"
                     android:id="@+id/barra23"
@@ -815,18 +691,16 @@
                     />
                 <ImageView
                     style="@style/precio_hace_un_año"
-                    android:layout_below="@+id/barra23"
                     android:id="@+id/rayita_anyo_pasado_23"
                     android:src="@drawable/rectangulo"/>
                 <ImageView
                     style="@style/precio_hace_una_semana"
-                    android:layout_below="@+id/barra23"
                     android:id="@+id/rayita_semana_pasada_23"
                     android:src="@drawable/rectangulo"/>
                 <TextView
                     style="@style/leyenda"
                     android:id="@+id/texto_precio23"
-                    android:layout_below="@+id/barra23"
+                    android:layout_alignBottom="@+id/barra23"
                     />
                 <TextView
                     style="@style/horas"
@@ -835,5 +709,7 @@
                     android:layout_below="@+id/texto_precio23"
                     />
             </RelativeLayout>
-        </LinearLayout>
+    </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

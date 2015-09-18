@@ -25,26 +25,22 @@ import java.util.logging.Logger;
         )
 )
 public class Endpoint_comprueba_version {
-
     private static final Logger logger = Logger.getLogger(Endpoint_comprueba_version.class.getName());
-
 
     @ApiMethod(name = "getBean_comprueba_version")
     public Bean_comprueba_version getBean_comprueba_version() {
-        Float version_actual;
         Bean_comprueba_version mBean_comprueba_version= new Bean_comprueba_version();
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query q = new Query("versiones");
-        PreparedQuery pq =datastore.prepare(q);
-        Entity result= pq.asSingleEntity();
-        mBean_comprueba_version.setVersion_actual((Double)result.getProperty("version"));
+        try{
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            Query q = new Query("versiones");
+            PreparedQuery pq =datastore.prepare(q);
+            Entity result= pq.asSingleEntity();
+            mBean_comprueba_version.setVersion_actual((Double)result.getProperty("version"));
+        }catch (Exception e){
+            logger.severe(e.toString());
+        }
 
         return   mBean_comprueba_version;
     }
 
-   /* @ApiMethod(name = "insertBean_comprueba_version")
-    public Bean_comprueba_version insertBean_comprueba_version(Bean_comprueba_version bean_comprueba_version) {
-
-    }*/
 }
