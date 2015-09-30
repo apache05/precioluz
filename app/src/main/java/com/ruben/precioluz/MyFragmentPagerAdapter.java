@@ -1,4 +1,4 @@
-package com.example.ruben.precioluz;
+package com.ruben.precioluz;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +20,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
      */
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.fragments = new ArrayList<Fragment>();
+        this.fragments = new ArrayList<>();
     }
 
     /**
@@ -47,5 +47,6 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
+
 
 }

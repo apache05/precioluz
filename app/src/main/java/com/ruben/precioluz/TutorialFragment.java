@@ -1,6 +1,5 @@
-package com.example.ruben.precioluz;
+package com.ruben.precioluz;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,20 +22,13 @@ public class TutorialFragment extends Fragment {
 
     // TODO: Rename and change types and number of parameters
     public static TutorialFragment newInstance() {
-        TutorialFragment fragment = new TutorialFragment();
-
-        return fragment;
+        return  new TutorialFragment();
     }
 
     public TutorialFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,9 +71,9 @@ public class TutorialFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+         void onFragmentInteraction(Uri uri);
     }
 
 }

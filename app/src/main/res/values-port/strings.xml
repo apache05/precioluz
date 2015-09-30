@@ -1,44 +1,39 @@
 <resources>
-    <string name="app_name">PrecioLuz</string>
+    <string name="app_name">PrecioLuz 1.2</string>
 
     <string name="action_settings">Opciones</string>
     <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
     <string name="precios_hace_un_año">Precio mismo día hace un año</string>
-    <string name="h00_01">00\n01</string>
-    <string name="h01_02">01\n02</string>
-    <string name="h02_03">02\n03</string>
-    <string name="h03_04">03\n04</string>
-    <string name="h04_05">04\n05</string>
-    <string name="h05_06">05\n06</string>
-    <string name="h06_07">06\n07</string>
-    <string name="h07_08">07\n08</string>
-    <string name="h08_09">08\n09</string>
-    <string name="h09_10">09\n10</string>
-    <string name="h10_11">10\n11</string>
-    <string name="h11_12">11\n12</string>
-    <string name="h12_13">12\n13</string>
-    <string name="h13_14">13\n14</string>
-    <string name="h14_15">14\n15</string>
-    <string name="h15_16">15\n16</string>
-    <string name="h16_17">16\n17</string>
-    <string name="h17_18">17\n18</string>
-    <string name="h18_19">18\n19</string>
-    <string name="h19_20">19\n20</string>
-    <string name="h20_21">20\n21</string>
-    <string name="h21_22">21\n22</string>
-    <string name="h22_23">22\n23</string>
-    <string name="h23_00">23\n00</string>
+    <string name="h00_01">00&#8211;01</string>
+    <string name="h01_02">01&#8211;02</string>
+    <string name="h02_03">02&#8211;03</string>
+    <string name="h03_04">03&#8211;04</string>
+    <string name="h04_05">04&#8211;05</string>
+    <string name="h05_06">05&#8211;06</string>
+    <string name="h06_07">06&#8211;07</string>
+    <string name="h07_08">07&#8211;08</string>
+    <string name="h08_09">08&#8211;09</string>
+    <string name="h09_10">09&#8211;10</string>
+    <string name="h10_11">10&#8211;11</string>
+    <string name="h11_12">11&#8211;12</string>
+    <string name="h12_13">12&#8211;13</string>
+    <string name="h13_14">13&#8211;14</string>
+    <string name="h14_15">14&#8211;15</string>
+    <string name="h15_16">15&#8211;16</string>
+    <string name="h16_17">16&#8211;17</string>
+    <string name="h17_18">17&#8211;18</string>
+    <string name="h18_19">18&#8211;19</string>
+    <string name="h19_20">19&#8211;20</string>
+    <string name="h20_21">20&#8211;21</string>
+    <string name="h21_22">21&#8211;22</string>
+    <string name="h22_23">22&#8211;23</string>
+    <string name="h23_00">23&#8211;00</string>
+    
 
-    <string name="tarifa_20A">2.0 A</string>
-    <string name="tarifa_20DHA">2.0 DHA</string>
-    <string name="tarifa_20DHS">2.0 DHS</string>
-    <string name="actualizar_datos">Actualizar datos</string>
+    <string name="tarifa_20A">Tarifa 2.0 A</string>
+    <string name="tarifa_20DHA">Tarifa 2.0 DHA</string>
+    <string name="tarifa_20DHS">Tarifa 2.0 DHS</string>
     <string name="actualizar_app">Actualizar versión</string>
-    <string name="titulo_sobre_precioluz">Sobre PrecioLuz</string>
-    <string name="barra"></string>
-    <string name="ok">Ok</string>
-    <string name="cancelar">Cancelar</string>
-    <string name="title_activity_opciones">OpcionesActivity</string>
 
     <string name="texto_tutorial">PrecioLuz es una app que te permite conocer los distintos precios de la electricidad tanto
     del día de hoy como los de mañana.\n\nLa información viene presentada mediante una gráfica de barras, una para cada hora del día. Hay una pantalla para los
@@ -51,5 +46,6 @@
         informarte  sobre estos temas y todo lo relacionado con las tarifas de electricidad consulta en www.esios.es</string>
 
     <string name="valorar">Valorar</string>
-
+    <string name="contentdescription_flecha">Flecha</string>
+    <string name="contentdescription_barra">Barra</string>
 </resources>

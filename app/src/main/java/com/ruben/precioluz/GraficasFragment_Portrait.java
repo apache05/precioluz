@@ -1,9 +1,10 @@
-package com.example.ruben.precioluz;
+package com.ruben.precioluz;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 
-public class GraficasFragment extends Fragment {
+public class GraficasFragment_Portrait extends Fragment {
 
     private static final String TITULO = "TITULO";
 
@@ -104,108 +103,117 @@ public class GraficasFragment extends Fragment {
     private static final String PRECIOS_AÑO_PASADO= "PRECIOS_AÑO_PASADO";
 
     private String titulo;
-    private Float[] precios= new Float[24]; //pueden ser los de hoy o los de mañana pq es el mismo fragment
-    private Float[] precios_hace_una_semana= new Float[24];
-    private Float[] precios_hace_un_año= new Float[24];
+    private final Float[] precios= new Float[24]; //pueden ser los de hoy o los de mañana pq es el mismo fragment
+    private final Float[] precios_hace_una_semana= new Float[24];
+    private final Float[] precios_hace_un_año= new Float[24];
     private boolean precios_semana_pasada_activado;
     private boolean precios_año_pasado_activado;
-    public static GraficasFragment newInstance(String titulo, Float[] precios,boolean boolean_precios_semana_pasada,boolean boolean_precios_año_pasado,Float[] precios_hace_un_año,Float[] precios_hace_una_semana) {
+    public static GraficasFragment_Portrait newInstance(String titulo, Float[] precios,boolean boolean_precios_semana_pasada,boolean boolean_precios_año_pasado,Float[] precios_hace_un_año,Float[] precios_hace_una_semana) {
 
         // Instantiate a new fragment
-        GraficasFragment fragment = new GraficasFragment();
+        GraficasFragment_Portrait fragment = new GraficasFragment_Portrait();
 
-        // Save the parameters
-        Bundle bundle = new Bundle();
+            // Save the parameters
+            Bundle bundle = new Bundle();
+        try {
+            if ((precios != null) && (precios.length != 0)){
+                bundle.putString(TITULO, titulo);
+                bundle.putFloat(PRECIO0, precios[0]);
+                bundle.putFloat(PRECIO1, precios[1]);
+                bundle.putFloat(PRECIO2, precios[2]);
+                bundle.putFloat(PRECIO3, precios[3]);
+                bundle.putFloat(PRECIO4, precios[4]);
+                bundle.putFloat(PRECIO5, precios[5]);
+                bundle.putFloat(PRECIO6, precios[6]);
+                bundle.putFloat(PRECIO7, precios[7]);
+                bundle.putFloat(PRECIO8, precios[8]);
+                bundle.putFloat(PRECIO9, precios[9]);
+                bundle.putFloat(PRECIO10, precios[10]);
+                bundle.putFloat(PRECIO11, precios[11]);
+                bundle.putFloat(PRECIO12, precios[12]);
+                bundle.putFloat(PRECIO13, precios[13]);
+                bundle.putFloat(PRECIO14, precios[14]);
+                bundle.putFloat(PRECIO15, precios[15]);
+                bundle.putFloat(PRECIO16, precios[16]);
+                bundle.putFloat(PRECIO17, precios[17]);
+                bundle.putFloat(PRECIO18, precios[18]);
+                bundle.putFloat(PRECIO19, precios[19]);
+                bundle.putFloat(PRECIO20, precios[20]);
+                bundle.putFloat(PRECIO21, precios[21]);
+                bundle.putFloat(PRECIO22, precios[22]);
+                bundle.putFloat(PRECIO23, precios[23]);
 
-        if (precios.length != 0){
-            bundle.putString(TITULO, titulo);
-            bundle.putFloat(PRECIO0, precios[0]);
-            bundle.putFloat(PRECIO1, precios[1]);
-            bundle.putFloat(PRECIO2, precios[2]);
-            bundle.putFloat(PRECIO3, precios[3]);
-            bundle.putFloat(PRECIO4, precios[4]);
-            bundle.putFloat(PRECIO5, precios[5]);
-            bundle.putFloat(PRECIO6, precios[6]);
-            bundle.putFloat(PRECIO7, precios[7]);
-            bundle.putFloat(PRECIO8, precios[8]);
-            bundle.putFloat(PRECIO9, precios[9]);
-            bundle.putFloat(PRECIO10, precios[10]);
-            bundle.putFloat(PRECIO11, precios[11]);
-            bundle.putFloat(PRECIO12, precios[12]);
-            bundle.putFloat(PRECIO13, precios[13]);
-            bundle.putFloat(PRECIO14, precios[14]);
-            bundle.putFloat(PRECIO15, precios[15]);
-            bundle.putFloat(PRECIO16, precios[16]);
-            bundle.putFloat(PRECIO17, precios[17]);
-            bundle.putFloat(PRECIO18, precios[18]);
-            bundle.putFloat(PRECIO19, precios[19]);
-            bundle.putFloat(PRECIO20, precios[20]);
-            bundle.putFloat(PRECIO21, precios[21]);
-            bundle.putFloat(PRECIO22, precios[22]);
-            bundle.putFloat(PRECIO23, precios[23]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO0, precios_hace_una_semana[0]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO1, precios_hace_una_semana[1]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO2, precios_hace_una_semana[2]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO3, precios_hace_una_semana[3]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO4, precios_hace_una_semana[4]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO5, precios_hace_una_semana[5]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO6, precios_hace_una_semana[6]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO7, precios_hace_una_semana[7]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO8, precios_hace_una_semana[8]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO9, precios_hace_una_semana[9]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO10, precios_hace_una_semana[10]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO11, precios_hace_una_semana[11]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO12, precios_hace_una_semana[12]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO13, precios_hace_una_semana[13]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO14, precios_hace_una_semana[14]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO15, precios_hace_una_semana[15]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO16, precios_hace_una_semana[16]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO17, precios_hace_una_semana[17]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO18, precios_hace_una_semana[18]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO19, precios_hace_una_semana[19]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO20, precios_hace_una_semana[20]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO21, precios_hace_una_semana[21]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO22, precios_hace_una_semana[22]);
+                bundle.putFloat(HACE_UNA_SEMANA_PRECIO23, precios_hace_una_semana[23]);
 
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO0, precios_hace_una_semana[0]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO1, precios_hace_una_semana[1]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO2, precios_hace_una_semana[2]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO3, precios_hace_una_semana[3]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO4, precios_hace_una_semana[4]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO5, precios_hace_una_semana[5]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO6, precios_hace_una_semana[6]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO7, precios_hace_una_semana[7]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO8, precios_hace_una_semana[8]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO9, precios_hace_una_semana[9]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO10, precios_hace_una_semana[10]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO11, precios_hace_una_semana[11]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO12, precios_hace_una_semana[12]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO13, precios_hace_una_semana[13]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO14, precios_hace_una_semana[14]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO15, precios_hace_una_semana[15]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO16, precios_hace_una_semana[16]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO17, precios_hace_una_semana[17]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO18, precios_hace_una_semana[18]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO19, precios_hace_una_semana[19]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO20, precios_hace_una_semana[20]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO21, precios_hace_una_semana[21]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO22, precios_hace_una_semana[22]);
-            bundle.putFloat(HACE_UNA_SEMANA_PRECIO23, precios_hace_una_semana[23]);
-            
-            bundle.putFloat(HACE_UN_AÑO_PRECIO0, precios_hace_un_año[0]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO1, precios_hace_un_año[1]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO2, precios_hace_un_año[2]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO3, precios_hace_un_año[3]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO4, precios_hace_un_año[4]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO5, precios_hace_un_año[5]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO6, precios_hace_un_año[6]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO7, precios_hace_un_año[7]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO8, precios_hace_un_año[8]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO9, precios_hace_un_año[9]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO10, precios_hace_un_año[10]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO11, precios_hace_un_año[11]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO12, precios_hace_un_año[12]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO13, precios_hace_un_año[13]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO14, precios_hace_un_año[14]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO15, precios_hace_un_año[15]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO16, precios_hace_un_año[16]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO17, precios_hace_un_año[17]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO18, precios_hace_un_año[18]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO19, precios_hace_un_año[19]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO20, precios_hace_un_año[20]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO21, precios_hace_un_año[21]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO22, precios_hace_un_año[22]);
-            bundle.putFloat(HACE_UN_AÑO_PRECIO23, precios_hace_un_año[23]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO0, precios_hace_un_año[0]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO1, precios_hace_un_año[1]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO2, precios_hace_un_año[2]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO3, precios_hace_un_año[3]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO4, precios_hace_un_año[4]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO5, precios_hace_un_año[5]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO6, precios_hace_un_año[6]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO7, precios_hace_un_año[7]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO8, precios_hace_un_año[8]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO9, precios_hace_un_año[9]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO10, precios_hace_un_año[10]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO11, precios_hace_un_año[11]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO12, precios_hace_un_año[12]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO13, precios_hace_un_año[13]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO14, precios_hace_un_año[14]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO15, precios_hace_un_año[15]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO16, precios_hace_un_año[16]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO17, precios_hace_un_año[17]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO18, precios_hace_un_año[18]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO19, precios_hace_un_año[19]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO20, precios_hace_un_año[20]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO21, precios_hace_un_año[21]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO22, precios_hace_un_año[22]);
+                bundle.putFloat(HACE_UN_AÑO_PRECIO23, precios_hace_un_año[23]);
 
-            bundle.putBoolean(PRECIOS_SEMANA_PASADA, boolean_precios_semana_pasada);
-            bundle.putBoolean(PRECIOS_AÑO_PASADO,boolean_precios_año_pasado);
-        }else{
-            bundle=null;
+                bundle.putBoolean(PRECIOS_SEMANA_PASADA, boolean_precios_semana_pasada);
+                bundle.putBoolean(PRECIOS_AÑO_PASADO,boolean_precios_año_pasado);
+            }else{
+                bundle=null;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            fragment.setArguments(bundle);
+            fragment.setRetainInstance(true);
         }
-
-        fragment.setArguments(bundle);
-        fragment.setRetainInstance(true);
-
         return fragment;
     }
 
+    private int ESCALA=0; //Altura de las barras
+    private int ANCHURA=0; //Anchura de las barras
+    /*private int TAMAÑO_TEXTO_TITULO=0;
+    private int TAMAÑO_TEXTO_HORAS=0;
+    private int TAMAÑO_TEXTO_PRECIO=0;*/
+    private int PADDING_LEFT_BARRA=0;
+    private int PADDING_LEFT_TEXTO_PRECIO=0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -286,54 +294,29 @@ public class GraficasFragment extends Fragment {
         this.precios_hace_una_semana[21] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO21) : -1;
         this.precios_hace_una_semana[22] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO22) : -1;
         this.precios_hace_una_semana[23] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO23) : -1;
-        this.precios_semana_pasada_activado= (getArguments() != null) ? getArguments().getBoolean(PRECIOS_SEMANA_PASADA) : false;
-        this.precios_año_pasado_activado= (getArguments() != null) ? getArguments().getBoolean(PRECIOS_AÑO_PASADO) : false;
+        this.precios_semana_pasada_activado= (getArguments() != null) && getArguments().getBoolean(PRECIOS_SEMANA_PASADA);
+        this.precios_año_pasado_activado= (getArguments() != null) && getArguments().getBoolean(PRECIOS_AÑO_PASADO);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        int ESCALA_IN_TWO_PANE_MODE=5500; //Altura de las barras
-        int ESCALA_IN_ONE_PANE_MODE=1200;
+        set_parametros_segun_screensize();
 
-        int ANCHURA_IN_TWO_PANE_MODE= getPixels(17); //Anchura de las barras
-        int ANCHURA_IN_ONE_PANE_MODE=getPixels(13);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.graficas_layout_portrait, container, false);
 
-        int TAMAÑO_TITULO_IN_TWO_PANE_MODE=getPixels(14);
-        int TAMAÑO_TITULO_IN_ONE_PANE_MODE= getPixels(12);
+        pinta_titulo(rootView/*,TAMAÑO_TEXTO_TITULO*/);
+        pinta_flechitas(rootView);
+        pinta_texto_horas(rootView/*,TAMAÑO_TEXTO_HORAS*/);
+        pinta_texto_precios(rootView/*,TAMAÑO_TEXTO_PRECIO,PADDING_LEFT_TEXTO_PRECIO*/);
 
-        int TAMAÑO_LEYENDA_IN_TWO_PANE_MODE=getPixels(7);
-        int TAMAÑO_LEYENDA_IN_ONE_PANE_MODE=getPixels(5);
-
-        int TAMAÑO_TEXTO=getPixels(8);
-
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.graficas_layout, container, false);
-
-        TextView TextView_titulo = (TextView) rootView.findViewById(R.id.precios);
-        TextView_titulo.setText(this.titulo);
-
-        pinta_grafica(rootView);
-        if (isInTwoPaneMode()) {
-            pinta_horas(rootView, TAMAÑO_TEXTO);
-            pinta_barras(rootView, ESCALA_IN_TWO_PANE_MODE, ANCHURA_IN_TWO_PANE_MODE);
-            if (precios[0].compareTo(-1.0f) != 0) {
-                pinta_rayitas_semana_pasada(rootView, ESCALA_IN_TWO_PANE_MODE, ANCHURA_IN_TWO_PANE_MODE);
-                pinta_rayitas_año_pasado(rootView, ESCALA_IN_TWO_PANE_MODE, ANCHURA_IN_TWO_PANE_MODE);
-            }
-            pinta_texto_precios(rootView, TAMAÑO_LEYENDA_IN_TWO_PANE_MODE);
-            TextView_titulo.setTextSize(TypedValue.COMPLEX_UNIT_DIP ,TAMAÑO_TITULO_IN_TWO_PANE_MODE);
-        }else{
-            pinta_horas(rootView, TAMAÑO_TEXTO);
-            pinta_barras(rootView, ESCALA_IN_ONE_PANE_MODE, ANCHURA_IN_ONE_PANE_MODE);
-            if (precios[0].compareTo(-1.0f) != 0) {
-                pinta_rayitas_semana_pasada(rootView, ESCALA_IN_ONE_PANE_MODE, ANCHURA_IN_ONE_PANE_MODE);
-                pinta_rayitas_año_pasado(rootView, ESCALA_IN_ONE_PANE_MODE, ANCHURA_IN_ONE_PANE_MODE);
-            }
-            pinta_texto_precios(rootView, TAMAÑO_LEYENDA_IN_ONE_PANE_MODE);
-            TextView_titulo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, TAMAÑO_TITULO_IN_ONE_PANE_MODE);
+        pinta_barras(rootView, ESCALA, ANCHURA);
+        if (precios[0].compareTo(-1.0f) != 0) {
+            pinta_rayitas_semana_pasada(rootView, ESCALA, ANCHURA);
+            pinta_rayitas_año_pasado   (rootView, ESCALA, ANCHURA);
         }
+
         return rootView;
     }
-
     public void setTitulo(String titulo){
         this.titulo= titulo;
     }
@@ -351,7 +334,62 @@ public class GraficasFragment extends Fragment {
     public void setPrecios_año_pasado_activado(boolean precios_año_pasado_activado){
         this.precios_año_pasado_activado= precios_año_pasado_activado;
     }
+    private void set_parametros_segun_screensize(){
+        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
+        switch(screenSize) {
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                ESCALA=Px2DP(1800);
+                ANCHURA= Px2DP(25);
+                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
+                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
+                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
+                //PADDING_LEFT_BARRA= Px2DP(180);
+                //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);    
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:  //nexus 10
+                ESCALA=Px2DP(1800);
+                ANCHURA= Px2DP(25);
+                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
+                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
+                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
+                //PADDING_LEFT_BARRA= Px2DP(180);
+                //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                ESCALA=Px2DP(1800);
+                ANCHURA= Px2DP(25);
+                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
+                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
+                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
+                //PADDING_LEFT_BARRA= Px2DP(180);
+                //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:  //nexus 9
+                ESCALA=Px2DP(1800);
+                ANCHURA= Px2DP(25);
+                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
+                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
+                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
+                //PADDING_LEFT_BARRA= Px2DP(180);
+                //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
+                break;
+            default:   //por defecto será igual que el normal
+                ESCALA=Px2DP(1800);
+                ANCHURA= Px2DP(25);
+                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
+                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
+                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
+                //PADDING_LEFT_BARRA= Px2DP(180);
+                //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
+                break;
+        }
+    }
+    private void pinta_titulo(ViewGroup rootView/*, int tamaño_letra*/){
+        TextView TextView_titulo = (TextView) rootView.findViewById(R.id.precios);
+        TextView_titulo.setText(this.titulo);
+        //TextView_titulo.setTextSize(tamaño_letra);
+    }
     private void pinta_barras(ViewGroup rootView,int escala, int anchura){
         ImageView barra0= (ImageView) rootView.findViewById(R.id.barra0);
         ImageView barra1= (ImageView) rootView.findViewById(R.id.barra1);
@@ -377,56 +415,57 @@ public class GraficasFragment extends Fragment {
         ImageView barra21= (ImageView) rootView.findViewById(R.id.barra21);
         ImageView barra22= (ImageView) rootView.findViewById(R.id.barra22);
         ImageView barra23= (ImageView) rootView.findViewById(R.id.barra23);
-        
-        RelativeLayout.LayoutParams mLayoutParams_barra0= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[0]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra1= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[1]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra2= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[2]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra3= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[3]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra4= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[4]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra5= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[5]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra6= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[6]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra7= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[7]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra8= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[8]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra9= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[9]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra10= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[10]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra11= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[11]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra12= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[12]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra13= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[13]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra14= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[14]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra15= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[15]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra16= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[16]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra17= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[17]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra18= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[18]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra19= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[19]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra20= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[20]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra21= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[21]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra22= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[22]*escala));
-        RelativeLayout.LayoutParams mLayoutParams_barra23= new RelativeLayout.LayoutParams(getPixels(anchura), (int) (precios[23]*escala));
 
-        mLayoutParams_barra0.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra2.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra3.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra4.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra5.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra6.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra7.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra8.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra9.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra10.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra11.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra12.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra13.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra14.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra15.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra16.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra17.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra18.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra19.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra20.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra21.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra22.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_barra23.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+/*        barra0.setPadding(padding_left,0,0,0);
+        barra1.setPadding(padding_left,0,0,0);
+        barra2.setPadding(padding_left,0,0,0);
+        barra3.setPadding(padding_left,0,0,0);
+        barra4.setPadding(padding_left,0,0,0);
+        barra5.setPadding(padding_left,0,0,0);
+        barra6.setPadding(padding_left,0,0,0);
+        barra7.setPadding(padding_left,0,0,0);
+        barra8.setPadding(padding_left,0,0,0);
+        barra9.setPadding(padding_left,0,0,0);
+        barra10.setPadding(padding_left,0,0,0);
+        barra11.setPadding(padding_left,0,0,0);
+        barra12.setPadding(padding_left,0,0,0);
+        barra13.setPadding(padding_left,0,0,0);
+        barra14.setPadding(padding_left,0,0,0);
+        barra15.setPadding(padding_left,0,0,0);
+        barra16.setPadding(padding_left,0,0,0);
+        barra17.setPadding(padding_left,0,0,0);
+        barra18.setPadding(padding_left,0,0,0);
+        barra19.setPadding(padding_left,0,0,0);
+        barra20.setPadding(padding_left,0,0,0);
+        barra21.setPadding(padding_left,0,0,0);
+        barra22.setPadding(padding_left,0,0,0);
+        barra23.setPadding(padding_left,0,0,0);*/
+
+        RelativeLayout.LayoutParams mLayoutParams_barra0= new RelativeLayout.LayoutParams( (int) (precios[0]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra1= new RelativeLayout.LayoutParams( (int) (precios[1]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra2= new RelativeLayout.LayoutParams( (int) (precios[2]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra3= new RelativeLayout.LayoutParams( (int) (precios[3]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra4= new RelativeLayout.LayoutParams( (int) (precios[4]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra5= new RelativeLayout.LayoutParams( (int) (precios[5]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra6= new RelativeLayout.LayoutParams( (int) (precios[6]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra7= new RelativeLayout.LayoutParams( (int) (precios[7]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra8= new RelativeLayout.LayoutParams( (int) (precios[8]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra9= new RelativeLayout.LayoutParams( (int) (precios[9]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra10= new RelativeLayout.LayoutParams( (int) (precios[10]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra11= new RelativeLayout.LayoutParams( (int) (precios[11]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra12= new RelativeLayout.LayoutParams( (int) (precios[12]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra13= new RelativeLayout.LayoutParams( (int) (precios[13]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra14= new RelativeLayout.LayoutParams( (int) (precios[14]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra15= new RelativeLayout.LayoutParams( (int) (precios[15]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra16= new RelativeLayout.LayoutParams( (int) (precios[16]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra17= new RelativeLayout.LayoutParams( (int) (precios[17]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra18= new RelativeLayout.LayoutParams( (int) (precios[18]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra19= new RelativeLayout.LayoutParams( (int) (precios[19]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra20= new RelativeLayout.LayoutParams( (int) (precios[20]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra21= new RelativeLayout.LayoutParams( (int) (precios[21]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra22= new RelativeLayout.LayoutParams( (int) (precios[22]*escala),anchura);
+        RelativeLayout.LayoutParams mLayoutParams_barra23= new RelativeLayout.LayoutParams( (int) (precios[23]*escala),anchura);
 
         barra0.setLayoutParams(mLayoutParams_barra0);
         barra1.setLayoutParams(mLayoutParams_barra1);
@@ -453,11 +492,10 @@ public class GraficasFragment extends Fragment {
         barra22.setLayoutParams(mLayoutParams_barra22);
         barra23.setLayoutParams(mLayoutParams_barra23);
 
-        Float[] precios_ordenados= new Float[24];
-        for (int i=0; i<24;i++){
-            precios_ordenados[i]= precios[i];
-        }
-        Arrays.sort(precios_ordenados, Collections.reverseOrder());
+
+        Float[] precios_ordenados= precios.clone();
+
+        Arrays.sort(precios_ordenados,Collections.reverseOrder());
         barra0.setColorFilter(getColor(precios_ordenados, precios[0]));
         barra1.setColorFilter(getColor(precios_ordenados, precios[1]));
         barra2.setColorFilter(getColor(precios_ordenados, precios[2]));
@@ -483,7 +521,7 @@ public class GraficasFragment extends Fragment {
         barra22.setColorFilter(getColor(precios_ordenados, precios[22]));
         barra23.setColorFilter(getColor(precios_ordenados, precios[23]));
     }
-    private void pinta_horas(ViewGroup rootView, int tamaño_letra){
+    private void pinta_texto_horas(ViewGroup rootView/*,int tamaño_letra*/){
         TextView mTextView0= (TextView) rootView.findViewById(R.id.texto0);
         TextView mTextView1= (TextView) rootView.findViewById(R.id.texto1);
         TextView mTextView2= (TextView) rootView.findViewById(R.id.texto2);
@@ -509,8 +547,8 @@ public class GraficasFragment extends Fragment {
         TextView mTextView22= (TextView) rootView.findViewById(R.id.texto22);
         TextView mTextView23= (TextView) rootView.findViewById(R.id.texto23);
         
-        
-        mTextView0.setTextSize(tamaño_letra);
+
+       /* mTextView0.setTextSize(tamaño_letra);
         mTextView1.setTextSize(tamaño_letra);
         mTextView2.setTextSize(tamaño_letra);
         mTextView3.setTextSize(tamaño_letra);
@@ -533,11 +571,11 @@ public class GraficasFragment extends Fragment {
         mTextView20.setTextSize(tamaño_letra);
         mTextView21.setTextSize(tamaño_letra);
         mTextView22.setTextSize(tamaño_letra);
-        mTextView23.setTextSize(tamaño_letra);
+        mTextView23.setTextSize(tamaño_letra);*/
 
         if(this.titulo.contains("hoy")) {
             DateFormat df = new SimpleDateFormat("HH");
-            Integer hora = new Integer(df.format(Calendar.getInstance().getTime()));
+            Integer hora = Integer.valueOf(df.format(Calendar.getInstance().getTime()));
             switch (hora) {
                 case 0:
                     mTextView0.setTextColor(getResources().getColor(R.color.Black));
@@ -614,7 +652,7 @@ public class GraficasFragment extends Fragment {
             }
         }
     }
-    private void pinta_rayitas_semana_pasada(ViewGroup rootView,int escala,int anchura){
+    private void pinta_rayitas_semana_pasada(ViewGroup rootView,int escala,int altura){
         ImageView rayita_semana_pasada_00= (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_00);
         ImageView rayita_semana_pasada_01= (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_01);
         ImageView rayita_semana_pasada_02= (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_02);
@@ -665,106 +703,56 @@ public class GraficasFragment extends Fragment {
         if (precios_semana_pasada_activado){rayita_semana_pasada_22.setVisibility(ImageView.VISIBLE);}else{rayita_semana_pasada_22.setVisibility(View.INVISIBLE);}
         if (precios_semana_pasada_activado){rayita_semana_pasada_23.setVisibility(ImageView.VISIBLE);}else{rayita_semana_pasada_23.setVisibility(View.INVISIBLE);}
 
-        rayita_semana_pasada_00.setY((int) ((-1) * precios_hace_una_semana[0] * escala));
-        rayita_semana_pasada_01.setY((int) ((-1) * precios_hace_una_semana[1] * escala));
-        rayita_semana_pasada_02.setY((int) ((-1) * precios_hace_una_semana[2] * escala));
-        rayita_semana_pasada_03.setY((int) ((-1) * precios_hace_una_semana[3] * escala));
-        rayita_semana_pasada_04.setY((int) ((-1) * precios_hace_una_semana[4] * escala));
-        rayita_semana_pasada_05.setY((int) ((-1) * precios_hace_una_semana[5] * escala));
-        rayita_semana_pasada_06.setY((int) ((-1) * precios_hace_una_semana[6] * escala));
-        rayita_semana_pasada_07.setY((int) ((-1) * precios_hace_una_semana[7] * escala));
-        rayita_semana_pasada_08.setY((int) ((-1) * precios_hace_una_semana[8] * escala));
-        rayita_semana_pasada_09.setY((int) ((-1) * precios_hace_una_semana[9] * escala));
-        rayita_semana_pasada_10.setY((int) ((-1) * precios_hace_una_semana[10] * escala));
-        rayita_semana_pasada_11.setY((int) ((-1) * precios_hace_una_semana[11] * escala));
-        rayita_semana_pasada_12.setY((int) ((-1) * precios_hace_una_semana[12] * escala));
-        rayita_semana_pasada_13.setY((int) ((-1) * precios_hace_una_semana[13] * escala));
-        rayita_semana_pasada_14.setY((int) ((-1) * precios_hace_una_semana[14] * escala));
-        rayita_semana_pasada_15.setY((int) ((-1) * precios_hace_una_semana[15] * escala));
-        rayita_semana_pasada_16.setY((int) ((-1) * precios_hace_una_semana[16] * escala));
-        rayita_semana_pasada_17.setY((int) ((-1) * precios_hace_una_semana[17] * escala));
-        rayita_semana_pasada_18.setY((int) ((-1) * precios_hace_una_semana[18] * escala));
-        rayita_semana_pasada_19.setY((int) ((-1) * precios_hace_una_semana[19] * escala));
-        rayita_semana_pasada_20.setY((int) ((-1) * precios_hace_una_semana[20] * escala));
-        rayita_semana_pasada_21.setY((int) ((-1) * precios_hace_una_semana[21] * escala));
-        rayita_semana_pasada_22.setY((int) ((-1) * precios_hace_una_semana[22] * escala));
-        rayita_semana_pasada_23.setY((int) ((-1) * precios_hace_una_semana[23] * escala));
+        RelativeLayout.LayoutParams mLayoutParams_rayita0= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita1= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita2= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita3= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita4= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita5= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita6= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita7= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita8= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita9= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita10= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita11= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita12= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita13= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita14= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita15= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita16= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita17= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita18= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita19= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita20= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita21= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita22= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita23= new RelativeLayout.LayoutParams(2, altura);
 
-        RelativeLayout.LayoutParams mLayoutParams_rayita0= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita1= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita2= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita3= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita4= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita5= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita6= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita7= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita8= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita9= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita10= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita11= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita12= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita13= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita14= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita15= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita16= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita17= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita18= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita19= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita20= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita21= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita22= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita23= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        
-        mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra0);
+        mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra1);
+        mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra2);
+        mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra3);
+        mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra4);
+        mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra5);
+        mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra6);
+        mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra7);
+        mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra8);
+        mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra9);
+        mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra10);
+        mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra11);
+        mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra12);
+        mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra13);
+        mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra14);
+        mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra15);
+        mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra16);
+        mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra17);
+        mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra18);
+        mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra19);
+        mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra20);
+        mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra21);
+        mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra22);
+        mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra23);
 
-        mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
-        mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
-        mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
-        mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
-        mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
-        mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
-        mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
-        mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
-        mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
-        mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
-        mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
-        mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
-        mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
-        mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
-        mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
-        mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
-        mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
-        mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
-        mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
-        mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
-        mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
-        mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
-        mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
-        mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);
-        
         rayita_semana_pasada_00.setLayoutParams(mLayoutParams_rayita0);
         rayita_semana_pasada_01.setLayoutParams(mLayoutParams_rayita1);
         rayita_semana_pasada_02.setLayoutParams(mLayoutParams_rayita2);
@@ -789,8 +777,33 @@ public class GraficasFragment extends Fragment {
         rayita_semana_pasada_21.setLayoutParams(mLayoutParams_rayita21);
         rayita_semana_pasada_22.setLayoutParams(mLayoutParams_rayita22);
         rayita_semana_pasada_23.setLayoutParams(mLayoutParams_rayita23);
+
+        rayita_semana_pasada_00.setX( precios_hace_una_semana[0] * escala);
+        rayita_semana_pasada_01.setX( precios_hace_una_semana[1] * escala);
+        rayita_semana_pasada_02.setX( precios_hace_una_semana[2] * escala);
+        rayita_semana_pasada_03.setX( precios_hace_una_semana[3] * escala);
+        rayita_semana_pasada_04.setX( precios_hace_una_semana[4] * escala);
+        rayita_semana_pasada_05.setX( precios_hace_una_semana[5] * escala);
+        rayita_semana_pasada_06.setX( precios_hace_una_semana[6] * escala);
+        rayita_semana_pasada_07.setX( precios_hace_una_semana[7] * escala);
+        rayita_semana_pasada_08.setX( precios_hace_una_semana[8] * escala);
+        rayita_semana_pasada_09.setX( precios_hace_una_semana[9] * escala);
+        rayita_semana_pasada_10.setX( precios_hace_una_semana[10] * escala);
+        rayita_semana_pasada_11.setX( precios_hace_una_semana[11] * escala);
+        rayita_semana_pasada_12.setX( precios_hace_una_semana[12] * escala);
+        rayita_semana_pasada_13.setX( precios_hace_una_semana[13] * escala);
+        rayita_semana_pasada_14.setX( precios_hace_una_semana[14] * escala);
+        rayita_semana_pasada_15.setX( precios_hace_una_semana[15] * escala);
+        rayita_semana_pasada_16.setX( precios_hace_una_semana[16] * escala);
+        rayita_semana_pasada_17.setX( precios_hace_una_semana[17] * escala);
+        rayita_semana_pasada_18.setX( precios_hace_una_semana[18] * escala);
+        rayita_semana_pasada_19.setX( precios_hace_una_semana[19] * escala);
+        rayita_semana_pasada_20.setX( precios_hace_una_semana[20] * escala);
+        rayita_semana_pasada_21.setX( precios_hace_una_semana[21] * escala);
+        rayita_semana_pasada_22.setX( precios_hace_una_semana[22] * escala);
+        rayita_semana_pasada_23.setX( precios_hace_una_semana[23] * escala);
     }
-    private void pinta_rayitas_año_pasado(ViewGroup rootView,int escala,int anchura){
+    private void pinta_rayitas_año_pasado(ViewGroup rootView,int escala,int altura){
         ImageView rayita_anyo_pasado_00= (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_00);
         ImageView rayita_anyo_pasado_01= (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_01);
         ImageView rayita_anyo_pasado_02= (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_02);
@@ -841,81 +854,55 @@ public class GraficasFragment extends Fragment {
         if (precios_año_pasado_activado){rayita_anyo_pasado_22.setVisibility(ImageView.VISIBLE);}else{rayita_anyo_pasado_22.setVisibility(View.INVISIBLE);}
         if (precios_año_pasado_activado){rayita_anyo_pasado_23.setVisibility(ImageView.VISIBLE);}else{rayita_anyo_pasado_23.setVisibility(View.INVISIBLE);}
 
+        RelativeLayout.LayoutParams mLayoutParams_rayita0= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita1= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita2= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita3= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita4= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita5= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita6= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita7= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita8= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita9= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita10= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita11= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita12= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita13= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita14= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita15= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita16= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita17= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita18= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita19= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita20= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita21= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita22= new RelativeLayout.LayoutParams(2, altura);
+        RelativeLayout.LayoutParams mLayoutParams_rayita23= new RelativeLayout.LayoutParams(2, altura);
 
-        RelativeLayout.LayoutParams mLayoutParams_rayita0= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita1= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita2= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita3= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita4= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita5= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita6= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita7= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita8= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita9= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita10= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita11= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita12= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita13= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita14= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita15= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita16= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita17= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita18= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita19= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita20= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita21= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita22= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-        RelativeLayout.LayoutParams mLayoutParams_rayita23= new RelativeLayout.LayoutParams(getPixels(anchura), getPixels(2));
-
-        mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);
-
-        mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
-        mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
-        mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
-        mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
-        mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
-        mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
-        mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
-        mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
-        mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
-        mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
-        mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
-        mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
-        mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
-        mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
-        mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
-        mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
-        mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
-        mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
-        mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
-        mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
-        mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
-        mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
-        mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
-        mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);
+        mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra0);
+        mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra1);
+        mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra2);
+        mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra3);
+        mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra4);
+        mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra5);
+        mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra6);
+        mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra7);
+        mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra8);
+        mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra9);
+        mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra10);
+        mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra11);
+        mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra12);
+        mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra13);
+        mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra14);
+        mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra15);
+        mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra16);
+        mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra17);
+        mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra18);
+        mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra19);
+        mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra20);
+        mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra21);
+        mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra22);
+        mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_LEFT,R.id.barra23);
 
         rayita_anyo_pasado_00.setLayoutParams(mLayoutParams_rayita0);
         rayita_anyo_pasado_01.setLayoutParams(mLayoutParams_rayita1);
@@ -942,40 +929,42 @@ public class GraficasFragment extends Fragment {
         rayita_anyo_pasado_22.setLayoutParams(mLayoutParams_rayita22);
         rayita_anyo_pasado_23.setLayoutParams(mLayoutParams_rayita23);
         
-        rayita_anyo_pasado_00.setY((int)((-1)*precios_hace_un_año[0]*escala));
-        rayita_anyo_pasado_01.setY((int)((-1)*precios_hace_un_año[1]*escala));
-        rayita_anyo_pasado_02.setY((int)((-1)*precios_hace_un_año[2]*escala));
-        rayita_anyo_pasado_03.setY((int)((-1)*precios_hace_un_año[3]*escala));
-        rayita_anyo_pasado_04.setY((int)((-1)*precios_hace_un_año[4]*escala));
-        rayita_anyo_pasado_05.setY((int)((-1)*precios_hace_un_año[5]*escala));
-        rayita_anyo_pasado_06.setY((int)((-1)*precios_hace_un_año[6]*escala));
-        rayita_anyo_pasado_07.setY((int)((-1)*precios_hace_un_año[7]*escala));
-        rayita_anyo_pasado_08.setY((int)((-1)*precios_hace_un_año[8]*escala));
-        rayita_anyo_pasado_09.setY((int)((-1)*precios_hace_un_año[9]*escala));
-        rayita_anyo_pasado_10.setY((int)((-1)*precios_hace_un_año[10]*escala));
-        rayita_anyo_pasado_11.setY((int)((-1)*precios_hace_un_año[11]*escala));
-        rayita_anyo_pasado_12.setY((int)((-1)*precios_hace_un_año[12]*escala));
-        rayita_anyo_pasado_13.setY((int)((-1)*precios_hace_un_año[13]*escala));
-        rayita_anyo_pasado_14.setY((int)((-1)*precios_hace_un_año[14]*escala));
-        rayita_anyo_pasado_15.setY((int)((-1)*precios_hace_un_año[15]*escala));
-        rayita_anyo_pasado_16.setY((int)((-1)*precios_hace_un_año[16]*escala));
-        rayita_anyo_pasado_17.setY((int)((-1)*precios_hace_un_año[17]*escala));
-        rayita_anyo_pasado_18.setY((int)((-1)*precios_hace_un_año[18]*escala));
-        rayita_anyo_pasado_19.setY((int)((-1)*precios_hace_un_año[19]*escala));
-        rayita_anyo_pasado_20.setY((int)((-1)*precios_hace_un_año[20]*escala));
-        rayita_anyo_pasado_21.setY((int)((-1)*precios_hace_un_año[21]*escala));
-        rayita_anyo_pasado_22.setY((int)((-1)*precios_hace_un_año[22]*escala));
-        rayita_anyo_pasado_23.setY((int)((-1)*precios_hace_un_año[23]*escala));
+        rayita_anyo_pasado_00.setX(precios_hace_un_año[0]*escala);
+        rayita_anyo_pasado_01.setX(precios_hace_un_año[1]*escala);
+        rayita_anyo_pasado_02.setX(precios_hace_un_año[2]*escala);
+        rayita_anyo_pasado_03.setX(precios_hace_un_año[3]*escala);
+        rayita_anyo_pasado_04.setX(precios_hace_un_año[4]*escala);
+        rayita_anyo_pasado_05.setX(precios_hace_un_año[5]*escala);
+        rayita_anyo_pasado_06.setX(precios_hace_un_año[6]*escala);
+        rayita_anyo_pasado_07.setX(precios_hace_un_año[7]*escala);
+        rayita_anyo_pasado_08.setX(precios_hace_un_año[8]*escala);
+        rayita_anyo_pasado_09.setX(precios_hace_un_año[9]*escala);
+        rayita_anyo_pasado_10.setX(precios_hace_un_año[10]*escala);
+        rayita_anyo_pasado_11.setX(precios_hace_un_año[11]*escala);
+        rayita_anyo_pasado_12.setX(precios_hace_un_año[12]*escala);
+        rayita_anyo_pasado_13.setX(precios_hace_un_año[13]*escala);
+        rayita_anyo_pasado_14.setX(precios_hace_un_año[14]*escala);
+        rayita_anyo_pasado_15.setX(precios_hace_un_año[15]*escala);
+        rayita_anyo_pasado_16.setX(precios_hace_un_año[16]*escala);
+        rayita_anyo_pasado_17.setX(precios_hace_un_año[17]*escala);
+        rayita_anyo_pasado_18.setX(precios_hace_un_año[18]*escala);
+        rayita_anyo_pasado_19.setX(precios_hace_un_año[19]*escala);
+        rayita_anyo_pasado_20.setX(precios_hace_un_año[20]*escala);
+        rayita_anyo_pasado_21.setX(precios_hace_un_año[21]*escala);
+        rayita_anyo_pasado_22.setX(precios_hace_un_año[22]*escala);
+        rayita_anyo_pasado_23.setX(precios_hace_un_año[23]*escala);
     }
-    private void pinta_grafica(ViewGroup rootView){
+    private void pinta_flechitas(ViewGroup rootView){
         ImageView flechita_derecha = (ImageView) rootView.findViewById(R.id.flechita_derecha);
         if(this.titulo.contains("hoy")) {
             flechita_derecha.setVisibility(ImageView.VISIBLE);
         }else{
             flechita_derecha.setVisibility(ImageView.INVISIBLE);
         }
+        
+        
     }
-    private void pinta_texto_precios(ViewGroup rootView,int tamaño_letra){
+    private void pinta_texto_precios(ViewGroup rootView){
         TextView texto_precio0= (TextView) rootView.findViewById(R.id.texto_precio0);
         TextView texto_precio1= (TextView) rootView.findViewById(R.id.texto_precio1);
         TextView texto_precio2= (TextView) rootView.findViewById(R.id.texto_precio2);
@@ -1002,7 +991,7 @@ public class GraficasFragment extends Fragment {
         TextView texto_precio23= (TextView) rootView.findViewById(R.id.texto_precio23);
         
         DecimalFormat df = new DecimalFormat(".0000");
-        texto_precio0.setTextSize(tamaño_letra);
+        /*texto_precio0.setTextSize(tamaño_letra);
         texto_precio1.setTextSize(tamaño_letra);
         texto_precio2.setTextSize(tamaño_letra);
         texto_precio3.setTextSize(tamaño_letra);
@@ -1026,6 +1015,31 @@ public class GraficasFragment extends Fragment {
         texto_precio21.setTextSize(tamaño_letra);
         texto_precio22.setTextSize(tamaño_letra);
         texto_precio23.setTextSize(tamaño_letra);
+        
+        texto_precio0.setPadding(padding_left, 0, 0, 0);
+        texto_precio1.setPadding(padding_left, 0, 0, 0);
+        texto_precio2.setPadding(padding_left, 0, 0, 0);
+        texto_precio3.setPadding(padding_left, 0, 0, 0);
+        texto_precio4.setPadding(padding_left, 0, 0, 0);
+        texto_precio5.setPadding(padding_left, 0, 0, 0);
+        texto_precio6.setPadding(padding_left, 0, 0, 0);
+        texto_precio7.setPadding(padding_left,0,0,0);
+        texto_precio8.setPadding(padding_left,0,0,0);
+        texto_precio9.setPadding(padding_left,0,0,0);
+        texto_precio10.setPadding(padding_left,0,0,0);
+        texto_precio11.setPadding(padding_left,0,0,0);
+        texto_precio12.setPadding(padding_left,0, 0, 0);
+        texto_precio13.setPadding(padding_left,0,0,0);
+        texto_precio14.setPadding(padding_left,0,0,0);
+        texto_precio15.setPadding(padding_left,0,0,0);
+        texto_precio16.setPadding(padding_left,0,0,0);
+        texto_precio17.setPadding(padding_left,0,0,0);
+        texto_precio18.setPadding(padding_left,0, 0, 0);
+        texto_precio19.setPadding(padding_left,0,0,0);
+        texto_precio20.setPadding(padding_left,0,0,0);
+        texto_precio21.setPadding(padding_left,0,0,0);
+        texto_precio22.setPadding(padding_left,0,0,0);
+        texto_precio23.setPadding(padding_left,0,0,0);*/
 
         if (precios[0].compareTo(-1.0f) == 0){texto_precio0.setText("0.0");}else{texto_precio0.setText(df.format(precios[0]));}
         if (precios[1].compareTo(-1.0f) == 0){texto_precio1.setText("0.0");}else{texto_precio1.setText(df.format(precios[1]));}
@@ -1051,15 +1065,21 @@ public class GraficasFragment extends Fragment {
         if (precios[21].compareTo(-1.0f) == 0){texto_precio21.setText("0.0");}else{texto_precio21.setText(df.format(precios[21]));}
         if (precios[22].compareTo(-1.0f) == 0){texto_precio22.setText("0.0");}else{texto_precio22.setText(df.format(precios[22]));}
         if (precios[23].compareTo(-1.0f) == 0){texto_precio23.setText("0.0");}else{texto_precio23.setText(df.format(precios[23]));}
-
     }
 
-    private int getPixels(int dipValue){
-        Resources r = getResources();
-        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, r.getDisplayMetrics());
+    private int Px2DP(int px){
+        Float pd=0.0f;
+        if (Resources.getSystem().getDisplayMetrics().density == 0.75f) {pd=px*0.75f;}
+        else if (Resources.getSystem().getDisplayMetrics().density == 1.0f){pd=Float.valueOf(px);}
+        else if (Resources.getSystem().getDisplayMetrics().density == 1.5f){pd=px*1.5f;}
+        else if (Resources.getSystem().getDisplayMetrics().density == 2.0f){pd=px*2.0f;}
+        else if (Resources.getSystem().getDisplayMetrics().density == 3.0f){pd=px*3.0f;}
+
+        return pd.intValue();
     }
-    private boolean isInTwoPaneMode() {
-        return getActivity().findViewById(R.id.main_layout) == null;
+    public static int Px2SP( float px) {
+        float scaledDensity = Resources.getSystem().getDisplayMetrics().scaledDensity;
+        return Math.round(px/scaledDensity);
     }
     private int getColor(Float[] precios_ordenados,float precio){
         int i=0;

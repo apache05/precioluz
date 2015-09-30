@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">PrecioLuz 1.2</string>
+
+    <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
+    <string name="precios_hace_un_año">Precio mismo día hace un año</string>
+   
+    <string name="h00_01">00\n01</string>
+    <string name="h01_02">01\n02</string>
+    <string name="h02_03">02\n03</string>
+    <string name="h03_04">03\n04</string>
+    <string name="h04_05">04\n05</string>
+    <string name="h05_06">05\n06</string>
+    <string name="h06_07">06\n07</string>
+    <string name="h07_08">07\n08</string>
+    <string name="h08_09">08\n09</string>
+    <string name="h09_10">09\n10</string>
+    <string name="h10_11">10\n11</string>
+    <string name="h11_12">11\n12</string>
+    <string name="h12_13">12\n13</string>
+    <string name="h13_14">13\n14</string>
+    <string name="h14_15">14\n15</string>
+    <string name="h15_16">15\n16</string>
+    <string name="h16_17">16\n17</string>
+    <string name="h17_18">17\n18</string>
+    <string name="h18_19">18\n19</string>
+    <string name="h19_20">19\n20</string>
+    <string name="h20_21">20\n21</string>
+    <string name="h21_22">21\n22</string>
+    <string name="h22_23">22\n23</string>
+    <string name="h23_00">23\n00</string>
+
+    <string name="tarifa_20A">Tarifa 2.0 A</string>
+    <string name="tarifa_20DHA">Tarifa 2.0 DHA</string>
+    <string name="tarifa_20DHS">Tarifa 2.0 DHS</string>
+    <string name="actualizar_app">Actualizar versión</string>
+    <string name="title_activity_opciones">OpcionesActivity</string>
+
+    <string name="texto_tutorial">PrecioLuz es una app que te permite conocer los distintos precios de la electricidad tanto
+    del día de hoy como los de mañana.\n\nLa información viene presentada mediante una gráfica de barras, una para cada hora del día. Hay una pantalla para los
+    precios de hoy y otra para los precios de mañana. Los
+    precios del día siguiente se podrán ver a partir de las 20:20h. Desliza el dedo para cambiar de una pantalla a otra. \n\nLa altura y color de cada barra indican
+    de forma relativa el precio. Debajo de cada barra aparece el precio exacto de la electricidad para esa hora expresado en euros. \n\nEn el menú de opciones podrás elegir la tarifa a mostrar según el actual sistema tarifario:\n\n
+    \t\t\t&#8226; 2.0 A Tarifa general.\n
+    \t\t\t&#8226; 2.0 DHA Tarifa con discriminación horaria.\n
+    \t\t\t&#8226; 2.0 DHS Tarifa coche electrico.\n\nTambién encontrarás opciones para comparar los precios con los de el mismo día de la semana pasada o con respecto al mismo día del año anterior\n\nPara
+        informarte  sobre estos temas y todo lo relacionado con las tarifas de electricidad consulta en www.esios.es</string>
+
+    <string name="valorar">Valorar</string>
+    <string name="contentdescription_barra">barra</string>
+</resources>
