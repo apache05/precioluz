@@ -1,4 +1,4 @@
-package com.ruben.precioluz;
+package com.ruben.precioluz2;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,10 +19,12 @@ import jxl.*;
 import jxl.read.biff.BiffException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -108,10 +110,7 @@ public class MainActivity extends AppCompatActivity {
             prefs = PreferenceManager.getDefaultSharedPreferences(this);
             crea_fragments();
 
-            if (isNetworkAvailable())  {
-                Comprobacion_inicial_actualizaciones_AsyncTask comprueba_actualizaciones = new Comprobacion_inicial_actualizaciones_AsyncTask();
-                comprueba_actualizaciones.execute(version_de_esta_instancia);
-            }
+
             getPrecios_AsyncTask mgetPrecios = new getPrecios_AsyncTask();
             mgetPrecios.execute();
 
@@ -207,15 +206,19 @@ public class MainActivity extends AppCompatActivity {
         pager.setCurrentItem(get_Fragment_actual_SharedPreferences());
     }
     private void carga_datos_inicial(){
-        int tarifa = prefs.getInt(TAG_TARIFA_ACTUAL, 0);
-        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-            fragment_mañana_Landscape.set_todos_los_precios(getPrecios_mañana_segun_tarifa(tarifa), getPrecios_hace_un_año_de_mañana_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_mañana_segun_tarifa(tarifa));
-            fragment_hoy_Landscape.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa));
-        }else{
-            fragment_mañana_Portrait.set_todos_los_precios(getPrecios_mañana_segun_tarifa(tarifa), getPrecios_hace_un_año_de_mañana_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_mañana_segun_tarifa(tarifa));
-            fragment_hoy_Portrait.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa));
+        try {
+            int tarifa = prefs.getInt(TAG_TARIFA_ACTUAL, 0);
+            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                fragment_mañana_Landscape.set_todos_los_precios(getPrecios_mañana_segun_tarifa(tarifa), getPrecios_hace_un_año_de_mañana_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_mañana_segun_tarifa(tarifa));
+                fragment_hoy_Landscape.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa));
+            } else {
+                fragment_mañana_Portrait.set_todos_los_precios(getPrecios_mañana_segun_tarifa(tarifa), getPrecios_hace_un_año_de_mañana_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_mañana_segun_tarifa(tarifa));
+                fragment_hoy_Portrait.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa));
+            }
+            pager.getAdapter().notifyDataSetChanged();
+        }catch (Exception e){
+            LOGGER.severe("Error en carga_datos_inicial de MainActivity "+e.toString());
         }
-        pager.getAdapter().notifyDataSetChanged();
     }
 
     private void set_Tarifa_SharedPreferences(int tarifa){
@@ -425,99 +428,102 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int fragment_actual= this.pager.getCurrentItem();
         try {
-            if (isNetworkAvailable()) {
-                set_Fragment_actual_SharedPreferences(fragment_actual);
-                SimpleDateFormat  mSimpleDateFormat= new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));
+            set_Fragment_actual_SharedPreferences(fragment_actual);
+            SimpleDateFormat  mSimpleDateFormat= new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));
 
-                switch (item.getItemId()) {
-                    case R.id.tarifa_20A:
-                        set_Tarifa_SharedPreferences(TARIFA_20A);
-                        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                            fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20A, precios_hace_un_año_de_hoy_tarifa_20A, precios_hace_una_semana_de_hoy_tarifa_20A);
-                            fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20A, precios_hace_un_año_de_mañana_tarifa_20A, precios_hace_una_semana_de_mañana_tarifa_20A);
-                        }else{
-                            fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20A, precios_hace_un_año_de_hoy_tarifa_20A, precios_hace_una_semana_de_hoy_tarifa_20A);
-                            fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20A, precios_hace_un_año_de_mañana_tarifa_20A, precios_hace_una_semana_de_mañana_tarifa_20A);
-                        }
+            switch (item.getItemId()) {
+                case R.id.tarifa_20A:
+                    set_Tarifa_SharedPreferences(TARIFA_20A);
+                    if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                        fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20A, precios_hace_un_año_de_hoy_tarifa_20A, precios_hace_una_semana_de_hoy_tarifa_20A);
+                        fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20A, precios_hace_un_año_de_mañana_tarifa_20A, precios_hace_una_semana_de_mañana_tarifa_20A);
+                    }else{
+                        fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20A, precios_hace_un_año_de_hoy_tarifa_20A, precios_hace_una_semana_de_hoy_tarifa_20A);
+                        fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20A, precios_hace_un_año_de_mañana_tarifa_20A, precios_hace_una_semana_de_mañana_tarifa_20A);
+                    }
+                    pager.getAdapter().notifyDataSetChanged();
+                    break;
+                case R.id.tarifa_20DHA:
+                    set_Tarifa_SharedPreferences( TARIFA_20DHA);
+                    if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                        fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20DHA, precios_hace_un_año_de_hoy_tarifa_20DHA, precios_hace_una_semana_de_hoy_tarifa_20DHA);
+                        fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20DHA, precios_hace_un_año_de_mañana_tarifa_20DHA, precios_hace_una_semana_de_mañana_tarifa_20DHA);
+                    }else{
+                        fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20DHA, precios_hace_un_año_de_hoy_tarifa_20DHA, precios_hace_una_semana_de_hoy_tarifa_20DHA);
+                        fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20DHA, precios_hace_un_año_de_mañana_tarifa_20DHA, precios_hace_una_semana_de_mañana_tarifa_20DHA);
+                    }
+                    pager.getAdapter().notifyDataSetChanged();
+                    break;
+                case R.id.tarifa_20DHS:
+                    set_Tarifa_SharedPreferences( TARIFA_20DHS);
+                    if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                        fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20DHS, precios_hace_un_año_de_hoy_tarifa_20DHS, precios_hace_una_semana_de_hoy_tarifa_20DHS);
+                        fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20DHS, precios_hace_un_año_de_mañana_tarifa_20DHS, precios_hace_una_semana_de_mañana_tarifa_20DHS);
+                    }else{
+                        fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20DHS, precios_hace_un_año_de_hoy_tarifa_20DHS, precios_hace_una_semana_de_hoy_tarifa_20DHS);
+                        fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
+                        fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20DHS, precios_hace_un_año_de_mañana_tarifa_20DHS, precios_hace_una_semana_de_mañana_tarifa_20DHS);
+                    }
                         pager.getAdapter().notifyDataSetChanged();
-                        break;
-                    case R.id.tarifa_20DHA:       
-                        set_Tarifa_SharedPreferences( TARIFA_20DHA);
+                    break;
+                case R.id.hace_una_semana:
+                    if (fragment_actual == 1) {
+                        set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UNA_SEMANA_DE_HOY);
                         if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                            fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20DHA, precios_hace_un_año_de_hoy_tarifa_20DHA, precios_hace_una_semana_de_hoy_tarifa_20DHA);
-                            fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20DHA, precios_hace_un_año_de_mañana_tarifa_20DHA, precios_hace_una_semana_de_mañana_tarifa_20DHA);
+                            fragment_hoy_Landscape.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_HOY, false));
                         }else{
-                            fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20DHA, precios_hace_un_año_de_hoy_tarifa_20DHA, precios_hace_una_semana_de_hoy_tarifa_20DHA);
-                            fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20DHA, precios_hace_un_año_de_mañana_tarifa_20DHA, precios_hace_una_semana_de_mañana_tarifa_20DHA);   
-                        }
-                        pager.getAdapter().notifyDataSetChanged();
-                        break;
-                    case R.id.tarifa_20DHS:
-                        set_Tarifa_SharedPreferences( TARIFA_20DHS);
-                        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                            fragment_hoy_Landscape.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Landscape.set_todos_los_precios(precios_hoy_tarifa_20DHS, precios_hace_un_año_de_hoy_tarifa_20DHS, precios_hace_una_semana_de_hoy_tarifa_20DHS);
-                            fragment_mañana_Landscape.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Landscape.set_todos_los_precios(precios_mañana_tarifa_20DHS, precios_hace_un_año_de_mañana_tarifa_20DHS, precios_hace_una_semana_de_mañana_tarifa_20DHS);
-                        }else{
-                            fragment_hoy_Portrait.setTitulo("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_hoy_Portrait.set_todos_los_precios(precios_hoy_tarifa_20DHS, precios_hace_un_año_de_hoy_tarifa_20DHS, precios_hace_una_semana_de_hoy_tarifa_20DHS);
-                            fragment_mañana_Portrait.setTitulo("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences());
-                            fragment_mañana_Portrait.set_todos_los_precios(precios_mañana_tarifa_20DHS, precios_hace_un_año_de_mañana_tarifa_20DHS, precios_hace_una_semana_de_mañana_tarifa_20DHS);
+                            fragment_hoy_Portrait.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_HOY, false));
                         }
                             pager.getAdapter().notifyDataSetChanged();
-                        break;
-                    case R.id.hace_una_semana:
-                        if (fragment_actual == 1) {
-                            set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UNA_SEMANA_DE_HOY);
-                            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                                fragment_hoy_Landscape.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_HOY, false));
-                            }else{
-                                fragment_hoy_Portrait.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_HOY, false));
-                            }
-                                pager.getAdapter().notifyDataSetChanged();
-                        } else if (fragment_actual == 2) {
-                            set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UNA_SEMANA_DE_MAÑANA);
-                            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                                fragment_mañana_Landscape.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_MAÑANA, false));
-                            }else{
-                                fragment_mañana_Portrait.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_MAÑANA, false));
-                            }
-                                pager.getAdapter().notifyDataSetChanged();
+                    } else if (fragment_actual == 2) {
+                        set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UNA_SEMANA_DE_MAÑANA);
+                        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                            fragment_mañana_Landscape.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_MAÑANA, false));
+                        }else{
+                            fragment_mañana_Portrait.setPrecios_semana_pasada_activado(prefs.getBoolean(TAG_HACE_UNA_SEMANA_DE_MAÑANA, false));
                         }
-                        break;
-                    case R.id.hace_un_año:
-                        if (fragment_actual == 1) {
-                            set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UN_AÑO_DE_HOY);
-                            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                                fragment_hoy_Landscape.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_HOY, false));
-                            }else{
-                                fragment_hoy_Portrait.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_HOY, false));
-                            }
-                            pager.getAdapter().notifyDataSetChanged();                        }
-                        else if (fragment_actual == 2) {
-                            set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UN_AÑO_DE_MAÑANA);
-                            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-                                fragment_mañana_Landscape.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_MAÑANA, false));
-                            }else{
-                                fragment_mañana_Portrait.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_MAÑANA, false));
-                            }
                             pager.getAdapter().notifyDataSetChanged();
+                    }
+                    break;
+                case R.id.hace_un_año:
+                    if (fragment_actual == 1) {
+                        set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UN_AÑO_DE_HOY);
+                        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                            fragment_hoy_Landscape.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_HOY, false));
+                        }else{
+                            fragment_hoy_Portrait.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_HOY, false));
                         }
-                        break;
-                    case R.id.actualizar_app:
-                        Comprobacion_explicita_actualizaciones_AsyncTask comprobar_actualizaciones = new Comprobacion_explicita_actualizaciones_AsyncTask();
-                        comprobar_actualizaciones.execute();
-                        break;
-                }
+                        pager.getAdapter().notifyDataSetChanged();                        }
+                    else if (fragment_actual == 2) {
+                        set_Si_Precios_Pasados_SharedPreferences(TAG_HACE_UN_AÑO_DE_MAÑANA);
+                        if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                            fragment_mañana_Landscape.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_MAÑANA, false));
+                        }else{
+                            fragment_mañana_Portrait.setPrecios_año_pasado_activado(prefs.getBoolean(TAG_HACE_UN_AÑO_DE_MAÑANA, false));
+                        }
+                        pager.getAdapter().notifyDataSetChanged();
+                    }
+                    break;
+                case R.id.version_app:
+                    String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+
+                    Toast.makeText(getApplicationContext(), "Versión "+versionName, Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.valorar:
+                    Intent baseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.ruben.precioluz&rdid=com.ruben.precioluz2"));
+                    startActivity(baseIntent);
+                    break;
             }
         }catch (Exception e){
             LOGGER.severe("Error en getTarifa  " + e.toString());
@@ -534,6 +540,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         //Guardamos el fragment actual para que no salga siempre el tutorial inicial
+
         set_Fragment_actual_SharedPreferences(this.pager.getCurrentItem());
     }
 
@@ -549,7 +556,7 @@ public class MainActivity extends AppCompatActivity {
         replace_fragments();
 
     }
-
+/*
     class Comprobacion_inicial_actualizaciones_AsyncTask extends AsyncTask<Double, Void, Boolean> {
         private BeanCompruebaVersionApi BeanCompruebaVersionService=null;
 
@@ -606,7 +613,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+*/
     class getPrecios_AsyncTask extends AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void...params) {

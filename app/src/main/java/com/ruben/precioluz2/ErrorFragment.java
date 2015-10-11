@@ -1,4 +1,4 @@
-package com.ruben.precioluz;
+package com.ruben.precioluz2;
 
 import android.net.Uri;
 import android.os.Bundle;

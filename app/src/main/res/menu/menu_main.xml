@@ -28,8 +28,8 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item
-        android:id="@+id/actualizar_app"
-        android:title="@string/actualizar_app"
+        android:id="@+id/version_app"
+        android:title="@string/version_app"
         android:orderInCategory="100"
         app:showAsAction="never" />
    <item

@@ -1,4 +1,4 @@
-package com.ruben.precioluz;
+package com.ruben.precioluz2;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

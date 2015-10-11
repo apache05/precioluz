@@ -5,11 +5,11 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.ruben.precioluz"
+        applicationId "com.ruben.precioluz2"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.2"
+        versionCode 11
+        versionName "1.10"
     }
     buildTypes {
         release {

@@ -1,4 +1,4 @@
-package com.ruben.precioluz;
+package com.ruben.precioluz2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
