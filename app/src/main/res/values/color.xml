@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primary">#01a764</color> <!-- Verde -->
+    <color name="primary_dark">#0288D1</color>
+    <color name="primary_light">#B3E5FC</color>
+    <color name="accent">#dfe701</color> <!-- Amarillo -->
+    <color name="gris">#777777</color>
     <color name="white">#FFFFFF</color>
     <color name="fuchsia">#FF00FF</color>
     <color name="red">#FF0000</color>

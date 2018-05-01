@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graficas_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- *************************  ESTO ES EL TITULO DE ARRIBA *************************-->
+    <TextView
+        android:id="@+id/precios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:paddingTop="20dp"
+    android:textColor="@color/Black"
+    android:typeface="monospace"
+    android:textIsSelectable="false"
+    android:gravity="center_horizontal"
+    android:textSize="20sp"/>
+    <ImageView
+        android:contentDescription="@string/contentdescription_flecha"
+        android:src="@drawable/flecha_izquierda"
+        android:id="@+id/flechita_izquierda"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        style="@style/flechita_izquierda"
+        />
+    <ImageView
+        android:contentDescription="@string/contentdescription_flecha"
+        android:src="@drawable/flecha_derecha"
+        android:id="@+id/flechita_derecha"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        style="@style/flechita_derecha"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextView_todavia_no_hay_precios"
+        android:gravity="center"
+        android:visibility="invisible"/>
+    <!-- ************************* ESTO ES LA GRAFICA  *************************-->
+    <ScrollView android:id="@+id/ScrlView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/precios">
+
+
+        <LinearLayout
+            android:id="@+id/grafica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/grafico0"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- *************************   LA BARRA DE LA GRAFICA ************************* -->
+                <ImageView
+                    android:id="@+id/barra0"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+                <!-- *************************  EL PRECIO DEL AÑO PASADO  ************************* -->
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_00"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+                <!-- *************************   EL PRECIO DE LA SEMANA PASADA ************************* -->
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_00"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+                <!-- *************************   leyenda  ************************* -->
+                <TextView
+                    android:id="@+id/texto_precio0"
+                    style="@style/leyenda" />
+                <!-- *************************  LA HORA  ************************* -->
+                <TextView
+                    android:id="@+id/texto0"
+                    style="@style/horas"
+                    android:text="@string/h00_01" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico1"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra1"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_01"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_01"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio1"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto1"
+                    style="@style/horas"
+                    android:text="@string/h01_02" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico2"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra2"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_02"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_02"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio2"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto2"
+                    style="@style/horas"
+                    android:text="@string/h02_03" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico3"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra3"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_03"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_03"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio3"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto3"
+                    style="@style/horas"
+                    android:text="@string/h03_04" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico4"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra4"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_04"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_04"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio4"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto4"
+                    style="@style/horas"
+                    android:text="@string/h04_05" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico5"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra5"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_05"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_05"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio5"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto5"
+                    style="@style/horas"
+                    android:text="@string/h05_06" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico6"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra6"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_06"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_06"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio6"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto6"
+                    style="@style/horas"
+                    android:text="@string/h06_07" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico7"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra7"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_07"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_07"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio7"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto7"
+                    style="@style/horas"
+                    android:text="@string/h07_08" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico8"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra8"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_08"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_08"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio8"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto8"
+                    style="@style/horas"
+                    android:text="@string/h08_09" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico9"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra9"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_09"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_09"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio9"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto9"
+                    style="@style/horas"
+                    android:text="@string/h09_10" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico10"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra10"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_10"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_10"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio10"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto10"
+                    style="@style/horas"
+                    android:text="@string/h10_11" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico11"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra11"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_11"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_11"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio11"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto11"
+                    style="@style/horas"
+                    android:text="@string/h11_12" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico12"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra12"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_12"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_12"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio12"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto12"
+                    style="@style/horas"
+                    android:text="@string/h12_13" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico13"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra13"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_13"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_13"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio13"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto13"
+                    style="@style/horas"
+                    android:text="@string/h13_14" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico14"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra14"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_14"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_14"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio14"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto14"
+                    style="@style/horas"
+                    android:text="@string/h14_15" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico15"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra15"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_15"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_15"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio15"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto15"
+                    style="@style/horas"
+                    android:text="@string/h15_16" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico16"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra16"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_16"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_16"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio16"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto16"
+                    style="@style/horas"
+                    android:text="@string/h16_17" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico17"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra17"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_17"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_17"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio17"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto17"
+                    style="@style/horas"
+                    android:text="@string/h17_18" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico18"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra18"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_18"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_18"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio18"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto18"
+                    style="@style/horas"
+                    android:text="@string/h18_19" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico19"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra19"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_19"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_19"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio19"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto19"
+                    style="@style/horas"
+                    android:text="@string/h19_20" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico20"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra20"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_20"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_20"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio20"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto20"
+                    style="@style/horas"
+                    android:text="@string/h20_21" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico21"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra21"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_21"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_21"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio21"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto21"
+                    style="@style/horas"
+                    android:text="@string/h21_22" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico22"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra22"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_22"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_22"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio22"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto22"
+                    style="@style/horas"
+                    android:text="@string/h22_23" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/grafico23"
+                style="@style/graficas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/barra23"
+                    style="@style/precio_hoy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/rayita_anyo_pasado_23"
+                    style="@style/precio_hace_un_año"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <ImageView
+                    android:id="@+id/rayita_semana_pasada_23"
+                    style="@style/precio_hace_una_semana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentdescription_barra" />
+
+                <TextView
+                    android:id="@+id/texto_precio23"
+                    style="@style/leyenda" />
+
+                <TextView
+                    android:id="@+id/texto23"
+                    style="@style/horas"
+                    android:text="@string/h23_00" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
