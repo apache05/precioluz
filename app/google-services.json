@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "104054720459",
+    "firebase_url": "https://precioluz-203117-c75df.firebaseio.com",
+    "project_id": "precioluz-203117-c75df",
+    "storage_bucket": "precioluz-203117-c75df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104054720459:android:f9de31ad65d3fb09",
+        "android_client_info": {
+          "package_name": "com.rubisoft.precioluz2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104054720459-0jgn8fopi05rab6oocdfsd27lbss3u97.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TMKk_ycmL_eNFN8zMkpebL805PJJUwI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

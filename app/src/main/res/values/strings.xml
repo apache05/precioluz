@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PrecioLuz</string>
+    <string name="version">1.0</string>
 
     <string name="action_settings">Opciones</string>
     <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
@@ -28,12 +29,11 @@
     <string name="h21_22">21&#8211;22</string>
     <string name="h22_23">22&#8211;23</string>
     <string name="h23_00">23&#8211;00</string>
-    
 
-  <!--  <string name="tarifa_20A">Tarifa 2.0 A</string>
+
+    <string name="tarifa_20A">Tarifa 2.0 A</string>
     <string name="tarifa_20DHA">Tarifa 2.0 DHA</string>
     <string name="tarifa_20DHS">Tarifa 2.0 DHS</string>
-    <string name="version_app">Versión</string>-->
     <string name="configuracion">Configuración</string>
     <string name="avisos">Avisos</string>
 
@@ -53,5 +53,6 @@
     <string name="contentdescription_flecha">Flecha</string>
     <string name="contentdescription_barra">Barra</string>
 
+    <string name="Guardar">Guardar</string>
 
 </resources>

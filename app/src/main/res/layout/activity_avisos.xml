@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rubisoft.precioluz2.Activities.Avisos">
+
+    <TextView
+        android:id="@+id/TextView_Aviso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:text="Crear Aviso"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/switch_Activa_Aviso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Crear aviso para mañana"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_Aviso" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_Activa_Aviso">
+
+        <RadioButton
+            android:id="@+id/radioButton_mejor_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mejor precio"
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="211dp"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/radioButton_peor_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Peor precio"
+            tools:layout_editor_absoluteX="62dp"
+            tools:layout_editor_absoluteY="211dp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_Antelacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Antelación"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_antelacion"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <Spinner
+        android:id="@+id/spinner_antelacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_Antelacion"
+        app:layout_constraintTop_toTopOf="@+id/textView_Antelacion" />
+
+    <!--<Button
+        android:id="@+id/button_Aceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:text="Aceptar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_antelacion" />-->
+</android.support.constraint.ConstraintLayout>

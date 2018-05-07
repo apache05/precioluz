@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/graficas_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,28 +9,34 @@
         android:id="@+id/precios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    android:paddingTop="20dp"
-    android:textColor="@color/Black"
-    android:typeface="monospace"
-    android:textIsSelectable="false"
-    android:gravity="center_horizontal"
-    android:textSize="20sp"/>
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:textColor="@color/Black"
+        android:typeface="monospace"
+        android:textIsSelectable="false"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"/>
+
     <ImageView
-        android:contentDescription="@string/contentdescription_flecha"
-        android:src="@drawable/flecha_izquierda"
         android:id="@+id/flechita_izquierda"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
         style="@style/flechita_izquierda"
-        />
-    <ImageView
-        android:contentDescription="@string/contentdescription_flecha"
-        android:src="@drawable/flecha_derecha"
-        android:id="@+id/flechita_derecha"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/contentdescription_flecha"
+        android:src="@drawable/flecha_izquierda" />
+
+    <ImageView
+        android:id="@+id/flechita_derecha"
+        style="@style/flechita_derecha"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/contentdescription_flecha"
         android:gravity="center_vertical"
-        style="@style/flechita_derecha"/>
+        android:src="@drawable/flecha_derecha" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +50,6 @@
         android:layout_marginStart="10dp"
         android:layout_below="@+id/precios">
 
-
         <LinearLayout
             android:id="@+id/grafica"
             android:layout_width="match_parent"
@@ -55,7 +59,7 @@
             <RelativeLayout
                 android:id="@+id/grafico0"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <!-- *************************   LA BARRA DE LA GRAFICA ************************* -->
@@ -82,18 +86,18 @@
                 <!-- *************************   leyenda  ************************* -->
                 <TextView
                     android:id="@+id/texto_precio0"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
                 <!-- *************************  LA HORA  ************************* -->
                 <TextView
                     android:id="@+id/texto0"
                     style="@style/horas"
                     android:text="@string/h00_01" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico1"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -119,18 +123,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio1"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto1"
                     style="@style/horas"
                     android:text="@string/h01_02" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico2"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -156,18 +160,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio2"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto2"
                     style="@style/horas"
                     android:text="@string/h02_03" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico3"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -193,18 +197,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio3"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto3"
                     style="@style/horas"
                     android:text="@string/h03_04" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico4"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -230,18 +234,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio4"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto4"
                     style="@style/horas"
                     android:text="@string/h04_05" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico5"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -269,18 +273,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio5"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto5"
                     style="@style/horas"
                     android:text="@string/h05_06" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico6"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -308,18 +312,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio6"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto6"
                     style="@style/horas"
                     android:text="@string/h06_07" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico7"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -347,18 +351,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio7"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto7"
                     style="@style/horas"
                     android:text="@string/h07_08" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico8"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -386,18 +390,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio8"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto8"
                     style="@style/horas"
                     android:text="@string/h08_09" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico9"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -425,18 +429,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio9"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto9"
                     style="@style/horas"
                     android:text="@string/h09_10" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico10"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -464,18 +468,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio10"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto10"
                     style="@style/horas"
                     android:text="@string/h10_11" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico11"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -503,18 +507,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio11"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto11"
                     style="@style/horas"
                     android:text="@string/h11_12" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico12"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -542,18 +546,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio12"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto12"
                     style="@style/horas"
                     android:text="@string/h12_13" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico13"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -581,18 +585,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio13"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto13"
                     style="@style/horas"
                     android:text="@string/h13_14" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico14"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -620,18 +624,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio14"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto14"
                     style="@style/horas"
                     android:text="@string/h14_15" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico15"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -659,18 +663,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio15"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto15"
                     style="@style/horas"
                     android:text="@string/h15_16" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico16"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -698,18 +702,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio16"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto16"
                     style="@style/horas"
                     android:text="@string/h16_17" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico17"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -737,18 +741,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio17"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto17"
                     style="@style/horas"
                     android:text="@string/h17_18" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico18"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -776,18 +780,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio18"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto18"
                     style="@style/horas"
                     android:text="@string/h18_19" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico19"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -815,18 +819,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio19"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto19"
                     style="@style/horas"
                     android:text="@string/h19_20" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico20"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -854,18 +858,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio20"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto20"
                     style="@style/horas"
                     android:text="@string/h20_21" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico21"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -893,18 +897,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio21"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto21"
                     style="@style/horas"
                     android:text="@string/h21_22" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico22"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -932,18 +936,18 @@
 
                 <TextView
                     android:id="@+id/texto_precio22"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0"/>
 
                 <TextView
                     android:id="@+id/texto22"
                     style="@style/horas"
                     android:text="@string/h22_23" />
             </RelativeLayout>
-
             <RelativeLayout
                 android:id="@+id/grafico23"
                 style="@style/graficas"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -951,9 +955,7 @@
                     style="@style/precio_hoy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/contentdescription_barra"
-
-                    />
+                    android:contentDescription="@string/contentdescription_barra" />
 
                 <ImageView
                     android:id="@+id/rayita_anyo_pasado_23"
@@ -971,7 +973,8 @@
 
                 <TextView
                     android:id="@+id/texto_precio23"
-                    style="@style/leyenda" />
+                    style="@style/leyenda"
+                    android:text="1.0" />
 
                 <TextView
                     android:id="@+id/texto23"
