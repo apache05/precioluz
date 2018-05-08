@@ -22,7 +22,7 @@
         style="@style/flechita_izquierda"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
         android:contentDescription="@string/contentdescription_flecha"
         android:src="@drawable/flecha_izquierda" />
@@ -40,6 +40,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/precio_no_disponible"
         android:id="@+id/TextView_todavia_no_hay_precios"
         android:gravity="center"
         android:visibility="invisible"/>
@@ -87,7 +88,7 @@
                 <TextView
                     android:id="@+id/texto_precio0"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
                 <!-- *************************  LA HORA  ************************* -->
                 <TextView
                     android:id="@+id/texto0"
@@ -124,7 +125,7 @@
                 <TextView
                     android:id="@+id/texto_precio1"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto1"
@@ -161,7 +162,7 @@
                 <TextView
                     android:id="@+id/texto_precio2"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto2"
@@ -198,7 +199,7 @@
                 <TextView
                     android:id="@+id/texto_precio3"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto3"
@@ -235,7 +236,7 @@
                 <TextView
                     android:id="@+id/texto_precio4"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto4"
@@ -274,7 +275,7 @@
                 <TextView
                     android:id="@+id/texto_precio5"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto5"
@@ -313,7 +314,7 @@
                 <TextView
                     android:id="@+id/texto_precio6"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto6"
@@ -352,7 +353,7 @@
                 <TextView
                     android:id="@+id/texto_precio7"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto7"
@@ -391,7 +392,7 @@
                 <TextView
                     android:id="@+id/texto_precio8"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto8"
@@ -430,7 +431,7 @@
                 <TextView
                     android:id="@+id/texto_precio9"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto9"
@@ -469,7 +470,7 @@
                 <TextView
                     android:id="@+id/texto_precio10"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto10"
@@ -508,7 +509,7 @@
                 <TextView
                     android:id="@+id/texto_precio11"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto11"
@@ -547,7 +548,7 @@
                 <TextView
                     android:id="@+id/texto_precio12"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto12"
@@ -586,7 +587,7 @@
                 <TextView
                     android:id="@+id/texto_precio13"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto13"
@@ -625,7 +626,7 @@
                 <TextView
                     android:id="@+id/texto_precio14"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto14"
@@ -664,7 +665,7 @@
                 <TextView
                     android:id="@+id/texto_precio15"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto15"
@@ -703,7 +704,7 @@
                 <TextView
                     android:id="@+id/texto_precio16"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto16"
@@ -742,7 +743,7 @@
                 <TextView
                     android:id="@+id/texto_precio17"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto17"
@@ -781,7 +782,7 @@
                 <TextView
                     android:id="@+id/texto_precio18"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto18"
@@ -820,7 +821,7 @@
                 <TextView
                     android:id="@+id/texto_precio19"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto19"
@@ -859,7 +860,7 @@
                 <TextView
                     android:id="@+id/texto_precio20"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto20"
@@ -898,7 +899,7 @@
                 <TextView
                     android:id="@+id/texto_precio21"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto21"
@@ -937,7 +938,7 @@
                 <TextView
                     android:id="@+id/texto_precio22"
                     style="@style/leyenda"
-                    android:text="1.0"/>
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto22"
@@ -974,7 +975,7 @@
                 <TextView
                     android:id="@+id/texto_precio23"
                     style="@style/leyenda"
-                    android:text="1.0" />
+                    android:text="@string/sin_precio"/>
 
                 <TextView
                     android:id="@+id/texto23"

@@ -1,37 +1,42 @@
 <resources>
-    <string name="app_name">PrecioLuz</string>
-    <string name="version">1.0</string>
+    <string name="app_name" translatable="false">Precio Luz</string>
+    <string name="version" translatable="false">1.0</string>
+    <string name="contentdescription_flecha" translatable="false">Flecha</string>
+    <string name="contentdescription_barra" translatable="false">Barra</string>
 
+
+    <string name="sin_precio" translatable="false">1.0</string>
     <string name="action_settings">Opciones</string>
     <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
     <string name="precios_hace_un_año">Precio mismo día hace un año</string>
-    <string name="h00_01">00&#8211;01</string>
-    <string name="h01_02">01&#8211;02</string>
-    <string name="h02_03">02&#8211;03</string>
-    <string name="h03_04">03&#8211;04</string>
-    <string name="h04_05">04&#8211;05</string>
-    <string name="h05_06">05&#8211;06</string>
-    <string name="h06_07">06&#8211;07</string>
-    <string name="h07_08">07&#8211;08</string>
-    <string name="h08_09">08&#8211;09</string>
-    <string name="h09_10">09&#8211;10</string>
-    <string name="h10_11">10&#8211;11</string>
-    <string name="h11_12">11&#8211;12</string>
-    <string name="h12_13">12&#8211;13</string>
-    <string name="h13_14">13&#8211;14</string>
-    <string name="h14_15">14&#8211;15</string>
-    <string name="h15_16">15&#8211;16</string>
-    <string name="h16_17">16&#8211;17</string>
-    <string name="h17_18">17&#8211;18</string>
-    <string name="h18_19">18&#8211;19</string>
-    <string name="h19_20">19&#8211;20</string>
-    <string name="h20_21">20&#8211;21</string>
-    <string name="h21_22">21&#8211;22</string>
-    <string name="h22_23">22&#8211;23</string>
-    <string name="h23_00">23&#8211;00</string>
+    <string name="h00_01" translatable="false">00&#8211;01</string>
+    <string name="h01_02" translatable="false">01&#8211;02</string>
+    <string name="h02_03" translatable="false">02&#8211;03</string>
+    <string name="h03_04" translatable="false">03&#8211;04</string>
+    <string name="h04_05" translatable="false">04&#8211;05</string>
+    <string name="h05_06" translatable="false">05&#8211;06</string>
+    <string name="h06_07" translatable="false">06&#8211;07</string>
+    <string name="h07_08" translatable="false">07&#8211;08</string>
+    <string name="h08_09" translatable="false">08&#8211;09</string>
+    <string name="h09_10" translatable="false">09&#8211;10</string>
+    <string name="h10_11" translatable="false">10&#8211;11</string>
+    <string name="h11_12" translatable="false">11&#8211;12</string>
+    <string name="h12_13" translatable="false">12&#8211;13</string>
+    <string name="h13_14" translatable="false">13&#8211;14</string>
+    <string name="h14_15" translatable="false">14&#8211;15</string>
+    <string name="h15_16" translatable="false">15&#8211;16</string>
+    <string name="h16_17" translatable="false">16&#8211;17</string>
+    <string name="h17_18" translatable="false">17&#8211;18</string>
+    <string name="h18_19" translatable="false">18&#8211;19</string>
+    <string name="h19_20" translatable="false">19&#8211;20</string>
+    <string name="h20_21" translatable="false">20&#8211;21</string>
+    <string name="h21_22" translatable="false">21&#8211;22</string>
+    <string name="h22_23" translatable="false">22&#8211;23</string>
+    <string name="h23_00" translatable="false">23&#8211;00</string>
 
+    <string name="precio_no_disponible">Precios todavía no disponibles</string>
 
-    <string name="tarifa_20A">Tarifa 2.0 A</string>
+    <string name="tarifa_20A">Tarifa 2.0A</string>
     <string name="tarifa_20DHA">Tarifa 2.0 DHA</string>
     <string name="tarifa_20DHS">Tarifa 2.0 DHS</string>
     <string name="configuracion">Configuración</string>
@@ -48,11 +53,21 @@
 
     <string name="tutorial">Tutorial</string>
     <string name="OK">OK</string>
-    <string name="no_mostrar">No volver a mostrar</string>
     <string name="valorar">Valorar</string>
-    <string name="contentdescription_flecha">Flecha</string>
-    <string name="contentdescription_barra">Barra</string>
 
     <string name="Guardar">Guardar</string>
 
+    <string name="Crear_aviso">Crear Aviso</string>
+    <string name="Crear_aviso_mañana">Crear aviso para mañana</string>
+    <string name="Mejor_precio">Mejor precio</string>
+    <string name="Peor_precio">Peor precio</string>
+    <string name="Antelacion">Antelación</string>
+    <string name="No_comparar">No comparar</string>
+    <string name="Pregunta">¿Te gusta la app?</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="Peticion">Por favor, díganos como podemos mejorar</string>
+    <string name="Enviar">Enviar</string>
+    <string name="valorenos">Por favor, valórenos positivamente</string>
+    <string name="Valorar">Valorar</string>
 </resources>

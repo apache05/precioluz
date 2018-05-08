@@ -41,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/TextView_todavia_no_hay_precios"
+            android:text="@string/precio_no_disponible"
             android:layout_centerVertical="true"
             android:gravity="center"
             android:visibility="invisible"/>
@@ -75,7 +76,7 @@
                 <TextView
                     android:id="@+id/texto_precio0"
                     style="@style/leyenda_landscape"
-                    android:layout_alignLeft="@id/barra0"
+                    android:layout_alignStart="@id/barra0"
                     android:layout_alignBottom="@id/barra0"
 
                      />

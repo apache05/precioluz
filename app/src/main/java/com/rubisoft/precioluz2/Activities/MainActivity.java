@@ -9,20 +9,20 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.rubisoft.precioluz2.Adapters.MyFragmentPagerAdapter;
-import com.rubisoft.precioluz2.Dialogs.tutorialDialog;
 import com.rubisoft.precioluz2.Fragments.ErrorFragment;
 import com.rubisoft.precioluz2.Fragments.GraficasFragment_Landscape;
 import com.rubisoft.precioluz2.Fragments.GraficasFragment_Portrait;
+import com.rubisoft.precioluz2.utils.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,8 +42,7 @@ import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager pager = null;
-    private MyFragmentPagerAdapter adapter = null;
-    private final Logger LOGGER = Logger.getLogger(getClass().getName());
+	private final Logger LOGGER = Logger.getLogger(getClass().getName());
     private ProgressBar mProgressBar;
 
     private SharedPreferences prefs = null;
@@ -59,16 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private final int INDICADOR_TARIFA_20A = 1013;
     private final int INDICADOR_TARIFA_20DHA = 1014;
     private final int INDICADOR_TARIFA_20DHS = 1015;
-
-    //PARA GUARDAR EN EL SHAREDPREFERENCES
-   /* private final String TAG_HACE_UNA_SEMANA_DE_HOY = "HACE_UNA_SEMANA_DE_HOY";
-    private final String TAG_HACE_UN_AÑO_DE_HOY = "HACE_UN_ANYO_DE_HOY";
-    private final String TAG_HACE_UNA_SEMANA_DE_MAÑANA = "HACE_UNA_SEMANA_DE_MANYANA";
-    private final String TAG_HACE_UN_AÑO_DE_MAÑANA = "HACE_UN_ANYO_DE_MANYANA";
-
-    private final String TAG_TARIFA_ACTUAL = "TARIFA_ACTUAL";
-
-    private final String FRAGMENT_ACTUAL = "FRAGMENT_ACTUAL";*/
 
     private final Float[] precios_hoy_tarifa_20A = new Float[24];
     private final Float[] precios_hoy_tarifa_20DHA = new Float[24];
@@ -102,32 +91,36 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
         super.onCreate(savedInstanceState);
-        String TAG_NO_MOSTRAR_TUTORIAL = "NO_MOSTRAR_TUTORIAL";
 
-        /*********** inserta el animacion ***********/
-        setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);
 
 
         try {
             //Con esto creamos el ViewPager e instanciamos los dos fragments de graficas
-            pager = (ViewPager) findViewById(R.id.pager);
-            mProgressBar = (ProgressBar) findViewById(R.id.mProgressBar);
+            pager = findViewById(R.id.pager);
+            mProgressBar = findViewById(R.id.mProgressBar);
 
+            if (isNetworkAvailable()) {
 
-            /*********** prepara las preferencias para guardar datos internamente ***********/
-            prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            crea_fragments();
+				prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                crea_fragments();
 
-            new AsyncTask_getPrecios_hoy().execute(prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A));
-            new AsyncTask_getPrecios_mañana().execute(prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A));
+                new AsyncTask_getPrecios_hoy().execute(prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A));
+                new AsyncTask_getPrecios_mañana().execute(prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A));
 
-            if (!prefs.getBoolean(TAG_NO_MOSTRAR_TUTORIAL, false)) {
-                //lanzamos el tutorial
-                android.app.DialogFragment un_dialogo = new tutorialDialog();
-                un_dialogo.show(this.getFragmentManager(), "");
+            } else {
+                ErrorFragment fragment_error1;
+                ErrorFragment fragment_error2;
+                MyFragmentPagerAdapter adapter_error;
+                adapter_error = new MyFragmentPagerAdapter(getSupportFragmentManager());
+                fragment_error1 = ErrorFragment.newInstance(1);
+                fragment_error2 = ErrorFragment.newInstance(2);
+                adapter_error.addFragment(fragment_error1);
+                adapter_error.addFragment(fragment_error2);
+                pager.setAdapter(adapter_error);
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en onCreate " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(),e.toString()));
         }
     }
 
@@ -140,15 +133,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(mIntent);
             finish();
         }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Exception en onConfigurationChanged " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
 
         }
     }
 
     private void crea_fragments() {
-        ErrorFragment fragment_error1;
-        ErrorFragment fragment_error2;
-        MyFragmentPagerAdapter adapter_error;
+
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));
         Float[] array_vacio = new Float[24];
         try {
@@ -157,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
             boolean boolean_precios_año_pasado = prefs.getBoolean(getString(R.string.TAG_HACE_UN_AÑO), false);
             //boolean boolean_precios_año_pasado_de_mañana = prefs.getBoolean(getString(R.string.TAG_HACE_UN_AÑO_DE_MAÑANA), false);
 
-            if (isNetworkAvailable()) {
-                adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+			MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
 
                 for (int i = 0; i < 24; i++) {
                     array_vacio[i] = -1.0f;
@@ -178,18 +168,11 @@ public class MainActivity extends AppCompatActivity {
                     adapter.addFragment(fragment_mañana_Portrait);
                 }
                 pager.setAdapter(adapter);
-            } else {
-                adapter_error = new MyFragmentPagerAdapter(getSupportFragmentManager());
-                fragment_error1 = ErrorFragment.newInstance(1);
-                fragment_error2 = ErrorFragment.newInstance(2);
-                adapter_error.addFragment(fragment_error1);
-                adapter_error.addFragment(fragment_error2);
-                pager.setAdapter(adapter_error);
-            }
+
             //PONEMOS EL PAGER QUE HABIA UTILIZADO POR ULTIMA VEZ EL USUARIO
             pager.setCurrentItem(get_Fragment_actual_SharedPreferences());
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en crea_fragments " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
     }
 
@@ -200,9 +183,10 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 fragment_hoy_Portrait.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa_actual));
             }
-            pager.getAdapter().notifyDataSetChanged();
+            PagerAdapter un_adapter= pager.getAdapter();
+			if (un_adapter!= null){un_adapter.notifyDataSetChanged();}
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en carga_datos_inicial_hoy " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
     }
 
@@ -213,30 +197,29 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 fragment_mañana_Portrait.set_todos_los_precios(getPrecios_mañana_segun_tarifa(tarifa_actual), getPrecios_hace_un_año_de_mañana_segun_tarifa(tarifa_actual), getPrecios_hace_una_semana_de_mañana_segun_tarifa(tarifa_actual));
             }
-            pager.getAdapter().notifyDataSetChanged();
+			PagerAdapter un_adapter= pager.getAdapter();
+			if (un_adapter!= null){un_adapter.notifyDataSetChanged();}
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en carga_datos_inicial_mañana " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
     }
 
     private void set_Fragment_actual_SharedPreferences(int Fragment_actual) {
-        /*********** guarda el ultimo fragmente (hoy o mañana) que ha seleccionado el usuario en la memoria interna ***********/
-        try {
+		try {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt(getResources().getString(R.string.FRAGMENT_ACTUAL), Fragment_actual);
             editor.apply();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en set_Fragment_actual_SharedPreferences " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
     }
 
     private int get_Fragment_actual_SharedPreferences() {
-        /*********** extrae el fragmen actual (hoy o mañana) ***********/
-        int fragment_actual = 0;
+		int fragment_actual = 0;
         try {
             fragment_actual = prefs.getInt(getResources().getString(R.string.FRAGMENT_ACTUAL), 0);
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Exception en get_Fragment_actual_SharedPreferences " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
         return fragment_actual;
 
@@ -349,11 +332,9 @@ public class MainActivity extends AppCompatActivity {
         return precios;
     }
 
-    public  String get_Tarifa_SharedPreferences() {
+    private String get_Tarifa_SharedPreferences() {
         String tarifa_actual = "TARIFA 20A";
         try {
-            SharedPreferences.Editor editor = prefs.edit();
-
             switch (prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A)) {
                 case INDICADOR_TARIFA_20A:
                     tarifa_actual = "TARIFA 20A";
@@ -369,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } catch (Exception e) {
-            e.toString();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
         return tarifa_actual;
 
@@ -378,7 +359,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		assert connectivityManager != null;
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
@@ -413,13 +395,14 @@ public class MainActivity extends AppCompatActivity {
                     finish();
                     break;
                 case R.id.tutorial:
-                    //lanzamos el tutorial
-                    android.app.DialogFragment un_dialogo = new tutorialDialog();
-                    un_dialogo.show(this.getFragmentManager(), "");
+                    Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+                    mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mIntent_tutorial);
+                    finish();
                     break;
             }
         } catch (Exception e) {
-            LOGGER.severe("Error en onOptionsItemSelected  " + e.toString());
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -445,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
         set_Fragment_actual_SharedPreferences(this.pager.getCurrentItem());
     }
 
-    private class AsyncTask_getPrecios_hoy extends AsyncTask<Integer, Void,Pair<Integer,JSONArray[]>> {
+    private class AsyncTask_getPrecios_hoy extends AsyncTask<Integer, Void, Pair> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -454,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Pair<Integer,JSONArray[]> doInBackground(Integer... params) {
+        protected Pair doInBackground(Integer... params) {
             JSONArray[] mJSONObject=new JSONArray[3];
             Integer indicador= params[0];
 
@@ -462,8 +445,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isNetworkAvailable()) {
                     Calendar mCalendar=Calendar.getInstance();
 
-                    /*************************** HOY ***********************************/
-                    int año_0=mCalendar.get(Calendar.YEAR);
+					int año_0=mCalendar.get(Calendar.YEAR);
                     String mes_0=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_0=mCalendar.get(Calendar.DAY_OF_MONTH);
 
@@ -484,8 +466,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray aux_02=((JSONArray)((JSONObject)aux_01.get("indicator")).get("values"));
                     mJSONObject[0] = aux_02;
 
-                    /*************************** HACE UNA SEMANA DE HOY ***********************************/
-                    mCalendar.add(Calendar.DAY_OF_YEAR, -7);
+					mCalendar.add(Calendar.DAY_OF_YEAR, -7);
                     int año_1=mCalendar.get(Calendar.YEAR);
                     String mes_1=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_1=mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -507,8 +488,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray aux_12=((JSONArray)((JSONObject)aux_11.get("indicator")).get("values"));
                     mJSONObject[1] = aux_12;
 
-                    /*************************** HACE UNA SEMANA DE HOY ***********************************/
-                    mCalendar.add(Calendar.YEAR, -1);
+					mCalendar.add(Calendar.YEAR, -1);
                     int año_2=mCalendar.get(Calendar.YEAR);
                     String mes_2=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_2=mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -575,7 +555,7 @@ public class MainActivity extends AppCompatActivity {
                 carga_datos_inicial_hoy(indicador);
 
             }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "Exception en AsyncTask_getPrecios_hoy " + e, Toast.LENGTH_LONG).show();
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -634,7 +614,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -688,7 +668,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -744,12 +724,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
     }
 
-    private class AsyncTask_getPrecios_mañana extends AsyncTask<Integer, Void,Pair<Integer,JSONArray[]>> {
+    private class AsyncTask_getPrecios_mañana extends AsyncTask<Integer, Void, Pair> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -758,7 +738,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Pair<Integer,JSONArray[]> doInBackground(Integer... params) {
+        protected Pair doInBackground(Integer... params) {
             JSONArray[] mJSONObject=new JSONArray[3];
             Integer indicador= params[0];
 
@@ -767,8 +747,7 @@ public class MainActivity extends AppCompatActivity {
                     Calendar mCalendar=Calendar.getInstance();
                     mCalendar.add(Calendar.DAY_OF_YEAR, 1);  //PARA COJER EL DE MAÑANA AÑADIMOS UN DIA MAS
 
-                    /*************************** MAÑANA ***********************************/
-                    int año_0=mCalendar.get(Calendar.YEAR);
+					int año_0=mCalendar.get(Calendar.YEAR);
                     String mes_0=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_0=mCalendar.get(Calendar.DAY_OF_MONTH);
 
@@ -789,8 +768,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray aux_02=((JSONArray)((JSONObject)aux_01.get("indicator")).get("values"));
                     mJSONObject[0] = aux_02;
 
-                    /*************************** HACE UNA SEMANA DE MAÑANA ***********************************/
-                    mCalendar.add(Calendar.DAY_OF_YEAR, -7);
+					mCalendar.add(Calendar.DAY_OF_YEAR, -7);
                     int año_1=mCalendar.get(Calendar.YEAR);
                     String mes_1=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_1=mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -812,8 +790,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray aux_12=((JSONArray)((JSONObject)aux_11.get("indicator")).get("values"));
                     mJSONObject[1] = aux_12;
 
-                    /*************************** HACE UNA SEMANA DE MAÑANA ***********************************/
-                    mCalendar.add(Calendar.YEAR, -1);
+					mCalendar.add(Calendar.YEAR, -1);
                     int año_2=mCalendar.get(Calendar.YEAR);
                     String mes_2=String.format("%02d", mCalendar.get(Calendar.MONTH)+1);
                     int dia_2=mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -885,7 +862,7 @@ public class MainActivity extends AppCompatActivity {
                 carga_datos_inicial_mañana(indicador);
 
             }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "Exception en AsyncTask_getPrecios_mañana " + e, Toast.LENGTH_LONG).show();
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -945,7 +922,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -1001,7 +978,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -1057,7 +1034,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                LOGGER.severe("Error en set_precios_SharedPreferences " + e.toString());
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
             }
         }
     }

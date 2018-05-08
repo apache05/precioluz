@@ -1,19 +1,20 @@
 package com.rubisoft.precioluz2.Fragments;
 
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rubisoft.precioluz2.Activities.R;
+import com.rubisoft.precioluz2.utils.utils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -106,14 +107,14 @@ public class GraficasFragment_Landscape extends Fragment {
     private static final String PRECIOS_AÑO_PASADO= "PRECIOS_AÑO_PASADO";
 
     private String titulo;
-    private Float[] precios= new Float[24]; //pueden ser los de hoy o los de mañana pq es el mismo fragment
-    private Float[] precios_hace_una_semana= new Float[24];
-    private Float[] precios_hace_un_año= new Float[24];
+    private final Float[] precios= new Float[24]; //pueden ser los de hoy o los de mañana pq es el mismo fragment
+    private final Float[] precios_hace_una_semana= new Float[24];
+    private final Float[] precios_hace_un_año= new Float[24];
     private boolean precios_semana_pasada_activado;
     private boolean precios_año_pasado_activado;
 
-    private int ESCALA=Px2DP(1200);//Altura de las barras
-    private int ANCHURA=Px2DP(25);//anchura de las barras
+    private final int ESCALA=Px2DP(1200);//Altura de las barras
+    private final int ANCHURA=Px2DP(25);//anchura de las barras
 
     public static GraficasFragment_Landscape newInstance(String titulo, Float[] precios,boolean boolean_precios_semana_pasada,boolean boolean_precios_año_pasado,Float[] precios_hace_un_año,Float[] precios_hace_una_semana) {
         // Instantiate a new fragment
@@ -203,8 +204,8 @@ public class GraficasFragment_Landscape extends Fragment {
             } else {
                 bundle = null;
             }
-        }catch (Exception e){
-            e.toString();
+        }catch (Exception ignored){
+
         }finally {
             fragment.setArguments(bundle);
             fragment.setRetainInstance(true);
@@ -293,22 +294,21 @@ public class GraficasFragment_Landscape extends Fragment {
             this.precios_hace_una_semana[21] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO21) : -1;
             this.precios_hace_una_semana[22] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO22) : -1;
             this.precios_hace_una_semana[23] = (getArguments() != null) ? getArguments().getFloat(HACE_UNA_SEMANA_PRECIO23) : -1;
-            this.precios_semana_pasada_activado= (getArguments() != null) ? getArguments().getBoolean(PRECIOS_SEMANA_PASADA) : false;
-            this.precios_año_pasado_activado= (getArguments() != null) ? getArguments().getBoolean(PRECIOS_AÑO_PASADO) : false;
+            this.precios_semana_pasada_activado= (getArguments() != null) && getArguments().getBoolean(PRECIOS_SEMANA_PASADA);
+            this.precios_año_pasado_activado= (getArguments() != null) && getArguments().getBoolean(PRECIOS_AÑO_PASADO);
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en onCreate " + e, Toast.LENGTH_LONG).show();
-
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
        // set_parametros_segun_screensize();
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.graficas_layout_land, container, false);
         try {
-            TextView TextView_titulo = (TextView) rootView.findViewById(R.id.precios);
+            TextView TextView_titulo = rootView.findViewById(R.id.precios);
             TextView_titulo.setText(this.titulo);
 
             pinta_titulo(rootView/*, TAMAÑO_TEXTO_TITULO*/);
@@ -321,20 +321,15 @@ public class GraficasFragment_Landscape extends Fragment {
                 pinta_texto_horas(rootView/*, TAMAÑO_TEXTO_HORAS*/);
                 pinta_texto_precios(rootView/*,TAMAÑO_TEXTO_PRECIO*/);
             } else {
-                TextView TextView_todavia_no_hay_precios = (TextView) rootView.findViewById(R.id.TextView_todavia_no_hay_precios);
-                TextView_todavia_no_hay_precios.setText("Precios todavía no disponibles");
+                TextView TextView_todavia_no_hay_precios = rootView.findViewById(R.id.TextView_todavia_no_hay_precios);
                 TextView_todavia_no_hay_precios.setVisibility(View.VISIBLE);
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en onCreateView " + e, Toast.LENGTH_LONG).show();
-
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
         return rootView;
     }
 
-    private void setTitulo(String titulo){
-        this.titulo= titulo;
-    }
     public void set_todos_los_precios( Float[] precios,Float[] precios_hace_un_año,Float[] precios_hace_una_semana){
         try {
             for (int i = 0; i < 24; i++) {
@@ -343,90 +338,40 @@ public class GraficasFragment_Landscape extends Fragment {
                 this.precios_hace_una_semana[i] = precios_hace_una_semana[i];
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en set_todos_los_precios " + e, Toast.LENGTH_LONG).show();
-
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
-    private void setPrecios_semana_pasada_activado(boolean precios_semana_pasada_activado){
-        this.precios_semana_pasada_activado= precios_semana_pasada_activado;
-    }
-    private void setPrecios_año_pasado_activado(boolean precios_año_pasado_activado){
-        this.precios_año_pasado_activado= precios_año_pasado_activado;
-    }
-    private void set_parametros_segun_screensize(){
-        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
-        switch(screenSize) {
-            case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                ESCALA=Px2DP(700);
-                ANCHURA= Px2DP(20);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(20);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(12);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_NORMAL:  //nexus 10
-                ESCALA=Px2DP(700);
-                ANCHURA= Px2DP(20);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(20);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(12);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                ESCALA=Px2DP(700);
-                ANCHURA= Px2DP(20);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(20);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(12);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                break;
-            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
-                ESCALA=Px2DP(700);
-                ANCHURA= Px2DP(20);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(20);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(12);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                break;
-            default:  //EL normal SERA EL DE POR DEFECTO
-                ESCALA=Px2DP(700);
-                ANCHURA= Px2DP(20);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(20);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(12);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                break;
-        }
-    }
     private void pinta_titulo(ViewGroup rootView/*, int tamaño_letra*/){
-        TextView TextView_titulo = (TextView) rootView.findViewById(R.id.precios);
+        TextView TextView_titulo = rootView.findViewById(R.id.precios);
         TextView_titulo.setText(this.titulo);
-        //TextView_titulo.setTextSize(tamaño_letra);
     }
     private void pinta_barras(ViewGroup rootView){
         try {
-
-
-            ImageView barra0 = (ImageView) rootView.findViewById(R.id.barra0);
-            ImageView barra1 = (ImageView) rootView.findViewById(R.id.barra1);
-            ImageView barra2 = (ImageView) rootView.findViewById(R.id.barra2);
-            ImageView barra3 = (ImageView) rootView.findViewById(R.id.barra3);
-            ImageView barra4 = (ImageView) rootView.findViewById(R.id.barra4);
-            ImageView barra5 = (ImageView) rootView.findViewById(R.id.barra5);
-            ImageView barra6 = (ImageView) rootView.findViewById(R.id.barra6);
-            ImageView barra7 = (ImageView) rootView.findViewById(R.id.barra7);
-            ImageView barra8 = (ImageView) rootView.findViewById(R.id.barra8);
-            ImageView barra9 = (ImageView) rootView.findViewById(R.id.barra9);
-            ImageView barra10 = (ImageView) rootView.findViewById(R.id.barra10);
-            ImageView barra11 = (ImageView) rootView.findViewById(R.id.barra11);
-            ImageView barra12 = (ImageView) rootView.findViewById(R.id.barra12);
-            ImageView barra13 = (ImageView) rootView.findViewById(R.id.barra13);
-            ImageView barra14 = (ImageView) rootView.findViewById(R.id.barra14);
-            ImageView barra15 = (ImageView) rootView.findViewById(R.id.barra15);
-            ImageView barra16 = (ImageView) rootView.findViewById(R.id.barra16);
-            ImageView barra17 = (ImageView) rootView.findViewById(R.id.barra17);
-            ImageView barra18 = (ImageView) rootView.findViewById(R.id.barra18);
-            ImageView barra19 = (ImageView) rootView.findViewById(R.id.barra19);
-            ImageView barra20 = (ImageView) rootView.findViewById(R.id.barra20);
-            ImageView barra21 = (ImageView) rootView.findViewById(R.id.barra21);
-            ImageView barra22 = (ImageView) rootView.findViewById(R.id.barra22);
-            ImageView barra23 = (ImageView) rootView.findViewById(R.id.barra23);
+            ImageView barra0 = rootView.findViewById(R.id.barra0);
+            ImageView barra1 = rootView.findViewById(R.id.barra1);
+            ImageView barra2 = rootView.findViewById(R.id.barra2);
+            ImageView barra3 = rootView.findViewById(R.id.barra3);
+            ImageView barra4 = rootView.findViewById(R.id.barra4);
+            ImageView barra5 = rootView.findViewById(R.id.barra5);
+            ImageView barra6 = rootView.findViewById(R.id.barra6);
+            ImageView barra7 = rootView.findViewById(R.id.barra7);
+            ImageView barra8 = rootView.findViewById(R.id.barra8);
+            ImageView barra9 = rootView.findViewById(R.id.barra9);
+            ImageView barra10 = rootView.findViewById(R.id.barra10);
+            ImageView barra11 = rootView.findViewById(R.id.barra11);
+            ImageView barra12 = rootView.findViewById(R.id.barra12);
+            ImageView barra13 = rootView.findViewById(R.id.barra13);
+            ImageView barra14 = rootView.findViewById(R.id.barra14);
+            ImageView barra15 = rootView.findViewById(R.id.barra15);
+            ImageView barra16 = rootView.findViewById(R.id.barra16);
+            ImageView barra17 = rootView.findViewById(R.id.barra17);
+            ImageView barra18 = rootView.findViewById(R.id.barra18);
+            ImageView barra19 = rootView.findViewById(R.id.barra19);
+            ImageView barra20 = rootView.findViewById(R.id.barra20);
+            ImageView barra21 = rootView.findViewById(R.id.barra21);
+            ImageView barra22 = rootView.findViewById(R.id.barra22);
+            ImageView barra23 = rootView.findViewById(R.id.barra23);
 
             RelativeLayout.LayoutParams mLayoutParams_barra0 = new RelativeLayout.LayoutParams(ANCHURA, (int) (precios[0] * ESCALA));
             RelativeLayout.LayoutParams mLayoutParams_barra1 = new RelativeLayout.LayoutParams(ANCHURA, (int) (precios[1] * ESCALA));
@@ -531,41 +476,41 @@ public class GraficasFragment_Landscape extends Fragment {
             barra22.setColorFilter(getColor(precios_ordenados, precios[22]));
             barra23.setColorFilter(getColor(precios_ordenados, precios[23]));
         }catch(Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_barras " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
     private void pinta_texto_horas(ViewGroup rootView/*, int tamaño_letra*/){
         try {
 
-            TextView mTextView0 = (TextView) rootView.findViewById(R.id.texto0);
-            TextView mTextView1 = (TextView) rootView.findViewById(R.id.texto1);
-            TextView mTextView2 = (TextView) rootView.findViewById(R.id.texto2);
-            TextView mTextView3 = (TextView) rootView.findViewById(R.id.texto3);
-            TextView mTextView4 = (TextView) rootView.findViewById(R.id.texto4);
-            TextView mTextView5 = (TextView) rootView.findViewById(R.id.texto5);
-            TextView mTextView6 = (TextView) rootView.findViewById(R.id.texto6);
-            TextView mTextView7 = (TextView) rootView.findViewById(R.id.texto7);
-            TextView mTextView8 = (TextView) rootView.findViewById(R.id.texto8);
-            TextView mTextView9 = (TextView) rootView.findViewById(R.id.texto9);
-            TextView mTextView10 = (TextView) rootView.findViewById(R.id.texto10);
-            TextView mTextView11 = (TextView) rootView.findViewById(R.id.texto11);
-            TextView mTextView12 = (TextView) rootView.findViewById(R.id.texto12);
-            TextView mTextView13 = (TextView) rootView.findViewById(R.id.texto13);
-            TextView mTextView14 = (TextView) rootView.findViewById(R.id.texto14);
-            TextView mTextView15 = (TextView) rootView.findViewById(R.id.texto15);
-            TextView mTextView16 = (TextView) rootView.findViewById(R.id.texto16);
-            TextView mTextView17 = (TextView) rootView.findViewById(R.id.texto17);
-            TextView mTextView18 = (TextView) rootView.findViewById(R.id.texto18);
-            TextView mTextView19 = (TextView) rootView.findViewById(R.id.texto19);
-            TextView mTextView20 = (TextView) rootView.findViewById(R.id.texto20);
-            TextView mTextView21 = (TextView) rootView.findViewById(R.id.texto21);
-            TextView mTextView22 = (TextView) rootView.findViewById(R.id.texto22);
-            TextView mTextView23 = (TextView) rootView.findViewById(R.id.texto23);
+            TextView mTextView0 = rootView.findViewById(R.id.texto0);
+            TextView mTextView1 = rootView.findViewById(R.id.texto1);
+            TextView mTextView2 = rootView.findViewById(R.id.texto2);
+            TextView mTextView3 = rootView.findViewById(R.id.texto3);
+            TextView mTextView4 = rootView.findViewById(R.id.texto4);
+            TextView mTextView5 = rootView.findViewById(R.id.texto5);
+            TextView mTextView6 = rootView.findViewById(R.id.texto6);
+            TextView mTextView7 = rootView.findViewById(R.id.texto7);
+            TextView mTextView8 = rootView.findViewById(R.id.texto8);
+            TextView mTextView9 = rootView.findViewById(R.id.texto9);
+            TextView mTextView10 = rootView.findViewById(R.id.texto10);
+            TextView mTextView11 = rootView.findViewById(R.id.texto11);
+            TextView mTextView12 = rootView.findViewById(R.id.texto12);
+            TextView mTextView13 = rootView.findViewById(R.id.texto13);
+            TextView mTextView14 = rootView.findViewById(R.id.texto14);
+            TextView mTextView15 = rootView.findViewById(R.id.texto15);
+            TextView mTextView16 = rootView.findViewById(R.id.texto16);
+            TextView mTextView17 = rootView.findViewById(R.id.texto17);
+            TextView mTextView18 = rootView.findViewById(R.id.texto18);
+            TextView mTextView19 = rootView.findViewById(R.id.texto19);
+            TextView mTextView20 = rootView.findViewById(R.id.texto20);
+            TextView mTextView21 = rootView.findViewById(R.id.texto21);
+            TextView mTextView22 = rootView.findViewById(R.id.texto22);
+            TextView mTextView23 = rootView.findViewById(R.id.texto23);
 
 
             if (this.titulo.contains("hoy")) {
                 DateFormat df = new SimpleDateFormat("HH");
-                Integer hora = new Integer(df.format(Calendar.getInstance().getTime()));
+                Integer hora = Integer.valueOf(df.format(Calendar.getInstance().getTime()));
                 switch (hora) {
                     case 0:
                         mTextView0.setTextColor(getResources().getColor(R.color.Black));
@@ -666,40 +611,40 @@ public class GraficasFragment_Landscape extends Fragment {
                 }
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_texto " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
 
     }
     private void pinta_rayitas_semana_pasada(ViewGroup rootView){
         try {
-        //    ImageView rayita_semana_pasada_00 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_00);
-         /*   ImageView rayita_semana_pasada_01 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_01);
-            ImageView rayita_semana_pasada_02 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_02);
-            ImageView rayita_semana_pasada_03 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_03);
-            ImageView rayita_semana_pasada_04 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_04);
-            ImageView rayita_semana_pasada_05 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_05);
-            ImageView rayita_semana_pasada_06 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_06);
-            ImageView rayita_semana_pasada_07 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_07);
-            ImageView rayita_semana_pasada_08 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_08);
-            ImageView rayita_semana_pasada_09 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_09);
-            ImageView rayita_semana_pasada_10 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_10);
-            ImageView rayita_semana_pasada_11 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_11);
-            ImageView rayita_semana_pasada_12 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_12);
-            ImageView rayita_semana_pasada_13 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_13);
-            ImageView rayita_semana_pasada_14 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_14);
-            ImageView rayita_semana_pasada_15 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_15);
-            ImageView rayita_semana_pasada_16 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_16);
-            ImageView rayita_semana_pasada_17 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_17);
-            ImageView rayita_semana_pasada_18 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_18);
-            ImageView rayita_semana_pasada_19 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_19);
-            ImageView rayita_semana_pasada_20 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_20);
-            ImageView rayita_semana_pasada_21 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_21);
-            ImageView rayita_semana_pasada_22 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_22);
-            ImageView rayita_semana_pasada_23 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_23);*/
+            ImageView rayita_semana_pasada_00 = rootView.findViewById(R.id.rayita_semana_pasada_00);
+            ImageView rayita_semana_pasada_01 = rootView.findViewById(R.id.rayita_semana_pasada_01);
+            ImageView rayita_semana_pasada_02 = rootView.findViewById(R.id.rayita_semana_pasada_02);
+            ImageView rayita_semana_pasada_03 = rootView.findViewById(R.id.rayita_semana_pasada_03);
+            ImageView rayita_semana_pasada_04 = rootView.findViewById(R.id.rayita_semana_pasada_04);
+            ImageView rayita_semana_pasada_05 = rootView.findViewById(R.id.rayita_semana_pasada_05);
+            ImageView rayita_semana_pasada_06 = rootView.findViewById(R.id.rayita_semana_pasada_06);
+            ImageView rayita_semana_pasada_07 = rootView.findViewById(R.id.rayita_semana_pasada_07);
+            ImageView rayita_semana_pasada_08 = rootView.findViewById(R.id.rayita_semana_pasada_08);
+            ImageView rayita_semana_pasada_09 = rootView.findViewById(R.id.rayita_semana_pasada_09);
+            ImageView rayita_semana_pasada_10 = rootView.findViewById(R.id.rayita_semana_pasada_10);
+            ImageView rayita_semana_pasada_11 = rootView.findViewById(R.id.rayita_semana_pasada_11);
+            ImageView rayita_semana_pasada_12 = rootView.findViewById(R.id.rayita_semana_pasada_12);
+            ImageView rayita_semana_pasada_13 = rootView.findViewById(R.id.rayita_semana_pasada_13);
+            ImageView rayita_semana_pasada_14 = rootView.findViewById(R.id.rayita_semana_pasada_14);
+            ImageView rayita_semana_pasada_15 = rootView.findViewById(R.id.rayita_semana_pasada_15);
+            ImageView rayita_semana_pasada_16 = rootView.findViewById(R.id.rayita_semana_pasada_16);
+            ImageView rayita_semana_pasada_17 = rootView.findViewById(R.id.rayita_semana_pasada_17);
+            ImageView rayita_semana_pasada_18 = rootView.findViewById(R.id.rayita_semana_pasada_18);
+            ImageView rayita_semana_pasada_19 = rootView.findViewById(R.id.rayita_semana_pasada_19);
+            ImageView rayita_semana_pasada_20 = rootView.findViewById(R.id.rayita_semana_pasada_20);
+            ImageView rayita_semana_pasada_21 = rootView.findViewById(R.id.rayita_semana_pasada_21);
+            ImageView rayita_semana_pasada_22 = rootView.findViewById(R.id.rayita_semana_pasada_22);
+            ImageView rayita_semana_pasada_23 = rootView.findViewById(R.id.rayita_semana_pasada_23);
 
             if (precios_semana_pasada_activado) {
-          //      rayita_semana_pasada_00.setVisibility(ImageView.VISIBLE);
-               /* rayita_semana_pasada_01.setVisibility(ImageView.VISIBLE);
+                rayita_semana_pasada_00.setVisibility(ImageView.VISIBLE);
+                rayita_semana_pasada_01.setVisibility(ImageView.VISIBLE);
                 rayita_semana_pasada_02.setVisibility(ImageView.VISIBLE);
                 rayita_semana_pasada_03.setVisibility(ImageView.VISIBLE);
                 rayita_semana_pasada_04.setVisibility(ImageView.VISIBLE);
@@ -721,218 +666,194 @@ public class GraficasFragment_Landscape extends Fragment {
                 rayita_semana_pasada_20.setVisibility(ImageView.VISIBLE);
                 rayita_semana_pasada_21.setVisibility(ImageView.VISIBLE);
                 rayita_semana_pasada_22.setVisibility(ImageView.VISIBLE);
-                rayita_semana_pasada_23.setVisibility(ImageView.VISIBLE);*/
+                rayita_semana_pasada_23.setVisibility(ImageView.VISIBLE);
 
+                rayita_semana_pasada_00.setY((int) ((-1) * precios_hace_una_semana[0] * ESCALA));
+                rayita_semana_pasada_01.setY((int) ((-1) * precios_hace_una_semana[1] * ESCALA));
+                rayita_semana_pasada_02.setY((int) ((-1) * precios_hace_una_semana[2] * ESCALA));
+                rayita_semana_pasada_03.setY((int) ((-1) * precios_hace_una_semana[3] * ESCALA));
+                rayita_semana_pasada_04.setY((int) ((-1) * precios_hace_una_semana[4] * ESCALA));
+                rayita_semana_pasada_05.setY((int) ((-1) * precios_hace_una_semana[5] * ESCALA));
+                rayita_semana_pasada_06.setY((int) ((-1) * precios_hace_una_semana[6] * ESCALA));
+                rayita_semana_pasada_07.setY((int) ((-1) * precios_hace_una_semana[7] * ESCALA));
+                rayita_semana_pasada_08.setY((int) ((-1) * precios_hace_una_semana[8] * ESCALA));
+                rayita_semana_pasada_09.setY((int) ((-1) * precios_hace_una_semana[9] * ESCALA));
+                rayita_semana_pasada_10.setY((int) ((-1) * precios_hace_una_semana[10] * ESCALA));
+                rayita_semana_pasada_11.setY((int) ((-1) * precios_hace_una_semana[11] * ESCALA));
+                rayita_semana_pasada_12.setY((int) ((-1) * precios_hace_una_semana[12] * ESCALA));
+                rayita_semana_pasada_13.setY((int) ((-1) * precios_hace_una_semana[13] * ESCALA));
+                rayita_semana_pasada_14.setY((int) ((-1) * precios_hace_una_semana[14] * ESCALA));
+                rayita_semana_pasada_15.setY((int) ((-1) * precios_hace_una_semana[15] * ESCALA));
+                rayita_semana_pasada_16.setY((int) ((-1) * precios_hace_una_semana[16] * ESCALA));
+                rayita_semana_pasada_17.setY((int) ((-1) * precios_hace_una_semana[17] * ESCALA));
+                rayita_semana_pasada_18.setY((int) ((-1) * precios_hace_una_semana[18] * ESCALA));
+                rayita_semana_pasada_19.setY((int) ((-1) * precios_hace_una_semana[19] * ESCALA));
+                rayita_semana_pasada_20.setY((int) ((-1) * precios_hace_una_semana[20] * ESCALA));
+                rayita_semana_pasada_21.setY((int) ((-1) * precios_hace_una_semana[21] * ESCALA));
+                rayita_semana_pasada_22.setY((int) ((-1) * precios_hace_una_semana[22] * ESCALA));
+                rayita_semana_pasada_23.setY((int) ((-1) * precios_hace_una_semana[23] * ESCALA));
 
+                RelativeLayout.LayoutParams mLayoutParams_rayita0 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita1 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita2 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita3 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita4 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita5 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita6 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita7 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita8 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita9 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita10 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita11 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita12 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita13 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita14 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita15 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita16 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita17 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita18 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita19 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita20 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita21 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita22 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+                RelativeLayout.LayoutParams mLayoutParams_rayita23 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+
+                mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
+                mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
+                mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
+                mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
+                mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
+                mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
+                mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
+                mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
+                mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
+                mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
+                mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
+                mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
+                mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
+                mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
+                mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
+                mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
+                mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
+                mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
+                mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
+                mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
+                mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
+                mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
+                mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
+                mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);
+
+                rayita_semana_pasada_00.setLayoutParams(mLayoutParams_rayita0);
+                rayita_semana_pasada_01.setLayoutParams(mLayoutParams_rayita1);
+                rayita_semana_pasada_02.setLayoutParams(mLayoutParams_rayita2);
+                rayita_semana_pasada_03.setLayoutParams(mLayoutParams_rayita3);
+                rayita_semana_pasada_04.setLayoutParams(mLayoutParams_rayita4);
+                rayita_semana_pasada_05.setLayoutParams(mLayoutParams_rayita5);
+                rayita_semana_pasada_06.setLayoutParams(mLayoutParams_rayita6);
+                rayita_semana_pasada_07.setLayoutParams(mLayoutParams_rayita7);
+                rayita_semana_pasada_08.setLayoutParams(mLayoutParams_rayita8);
+                rayita_semana_pasada_09.setLayoutParams(mLayoutParams_rayita9);
+                rayita_semana_pasada_10.setLayoutParams(mLayoutParams_rayita10);
+                rayita_semana_pasada_11.setLayoutParams(mLayoutParams_rayita11);
+                rayita_semana_pasada_12.setLayoutParams(mLayoutParams_rayita12);
+                rayita_semana_pasada_13.setLayoutParams(mLayoutParams_rayita13);
+                rayita_semana_pasada_14.setLayoutParams(mLayoutParams_rayita14);
+                rayita_semana_pasada_15.setLayoutParams(mLayoutParams_rayita15);
+                rayita_semana_pasada_16.setLayoutParams(mLayoutParams_rayita16);
+                rayita_semana_pasada_17.setLayoutParams(mLayoutParams_rayita17);
+                rayita_semana_pasada_18.setLayoutParams(mLayoutParams_rayita18);
+                rayita_semana_pasada_19.setLayoutParams(mLayoutParams_rayita19);
+                rayita_semana_pasada_20.setLayoutParams(mLayoutParams_rayita20);
+                rayita_semana_pasada_21.setLayoutParams(mLayoutParams_rayita21);
+                rayita_semana_pasada_22.setLayoutParams(mLayoutParams_rayita22);
+                rayita_semana_pasada_23.setLayoutParams(mLayoutParams_rayita23);
             } else {
-//                rayita_semana_pasada_00.setVisibility(View.INVISIBLE);
-
-                /*rayita_semana_pasada_01.setVisibility(View.INVISIBLE);
-
+                rayita_semana_pasada_00.setVisibility(View.INVISIBLE);
+                rayita_semana_pasada_01.setVisibility(View.INVISIBLE);
                 rayita_semana_pasada_02.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_03.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_04.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_05.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_06.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_07.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_08.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_09.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_10.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_11.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_12.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_13.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_14.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_15.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_16.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_17.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_18.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_19.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_20.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_21.setVisibility(View.INVISIBLE);
-
                 rayita_semana_pasada_22.setVisibility(View.INVISIBLE);
-
-                rayita_semana_pasada_23.setVisibility(View.INVISIBLE);*/
+                rayita_semana_pasada_23.setVisibility(View.INVISIBLE);
             }
 
-            //rayita_semana_pasada_00.setY((int) ((-1) * precios_hace_una_semana[0] * ESCALA));
-            /*rayita_semana_pasada_01.setY((int) ((-1) * precios_hace_una_semana[1] * ESCALA));
-            rayita_semana_pasada_02.setY((int) ((-1) * precios_hace_una_semana[2] * ESCALA));
-            rayita_semana_pasada_03.setY((int) ((-1) * precios_hace_una_semana[3] * ESCALA));
-            rayita_semana_pasada_04.setY((int) ((-1) * precios_hace_una_semana[4] * ESCALA));
-            rayita_semana_pasada_05.setY((int) ((-1) * precios_hace_una_semana[5] * ESCALA));
-            rayita_semana_pasada_06.setY((int) ((-1) * precios_hace_una_semana[6] * ESCALA));
-            rayita_semana_pasada_07.setY((int) ((-1) * precios_hace_una_semana[7] * ESCALA));
-            rayita_semana_pasada_08.setY((int) ((-1) * precios_hace_una_semana[8] * ESCALA));
-            rayita_semana_pasada_09.setY((int) ((-1) * precios_hace_una_semana[9] * ESCALA));
-            rayita_semana_pasada_10.setY((int) ((-1) * precios_hace_una_semana[10] * ESCALA));
-            rayita_semana_pasada_11.setY((int) ((-1) * precios_hace_una_semana[11] * ESCALA));
-            rayita_semana_pasada_12.setY((int) ((-1) * precios_hace_una_semana[12] * ESCALA));
-            rayita_semana_pasada_13.setY((int) ((-1) * precios_hace_una_semana[13] * ESCALA));
-            rayita_semana_pasada_14.setY((int) ((-1) * precios_hace_una_semana[14] * ESCALA));
-            rayita_semana_pasada_15.setY((int) ((-1) * precios_hace_una_semana[15] * ESCALA));
-            rayita_semana_pasada_16.setY((int) ((-1) * precios_hace_una_semana[16] * ESCALA));
-            rayita_semana_pasada_17.setY((int) ((-1) * precios_hace_una_semana[17] * ESCALA));
-            rayita_semana_pasada_18.setY((int) ((-1) * precios_hace_una_semana[18] * ESCALA));
-            rayita_semana_pasada_19.setY((int) ((-1) * precios_hace_una_semana[19] * ESCALA));
-            rayita_semana_pasada_20.setY((int) ((-1) * precios_hace_una_semana[20] * ESCALA));
-            rayita_semana_pasada_21.setY((int) ((-1) * precios_hace_una_semana[21] * ESCALA));
-            rayita_semana_pasada_22.setY((int) ((-1) * precios_hace_una_semana[22] * ESCALA));
-            rayita_semana_pasada_23.setY((int) ((-1) * precios_hace_una_semana[23] * ESCALA));*/
-
-            RelativeLayout.LayoutParams mLayoutParams_rayita0 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            /*RelativeLayout.LayoutParams mLayoutParams_rayita1 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita2 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita3 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita4 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita5 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita6 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita7 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita8 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita9 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita10 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita11 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita12 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita13 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita14 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita15 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita16 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita17 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita18 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita19 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita20 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita21 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita22 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita23 = new RelativeLayout.LayoutParams(ANCHURA, 2);*/
-
-            mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
-           /* mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);*/
-
-            mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
-            /*mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
-            mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
-            mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
-            mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
-            mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
-            mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
-            mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
-            mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
-            mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
-            mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
-            mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
-            mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
-            mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
-            mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
-            mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
-            mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
-            mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
-            mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
-            mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
-            mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
-            mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
-            mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
-            mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);*/
-
-          //  rayita_semana_pasada_00.setLayoutParams(mLayoutParams_rayita0);
-            /*rayita_semana_pasada_01.setLayoutParams(mLayoutParams_rayita1);
-            rayita_semana_pasada_02.setLayoutParams(mLayoutParams_rayita2);
-            rayita_semana_pasada_03.setLayoutParams(mLayoutParams_rayita3);
-            rayita_semana_pasada_04.setLayoutParams(mLayoutParams_rayita4);
-            rayita_semana_pasada_05.setLayoutParams(mLayoutParams_rayita5);
-            rayita_semana_pasada_06.setLayoutParams(mLayoutParams_rayita6);
-            rayita_semana_pasada_07.setLayoutParams(mLayoutParams_rayita7);
-            rayita_semana_pasada_08.setLayoutParams(mLayoutParams_rayita8);
-            rayita_semana_pasada_09.setLayoutParams(mLayoutParams_rayita9);
-            rayita_semana_pasada_10.setLayoutParams(mLayoutParams_rayita10);
-            rayita_semana_pasada_11.setLayoutParams(mLayoutParams_rayita11);
-            rayita_semana_pasada_12.setLayoutParams(mLayoutParams_rayita12);
-            rayita_semana_pasada_13.setLayoutParams(mLayoutParams_rayita13);
-            rayita_semana_pasada_14.setLayoutParams(mLayoutParams_rayita14);
-            rayita_semana_pasada_15.setLayoutParams(mLayoutParams_rayita15);
-            rayita_semana_pasada_16.setLayoutParams(mLayoutParams_rayita16);
-            rayita_semana_pasada_17.setLayoutParams(mLayoutParams_rayita17);
-            rayita_semana_pasada_18.setLayoutParams(mLayoutParams_rayita18);
-            rayita_semana_pasada_19.setLayoutParams(mLayoutParams_rayita19);
-            rayita_semana_pasada_20.setLayoutParams(mLayoutParams_rayita20);
-            rayita_semana_pasada_21.setLayoutParams(mLayoutParams_rayita21);
-            rayita_semana_pasada_22.setLayoutParams(mLayoutParams_rayita22);
-            rayita_semana_pasada_23.setLayoutParams(mLayoutParams_rayita23);*/
         }catch(Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_rayitas_semana_pasada " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
     private void pinta_rayitas_año_pasado(ViewGroup rootView){
         try {
 
-            //ImageView rayita_anyo_pasado_00 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_00);
-            /*ImageView rayita_anyo_pasado_01 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_01);
-            ImageView rayita_anyo_pasado_02 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_02);
-            ImageView rayita_anyo_pasado_03 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_03);
-            ImageView rayita_anyo_pasado_04 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_04);
-            ImageView rayita_anyo_pasado_05 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_05);
-            ImageView rayita_anyo_pasado_06 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_06);
-            ImageView rayita_anyo_pasado_07 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_07);
-            ImageView rayita_anyo_pasado_08 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_08);
-            ImageView rayita_anyo_pasado_09 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_09);
-            ImageView rayita_anyo_pasado_10 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_10);
-            ImageView rayita_anyo_pasado_11 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_11);
-            ImageView rayita_anyo_pasado_12 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_12);
-            ImageView rayita_anyo_pasado_13 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_13);
-            ImageView rayita_anyo_pasado_14 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_14);
-            ImageView rayita_anyo_pasado_15 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_15);
-            ImageView rayita_anyo_pasado_16 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_16);
-            ImageView rayita_anyo_pasado_17 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_17);
-            ImageView rayita_anyo_pasado_18 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_18);
-            ImageView rayita_anyo_pasado_19 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_19);
-            ImageView rayita_anyo_pasado_20 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_20);
-            ImageView rayita_anyo_pasado_21 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_21);
-            ImageView rayita_anyo_pasado_22 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_22);
-            ImageView rayita_anyo_pasado_23 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_23);*/
+            ImageView rayita_anyo_pasado_00 = rootView.findViewById(R.id.rayita_anyo_pasado_00);
+            ImageView rayita_anyo_pasado_01 = rootView.findViewById(R.id.rayita_anyo_pasado_01);
+            ImageView rayita_anyo_pasado_02 = rootView.findViewById(R.id.rayita_anyo_pasado_02);
+            ImageView rayita_anyo_pasado_03 = rootView.findViewById(R.id.rayita_anyo_pasado_03);
+            ImageView rayita_anyo_pasado_04 = rootView.findViewById(R.id.rayita_anyo_pasado_04);
+            ImageView rayita_anyo_pasado_05 = rootView.findViewById(R.id.rayita_anyo_pasado_05);
+            ImageView rayita_anyo_pasado_06 = rootView.findViewById(R.id.rayita_anyo_pasado_06);
+            ImageView rayita_anyo_pasado_07 = rootView.findViewById(R.id.rayita_anyo_pasado_07);
+            ImageView rayita_anyo_pasado_08 = rootView.findViewById(R.id.rayita_anyo_pasado_08);
+            ImageView rayita_anyo_pasado_09 = rootView.findViewById(R.id.rayita_anyo_pasado_09);
+            ImageView rayita_anyo_pasado_10 = rootView.findViewById(R.id.rayita_anyo_pasado_10);
+            ImageView rayita_anyo_pasado_11 = rootView.findViewById(R.id.rayita_anyo_pasado_11);
+            ImageView rayita_anyo_pasado_12 = rootView.findViewById(R.id.rayita_anyo_pasado_12);
+            ImageView rayita_anyo_pasado_13 = rootView.findViewById(R.id.rayita_anyo_pasado_13);
+            ImageView rayita_anyo_pasado_14 = rootView.findViewById(R.id.rayita_anyo_pasado_14);
+            ImageView rayita_anyo_pasado_15 = rootView.findViewById(R.id.rayita_anyo_pasado_15);
+            ImageView rayita_anyo_pasado_16 = rootView.findViewById(R.id.rayita_anyo_pasado_16);
+            ImageView rayita_anyo_pasado_17 = rootView.findViewById(R.id.rayita_anyo_pasado_17);
+            ImageView rayita_anyo_pasado_18 = rootView.findViewById(R.id.rayita_anyo_pasado_18);
+            ImageView rayita_anyo_pasado_19 = rootView.findViewById(R.id.rayita_anyo_pasado_19);
+            ImageView rayita_anyo_pasado_20 = rootView.findViewById(R.id.rayita_anyo_pasado_20);
+            ImageView rayita_anyo_pasado_21 = rootView.findViewById(R.id.rayita_anyo_pasado_21);
+            ImageView rayita_anyo_pasado_22 = rootView.findViewById(R.id.rayita_anyo_pasado_22);
+            ImageView rayita_anyo_pasado_23 = rootView.findViewById(R.id.rayita_anyo_pasado_23);
 
             if (precios_año_pasado_activado) {
-               // rayita_anyo_pasado_00.setVisibility(ImageView.VISIBLE);
-                /*rayita_anyo_pasado_01.setVisibility(ImageView.VISIBLE);
+                rayita_anyo_pasado_00.setVisibility(ImageView.VISIBLE);
+                rayita_anyo_pasado_01.setVisibility(ImageView.VISIBLE);
                 rayita_anyo_pasado_02.setVisibility(ImageView.VISIBLE);
                 rayita_anyo_pasado_03.setVisibility(ImageView.VISIBLE);
                 rayita_anyo_pasado_04.setVisibility(ImageView.VISIBLE);
@@ -954,191 +875,168 @@ public class GraficasFragment_Landscape extends Fragment {
                 rayita_anyo_pasado_20.setVisibility(ImageView.VISIBLE);
                 rayita_anyo_pasado_21.setVisibility(ImageView.VISIBLE);
                 rayita_anyo_pasado_22.setVisibility(ImageView.VISIBLE);
-                rayita_anyo_pasado_23.setVisibility(ImageView.VISIBLE);*/
+                rayita_anyo_pasado_23.setVisibility(ImageView.VISIBLE);
 
 
+
+				RelativeLayout.LayoutParams mLayoutParams_rayita0 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita1 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita2 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita3 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita4 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita5 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita6 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita7 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita8 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita9 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita10 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita11 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita12 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita13 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita14 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita15 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita16 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita17 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita18 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita19 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita20 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita21 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita22 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+				RelativeLayout.LayoutParams mLayoutParams_rayita23 = new RelativeLayout.LayoutParams(ANCHURA, 2);
+
+				mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
+				mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+				mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
+				mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
+				mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
+				mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
+				mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
+				mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
+				mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
+				mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
+				mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
+				mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
+				mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
+				mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
+				mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
+				mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
+				mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
+				mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
+				mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
+				mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
+				mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
+				mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
+				mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
+				mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
+				mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
+				mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);
+
+				rayita_anyo_pasado_00.setLayoutParams(mLayoutParams_rayita0);
+				rayita_anyo_pasado_01.setLayoutParams(mLayoutParams_rayita1);
+				rayita_anyo_pasado_02.setLayoutParams(mLayoutParams_rayita2);
+				rayita_anyo_pasado_03.setLayoutParams(mLayoutParams_rayita3);
+				rayita_anyo_pasado_04.setLayoutParams(mLayoutParams_rayita4);
+				rayita_anyo_pasado_05.setLayoutParams(mLayoutParams_rayita5);
+				rayita_anyo_pasado_06.setLayoutParams(mLayoutParams_rayita6);
+				rayita_anyo_pasado_07.setLayoutParams(mLayoutParams_rayita7);
+				rayita_anyo_pasado_08.setLayoutParams(mLayoutParams_rayita8);
+				rayita_anyo_pasado_09.setLayoutParams(mLayoutParams_rayita9);
+				rayita_anyo_pasado_10.setLayoutParams(mLayoutParams_rayita10);
+				rayita_anyo_pasado_11.setLayoutParams(mLayoutParams_rayita11);
+				rayita_anyo_pasado_12.setLayoutParams(mLayoutParams_rayita12);
+				rayita_anyo_pasado_13.setLayoutParams(mLayoutParams_rayita13);
+				rayita_anyo_pasado_14.setLayoutParams(mLayoutParams_rayita14);
+				rayita_anyo_pasado_15.setLayoutParams(mLayoutParams_rayita15);
+				rayita_anyo_pasado_16.setLayoutParams(mLayoutParams_rayita16);
+				rayita_anyo_pasado_17.setLayoutParams(mLayoutParams_rayita17);
+				rayita_anyo_pasado_18.setLayoutParams(mLayoutParams_rayita18);
+				rayita_anyo_pasado_19.setLayoutParams(mLayoutParams_rayita19);
+				rayita_anyo_pasado_20.setLayoutParams(mLayoutParams_rayita20);
+				rayita_anyo_pasado_21.setLayoutParams(mLayoutParams_rayita21);
+				rayita_anyo_pasado_22.setLayoutParams(mLayoutParams_rayita22);
+				rayita_anyo_pasado_23.setLayoutParams(mLayoutParams_rayita23);
+
+				rayita_anyo_pasado_00.setY((int) ((-1) * precios_hace_un_año[0] * ESCALA));
+				rayita_anyo_pasado_01.setY((int) ((-1) * precios_hace_un_año[1] * ESCALA));
+				rayita_anyo_pasado_02.setY((int) ((-1) * precios_hace_un_año[2] * ESCALA));
+				rayita_anyo_pasado_03.setY((int) ((-1) * precios_hace_un_año[3] * ESCALA));
+				rayita_anyo_pasado_04.setY((int) ((-1) * precios_hace_un_año[4] * ESCALA));
+				rayita_anyo_pasado_05.setY((int) ((-1) * precios_hace_un_año[5] * ESCALA));
+				rayita_anyo_pasado_06.setY((int) ((-1) * precios_hace_un_año[6] * ESCALA));
+				rayita_anyo_pasado_07.setY((int) ((-1) * precios_hace_un_año[7] * ESCALA));
+				rayita_anyo_pasado_08.setY((int) ((-1) * precios_hace_un_año[8] * ESCALA));
+				rayita_anyo_pasado_09.setY((int) ((-1) * precios_hace_un_año[9] * ESCALA));
+				rayita_anyo_pasado_10.setY((int) ((-1) * precios_hace_un_año[10] * ESCALA));
+				rayita_anyo_pasado_11.setY((int) ((-1) * precios_hace_un_año[11] * ESCALA));
+				rayita_anyo_pasado_12.setY((int) ((-1) * precios_hace_un_año[12] * ESCALA));
+				rayita_anyo_pasado_13.setY((int) ((-1) * precios_hace_un_año[13] * ESCALA));
+				rayita_anyo_pasado_14.setY((int) ((-1) * precios_hace_un_año[14] * ESCALA));
+				rayita_anyo_pasado_15.setY((int) ((-1) * precios_hace_un_año[15] * ESCALA));
+				rayita_anyo_pasado_16.setY((int) ((-1) * precios_hace_un_año[16] * ESCALA));
+				rayita_anyo_pasado_17.setY((int) ((-1) * precios_hace_un_año[17] * ESCALA));
+				rayita_anyo_pasado_18.setY((int) ((-1) * precios_hace_un_año[18] * ESCALA));
+				rayita_anyo_pasado_19.setY((int) ((-1) * precios_hace_un_año[19] * ESCALA));
+				rayita_anyo_pasado_20.setY((int) ((-1) * precios_hace_un_año[20] * ESCALA));
+				rayita_anyo_pasado_21.setY((int) ((-1) * precios_hace_un_año[21] * ESCALA));
+				rayita_anyo_pasado_22.setY((int) ((-1) * precios_hace_un_año[22] * ESCALA));
+				rayita_anyo_pasado_23.setY((int) ((-1) * precios_hace_un_año[23] * ESCALA));
             } else {
-              //  rayita_anyo_pasado_00.setVisibility(View.INVISIBLE);
-
-                /*rayita_anyo_pasado_01.setVisibility(View.INVISIBLE);
-
+               rayita_anyo_pasado_00.setVisibility(View.INVISIBLE);
+                rayita_anyo_pasado_01.setVisibility(View.INVISIBLE);
                 rayita_anyo_pasado_02.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_03.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_04.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_05.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_06.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_07.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_08.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_09.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_10.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_11.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_12.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_13.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_14.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_15.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_16.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_17.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_18.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_19.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_20.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_21.setVisibility(View.INVISIBLE);
-
                 rayita_anyo_pasado_22.setVisibility(View.INVISIBLE);
-
-                rayita_anyo_pasado_23.setVisibility(View.INVISIBLE);*/
+                rayita_anyo_pasado_23.setVisibility(View.INVISIBLE);
             }
 
-
-            RelativeLayout.LayoutParams mLayoutParams_rayita0 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            /*RelativeLayout.LayoutParams mLayoutParams_rayita1 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita2 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita3 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita4 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita5 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita6 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita7 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita8 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita9 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita10 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita11 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita12 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita13 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita14 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita15 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita16 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita17 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita18 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita19 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita20 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita21 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita22 = new RelativeLayout.LayoutParams(ANCHURA, 2);
-            RelativeLayout.LayoutParams mLayoutParams_rayita23 = new RelativeLayout.LayoutParams(ANCHURA, 2);*/
-
-            mLayoutParams_rayita0.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            /*mLayoutParams_rayita1.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita2.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita3.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita4.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita5.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita6.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita7.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita8.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita9.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita10.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita11.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita12.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita13.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita14.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita15.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita16.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita17.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita18.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita19.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita20.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita21.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita22.addRule(RelativeLayout.CENTER_HORIZONTAL);
-            mLayoutParams_rayita23.addRule(RelativeLayout.CENTER_HORIZONTAL);*/
-
-            mLayoutParams_rayita0.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra0);
-            /*mLayoutParams_rayita1.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra1);
-            mLayoutParams_rayita2.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra2);
-            mLayoutParams_rayita3.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra3);
-            mLayoutParams_rayita4.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra4);
-            mLayoutParams_rayita5.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra5);
-            mLayoutParams_rayita6.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra6);
-            mLayoutParams_rayita7.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra7);
-            mLayoutParams_rayita8.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra8);
-            mLayoutParams_rayita9.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra9);
-            mLayoutParams_rayita10.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra10);
-            mLayoutParams_rayita11.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra11);
-            mLayoutParams_rayita12.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra12);
-            mLayoutParams_rayita13.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra13);
-            mLayoutParams_rayita14.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra14);
-            mLayoutParams_rayita15.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra15);
-            mLayoutParams_rayita16.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra16);
-            mLayoutParams_rayita17.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra17);
-            mLayoutParams_rayita18.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra18);
-            mLayoutParams_rayita19.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra19);
-            mLayoutParams_rayita20.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra20);
-            mLayoutParams_rayita21.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra21);
-            mLayoutParams_rayita22.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra22);
-            mLayoutParams_rayita23.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.barra23);*/
-
-           // rayita_anyo_pasado_00.setLayoutParams(mLayoutParams_rayita0);
-            /*rayita_anyo_pasado_01.setLayoutParams(mLayoutParams_rayita1);
-            rayita_anyo_pasado_02.setLayoutParams(mLayoutParams_rayita2);
-            rayita_anyo_pasado_03.setLayoutParams(mLayoutParams_rayita3);
-            rayita_anyo_pasado_04.setLayoutParams(mLayoutParams_rayita4);
-            rayita_anyo_pasado_05.setLayoutParams(mLayoutParams_rayita5);
-            rayita_anyo_pasado_06.setLayoutParams(mLayoutParams_rayita6);
-            rayita_anyo_pasado_07.setLayoutParams(mLayoutParams_rayita7);
-            rayita_anyo_pasado_08.setLayoutParams(mLayoutParams_rayita8);
-            rayita_anyo_pasado_09.setLayoutParams(mLayoutParams_rayita9);
-            rayita_anyo_pasado_10.setLayoutParams(mLayoutParams_rayita10);
-            rayita_anyo_pasado_11.setLayoutParams(mLayoutParams_rayita11);
-            rayita_anyo_pasado_12.setLayoutParams(mLayoutParams_rayita12);
-            rayita_anyo_pasado_13.setLayoutParams(mLayoutParams_rayita13);
-            rayita_anyo_pasado_14.setLayoutParams(mLayoutParams_rayita14);
-            rayita_anyo_pasado_15.setLayoutParams(mLayoutParams_rayita15);
-            rayita_anyo_pasado_16.setLayoutParams(mLayoutParams_rayita16);
-            rayita_anyo_pasado_17.setLayoutParams(mLayoutParams_rayita17);
-            rayita_anyo_pasado_18.setLayoutParams(mLayoutParams_rayita18);
-            rayita_anyo_pasado_19.setLayoutParams(mLayoutParams_rayita19);
-            rayita_anyo_pasado_20.setLayoutParams(mLayoutParams_rayita20);
-            rayita_anyo_pasado_21.setLayoutParams(mLayoutParams_rayita21);
-            rayita_anyo_pasado_22.setLayoutParams(mLayoutParams_rayita22);
-            rayita_anyo_pasado_23.setLayoutParams(mLayoutParams_rayita23);*/
-
-         //   rayita_anyo_pasado_00.setY((int) ((-1) * precios_hace_un_año[0] * ESCALA));
-            /*rayita_anyo_pasado_01.setY((int) ((-1) * precios_hace_un_año[1] * ESCALA));
-            rayita_anyo_pasado_02.setY((int) ((-1) * precios_hace_un_año[2] * ESCALA));
-            rayita_anyo_pasado_03.setY((int) ((-1) * precios_hace_un_año[3] * ESCALA));
-            rayita_anyo_pasado_04.setY((int) ((-1) * precios_hace_un_año[4] * ESCALA));
-            rayita_anyo_pasado_05.setY((int) ((-1) * precios_hace_un_año[5] * ESCALA));
-            rayita_anyo_pasado_06.setY((int) ((-1) * precios_hace_un_año[6] * ESCALA));
-            rayita_anyo_pasado_07.setY((int) ((-1) * precios_hace_un_año[7] * ESCALA));
-            rayita_anyo_pasado_08.setY((int) ((-1) * precios_hace_un_año[8] * ESCALA));
-            rayita_anyo_pasado_09.setY((int) ((-1) * precios_hace_un_año[9] * ESCALA));
-            rayita_anyo_pasado_10.setY((int) ((-1) * precios_hace_un_año[10] * ESCALA));
-            rayita_anyo_pasado_11.setY((int) ((-1) * precios_hace_un_año[11] * ESCALA));
-            rayita_anyo_pasado_12.setY((int) ((-1) * precios_hace_un_año[12] * ESCALA));
-            rayita_anyo_pasado_13.setY((int) ((-1) * precios_hace_un_año[13] * ESCALA));
-            rayita_anyo_pasado_14.setY((int) ((-1) * precios_hace_un_año[14] * ESCALA));
-            rayita_anyo_pasado_15.setY((int) ((-1) * precios_hace_un_año[15] * ESCALA));
-            rayita_anyo_pasado_16.setY((int) ((-1) * precios_hace_un_año[16] * ESCALA));
-            rayita_anyo_pasado_17.setY((int) ((-1) * precios_hace_un_año[17] * ESCALA));
-            rayita_anyo_pasado_18.setY((int) ((-1) * precios_hace_un_año[18] * ESCALA));
-            rayita_anyo_pasado_19.setY((int) ((-1) * precios_hace_un_año[19] * ESCALA));
-            rayita_anyo_pasado_20.setY((int) ((-1) * precios_hace_un_año[20] * ESCALA));
-            rayita_anyo_pasado_21.setY((int) ((-1) * precios_hace_un_año[21] * ESCALA));
-            rayita_anyo_pasado_22.setY((int) ((-1) * precios_hace_un_año[22] * ESCALA));
-            rayita_anyo_pasado_23.setY((int) ((-1) * precios_hace_un_año[23] * ESCALA));*/
         }catch(Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_rayitas_año_pasado" + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
     private void pinta_flechitas(ViewGroup rootView){
-        ImageView flechita_derecha = (ImageView) rootView.findViewById(R.id.flechita_derecha);
-        ImageView flechita_izquierda = (ImageView) rootView.findViewById(R.id.flechita_izquierda);
+        ImageView flechita_derecha = rootView.findViewById(R.id.flechita_derecha);
+        ImageView flechita_izquierda = rootView.findViewById(R.id.flechita_izquierda);
 
         if(this.titulo.contains("hoy")) {
             flechita_derecha.setVisibility(ImageView.INVISIBLE);
@@ -1151,30 +1049,30 @@ public class GraficasFragment_Landscape extends Fragment {
     private void pinta_texto_precios(ViewGroup rootView/*, int tamaño_letra*/){
         try {
 
-            TextView texto_precio0 = (TextView) rootView.findViewById(R.id.texto_precio0);
-            TextView texto_precio1 = (TextView) rootView.findViewById(R.id.texto_precio1);
-            TextView texto_precio2 = (TextView) rootView.findViewById(R.id.texto_precio2);
-            TextView texto_precio3 = (TextView) rootView.findViewById(R.id.texto_precio3);
-            TextView texto_precio4 = (TextView) rootView.findViewById(R.id.texto_precio4);
-            TextView texto_precio5 = (TextView) rootView.findViewById(R.id.texto_precio5);
-            TextView texto_precio6 = (TextView) rootView.findViewById(R.id.texto_precio6);
-            TextView texto_precio7 = (TextView) rootView.findViewById(R.id.texto_precio7);
-            TextView texto_precio8 = (TextView) rootView.findViewById(R.id.texto_precio8);
-            TextView texto_precio9 = (TextView) rootView.findViewById(R.id.texto_precio9);
-            TextView texto_precio10 = (TextView) rootView.findViewById(R.id.texto_precio10);
-            TextView texto_precio11 = (TextView) rootView.findViewById(R.id.texto_precio11);
-            TextView texto_precio12 = (TextView) rootView.findViewById(R.id.texto_precio12);
-            TextView texto_precio13 = (TextView) rootView.findViewById(R.id.texto_precio13);
-            TextView texto_precio14 = (TextView) rootView.findViewById(R.id.texto_precio14);
-            TextView texto_precio15 = (TextView) rootView.findViewById(R.id.texto_precio15);
-            TextView texto_precio16 = (TextView) rootView.findViewById(R.id.texto_precio16);
-            TextView texto_precio17 = (TextView) rootView.findViewById(R.id.texto_precio17);
-            TextView texto_precio18 = (TextView) rootView.findViewById(R.id.texto_precio18);
-            TextView texto_precio19 = (TextView) rootView.findViewById(R.id.texto_precio19);
-            TextView texto_precio20 = (TextView) rootView.findViewById(R.id.texto_precio20);
-            TextView texto_precio21 = (TextView) rootView.findViewById(R.id.texto_precio21);
-            TextView texto_precio22 = (TextView) rootView.findViewById(R.id.texto_precio22);
-            TextView texto_precio23 = (TextView) rootView.findViewById(R.id.texto_precio23);
+            TextView texto_precio0 = rootView.findViewById(R.id.texto_precio0);
+            TextView texto_precio1 = rootView.findViewById(R.id.texto_precio1);
+            TextView texto_precio2 = rootView.findViewById(R.id.texto_precio2);
+            TextView texto_precio3 = rootView.findViewById(R.id.texto_precio3);
+            TextView texto_precio4 = rootView.findViewById(R.id.texto_precio4);
+            TextView texto_precio5 = rootView.findViewById(R.id.texto_precio5);
+            TextView texto_precio6 = rootView.findViewById(R.id.texto_precio6);
+            TextView texto_precio7 = rootView.findViewById(R.id.texto_precio7);
+            TextView texto_precio8 = rootView.findViewById(R.id.texto_precio8);
+            TextView texto_precio9 = rootView.findViewById(R.id.texto_precio9);
+            TextView texto_precio10 = rootView.findViewById(R.id.texto_precio10);
+            TextView texto_precio11 = rootView.findViewById(R.id.texto_precio11);
+            TextView texto_precio12 = rootView.findViewById(R.id.texto_precio12);
+            TextView texto_precio13 = rootView.findViewById(R.id.texto_precio13);
+            TextView texto_precio14 = rootView.findViewById(R.id.texto_precio14);
+            TextView texto_precio15 = rootView.findViewById(R.id.texto_precio15);
+            TextView texto_precio16 = rootView.findViewById(R.id.texto_precio16);
+            TextView texto_precio17 = rootView.findViewById(R.id.texto_precio17);
+            TextView texto_precio18 = rootView.findViewById(R.id.texto_precio18);
+            TextView texto_precio19 = rootView.findViewById(R.id.texto_precio19);
+            TextView texto_precio20 = rootView.findViewById(R.id.texto_precio20);
+            TextView texto_precio21 = rootView.findViewById(R.id.texto_precio21);
+            TextView texto_precio22 = rootView.findViewById(R.id.texto_precio22);
+            TextView texto_precio23 = rootView.findViewById(R.id.texto_precio23);
 
             DecimalFormat df = new DecimalFormat(".0000");
 
@@ -1300,14 +1198,14 @@ public class GraficasFragment_Landscape extends Fragment {
                 texto_precio23.setText(df.format(precios[23]));
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_texto_precios " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
         }
     }
 
     private int Px2DP(int px){
-        Float pd=0.0f;
+        Float pd;
         if (Resources.getSystem().getDisplayMetrics().density == 0.75f) {pd=px*0.75f;}
-        else if (Resources.getSystem().getDisplayMetrics().density == 1.0f){pd=Float.valueOf(px);}
+        else if (Resources.getSystem().getDisplayMetrics().density == 1.0f){pd= (float) px;}
         else if (Resources.getSystem().getDisplayMetrics().density == 1.5f){pd=px*1.5f;}
         else if (Resources.getSystem().getDisplayMetrics().density == 2.0f){pd=px*2.0f;}
         else if (Resources.getSystem().getDisplayMetrics().density == 3.0f){pd=px*3.0f;}

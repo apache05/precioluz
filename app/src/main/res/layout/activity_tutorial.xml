@@ -9,12 +9,12 @@
     <TextView
             android:id="@+id/app_name"
             android:text="@string/app_name"
-            style="@style/titulo_tutorial"/>
-    <ImageView
-        android:contentDescription="@string/contentdescription_flecha"
-        android:src="@drawable/flecha_derecha"
-        style="@style/flechita_derecha"
-        />
+        android:layout_width="match_parent"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tamaño_letra_titulos"
+        android:gravity="center_horizontal"/>
 
     <ScrollView android:id="@+id/ScrlView"
         android:layout_width="fill_parent"

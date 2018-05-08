@@ -9,5 +9,7 @@
 
     <string name="TAG_TARIFA_ACTUAL" translatable="false">TAG_TARIFA_ACTUAL</string>
     <string name="FRAGMENT_ACTUAL" translatable="false">FRAGMENT_ACTUAL</string>
+    <string name="ALARMA" translatable="false">ALARMA</string>
+    <string name="ULTIMA_ALARMA" translatable="false">ULTIMA_ALARMA</string>
 
 </resources>

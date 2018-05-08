@@ -1,7 +1,7 @@
 package com.rubisoft.precioluz2.Fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rubisoft.precioluz2.Activities.R;
+import com.rubisoft.precioluz2.utils.utils;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ErrorFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ErrorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
- public class ErrorFragment extends Fragment {
+public class ErrorFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +23,6 @@ import com.rubisoft.precioluz2.Activities.R;
     private String texto_error;
     private int num_fragment;
 
-    private OnFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -43,7 +35,7 @@ import com.rubisoft.precioluz2.Activities.R;
     public static ErrorFragment newInstance( int param2) {
         ErrorFragment fragment = new ErrorFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, "Error: no hay conexión a Internet");
+        args.putString(ARG_PARAM1, "Error \n no hay conexión a Internet");
         args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -63,59 +55,34 @@ import com.rubisoft.precioluz2.Activities.R;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the animacion for this fragment
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_error, container, false);
-        TextView TextView_error=  (TextView) rootView.findViewById(R.id.texto_error);
-        TextView_error.setText(texto_error);
+        try {
+            TextView TextView_error = rootView.findViewById(R.id.texto_error);
+            TextView_error.setText(texto_error);
 
-        ImageView flechita_derecha = (ImageView) rootView.findViewById(R.id.flechita_derecha_error);
-        if(this.num_fragment == 1) {
-            flechita_derecha.setVisibility(ImageView.VISIBLE);
-        }else{
-            flechita_derecha.setVisibility(ImageView.INVISIBLE);
+            ImageView flechita_derecha = rootView.findViewById(R.id.flechita_derecha_error);
+            ImageView flechita_izquierda = rootView.findViewById(R.id.flechita_izquierda_error);
+
+            if (this.num_fragment == 1) {
+                flechita_derecha.setVisibility(ImageView.INVISIBLE);
+                flechita_izquierda.setVisibility(ImageView.VISIBLE);
+            } else {
+                flechita_derecha.setVisibility(ImageView.VISIBLE);
+                flechita_izquierda.setVisibility(ImageView.INVISIBLE);
+            }
+        }catch (Exception e){
+            new utils.AsyncTask_Guardar_Error().execute(new android.support.v4.util.Pair<>(getContext(), e.toString()));
         }
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-   /* @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }*/
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-         void onFragmentInteraction(Uri uri);
     }
 
 

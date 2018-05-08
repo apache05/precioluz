@@ -1,19 +1,21 @@
 package com.rubisoft.precioluz2.Fragments;
 
-import android.content.res.Configuration;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rubisoft.precioluz2.Activities.R;
+import com.rubisoft.precioluz2.utils.utils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -211,10 +213,10 @@ public class GraficasFragment_Portrait extends Fragment {
         return fragment;
     }
 
-    private int ESCALA = Px2DP(2000); //Altura de las barras
-    private int ANCHURA = Px2DP(25); //Anchura de las barras
-    private int TRASLACION = Px2DP(35);
-    private int GROSOR = Px2DP(3);
+    private final int ESCALA = Px2DP(1500); //Altura de las barras
+    private final int ANCHURA = Px2DP(25); //Anchura de las barras
+    private final int TRASLACION = Px2DP(35);
+    private final int GROSOR = Px2DP(3);
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -298,12 +300,12 @@ public class GraficasFragment_Portrait extends Fragment {
             this.precios_semana_pasada_activado = (getArguments() != null) && getArguments().getBoolean(PRECIOS_SEMANA_PASADA);
             this.precios_año_pasado_activado = (getArguments() != null) && getArguments().getBoolean(PRECIOS_AÑO_PASADO);
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en onCreate " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //set_parametros_segun_screensize();
         ViewGroup rootView = null;
         try {
@@ -320,12 +322,11 @@ public class GraficasFragment_Portrait extends Fragment {
                 pinta_texto_precios(rootView/*,TAMAÑO_TEXTO_PRECIO,PADDING_LEFT_TEXTO_PRECIO*/);
 
             }else{
-                TextView TextView_todavia_no_hay_precios= (TextView) rootView.findViewById(R.id.TextView_todavia_no_hay_precios);
-                TextView_todavia_no_hay_precios.setText("Precios todavía no disponibles");
+                TextView TextView_todavia_no_hay_precios= rootView.findViewById(R.id.TextView_todavia_no_hay_precios);
                 TextView_todavia_no_hay_precios.setVisibility(View.VISIBLE);
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en onCreateView " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
         return rootView;
     }
@@ -339,99 +340,42 @@ public class GraficasFragment_Portrait extends Fragment {
                 this.precios_hace_una_semana[i] = precios_hace_una_semana[i];
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Exception en set_todos_los_precios " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
-
-    private void set_parametros_segun_screensize() {
-        try {
-            int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-
-            switch (screenSize) {
-                case Configuration.SCREENLAYOUT_SIZE_SMALL:
-                    ESCALA = Px2DP(1100);
-                    ANCHURA = Px2DP(25);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                    //PADDING_LEFT_BARRA= Px2DP(180);
-                    //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_NORMAL:  //nexus 10
-                    ESCALA = Px2DP(1100);
-                    ANCHURA = Px2DP(25);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                    //PADDING_LEFT_BARRA= Px2DP(180);
-                    //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_LARGE:
-                    ESCALA = Px2DP(1100);
-                    ANCHURA = Px2DP(25);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                    //PADDING_LEFT_BARRA= Px2DP(180);
-                    //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
-                    break;
-                case Configuration.SCREENLAYOUT_SIZE_XLARGE:  //nexus 9
-                    ESCALA = Px2DP(1100);
-                    ANCHURA = Px2DP(25);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                    //PADDING_LEFT_BARRA= Px2DP(180);
-                    //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
-                    break;
-                default:   //por defecto será igual que el normal
-                    ESCALA = Px2DP(1100);
-                    ANCHURA = Px2DP(25);
-                /*TAMAÑO_TEXTO_TITULO= Px2SP(35);
-                TAMAÑO_TEXTO_PRECIO = Px2SP(17);
-                TAMAÑO_TEXTO_HORAS= Px2DP(20);*/
-                    //PADDING_LEFT_BARRA= Px2DP(180);
-                    //PADDING_LEFT_TEXTO_PRECIO= Px2DP(200);
-                    break;
-            }
-        }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en set_parametros_segun_screensize " + e, Toast.LENGTH_LONG).show();
-        }
-    }
 
     private void pinta_titulo(ViewGroup rootView) {
-        TextView TextView_titulo = (TextView) rootView.findViewById(R.id.precios);
+        TextView TextView_titulo = rootView.findViewById(R.id.precios);
         TextView_titulo.setText(this.titulo);
-        //TextView_titulo.setTextSize(tamaño_letra);
     }
 
     private void pinta_barras(ViewGroup rootView) {
         try {
-            ImageView barra0 = (ImageView) rootView.findViewById(R.id.barra0);
-            ImageView barra1 = (ImageView) rootView.findViewById(R.id.barra1);
-            ImageView barra2 = (ImageView) rootView.findViewById(R.id.barra2);
-            ImageView barra3 = (ImageView) rootView.findViewById(R.id.barra3);
-            ImageView barra4 = (ImageView) rootView.findViewById(R.id.barra4);
-            ImageView barra5 = (ImageView) rootView.findViewById(R.id.barra5);
-            ImageView barra6 = (ImageView) rootView.findViewById(R.id.barra6);
-            ImageView barra7 = (ImageView) rootView.findViewById(R.id.barra7);
-            ImageView barra8 = (ImageView) rootView.findViewById(R.id.barra8);
-            ImageView barra9 = (ImageView) rootView.findViewById(R.id.barra9);
-            ImageView barra10 = (ImageView) rootView.findViewById(R.id.barra10);
-            ImageView barra11 = (ImageView) rootView.findViewById(R.id.barra11);
-            ImageView barra12 = (ImageView) rootView.findViewById(R.id.barra12);
-            ImageView barra13 = (ImageView) rootView.findViewById(R.id.barra13);
-            ImageView barra14 = (ImageView) rootView.findViewById(R.id.barra14);
-            ImageView barra15 = (ImageView) rootView.findViewById(R.id.barra15);
-            ImageView barra16 = (ImageView) rootView.findViewById(R.id.barra16);
-            ImageView barra17 = (ImageView) rootView.findViewById(R.id.barra17);
-            ImageView barra18 = (ImageView) rootView.findViewById(R.id.barra18);
-            ImageView barra19 = (ImageView) rootView.findViewById(R.id.barra19);
-            ImageView barra20 = (ImageView) rootView.findViewById(R.id.barra20);
-            ImageView barra21 = (ImageView) rootView.findViewById(R.id.barra21);
-            ImageView barra22 = (ImageView) rootView.findViewById(R.id.barra22);
-            ImageView barra23 = (ImageView) rootView.findViewById(R.id.barra23);
+            ImageView barra0 = rootView.findViewById(R.id.barra0);
+            ImageView barra1 = rootView.findViewById(R.id.barra1);
+            ImageView barra2 = rootView.findViewById(R.id.barra2);
+            ImageView barra3 = rootView.findViewById(R.id.barra3);
+            ImageView barra4 = rootView.findViewById(R.id.barra4);
+            ImageView barra5 = rootView.findViewById(R.id.barra5);
+            ImageView barra6 = rootView.findViewById(R.id.barra6);
+            ImageView barra7 = rootView.findViewById(R.id.barra7);
+            ImageView barra8 = rootView.findViewById(R.id.barra8);
+            ImageView barra9 = rootView.findViewById(R.id.barra9);
+            ImageView barra10 = rootView.findViewById(R.id.barra10);
+            ImageView barra11 = rootView.findViewById(R.id.barra11);
+            ImageView barra12 = rootView.findViewById(R.id.barra12);
+            ImageView barra13 = rootView.findViewById(R.id.barra13);
+            ImageView barra14 = rootView.findViewById(R.id.barra14);
+            ImageView barra15 = rootView.findViewById(R.id.barra15);
+            ImageView barra16 = rootView.findViewById(R.id.barra16);
+            ImageView barra17 = rootView.findViewById(R.id.barra17);
+            ImageView barra18 = rootView.findViewById(R.id.barra18);
+            ImageView barra19 = rootView.findViewById(R.id.barra19);
+            ImageView barra20 = rootView.findViewById(R.id.barra20);
+            ImageView barra21 = rootView.findViewById(R.id.barra21);
+            ImageView barra22 = rootView.findViewById(R.id.barra22);
+            ImageView barra23 = rootView.findViewById(R.id.barra23);
 
             barra0.setLayoutParams(new RelativeLayout.LayoutParams((int) (precios[0] * ESCALA), ANCHURA));
             barra1.setLayoutParams(new RelativeLayout.LayoutParams((int) (precios[1] * ESCALA), ANCHURA));
@@ -511,41 +455,41 @@ public class GraficasFragment_Portrait extends Fragment {
             barra22.setColorFilter(getColor(precios_ordenados, precios[22]));
             barra23.setColorFilter(getColor(precios_ordenados, precios[23]));
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_barras " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     private void pinta_texto_horas(ViewGroup rootView) {
         try {
-            TextView mTextView0 = (TextView) rootView.findViewById(R.id.texto0);
-            TextView mTextView1 = (TextView) rootView.findViewById(R.id.texto1);
-            TextView mTextView2 = (TextView) rootView.findViewById(R.id.texto2);
-            TextView mTextView3 = (TextView) rootView.findViewById(R.id.texto3);
-            TextView mTextView4 = (TextView) rootView.findViewById(R.id.texto4);
-            TextView mTextView5 = (TextView) rootView.findViewById(R.id.texto5);
-            TextView mTextView6 = (TextView) rootView.findViewById(R.id.texto6);
-            TextView mTextView7 = (TextView) rootView.findViewById(R.id.texto7);
-            TextView mTextView8 = (TextView) rootView.findViewById(R.id.texto8);
-            TextView mTextView9 = (TextView) rootView.findViewById(R.id.texto9);
-            TextView mTextView10 = (TextView) rootView.findViewById(R.id.texto10);
-            TextView mTextView11 = (TextView) rootView.findViewById(R.id.texto11);
-            TextView mTextView12 = (TextView) rootView.findViewById(R.id.texto12);
-            TextView mTextView13 = (TextView) rootView.findViewById(R.id.texto13);
-            TextView mTextView14 = (TextView) rootView.findViewById(R.id.texto14);
-            TextView mTextView15 = (TextView) rootView.findViewById(R.id.texto15);
-            TextView mTextView16 = (TextView) rootView.findViewById(R.id.texto16);
-            TextView mTextView17 = (TextView) rootView.findViewById(R.id.texto17);
-            TextView mTextView18 = (TextView) rootView.findViewById(R.id.texto18);
-            TextView mTextView19 = (TextView) rootView.findViewById(R.id.texto19);
-            TextView mTextView20 = (TextView) rootView.findViewById(R.id.texto20);
-            TextView mTextView21 = (TextView) rootView.findViewById(R.id.texto21);
-            TextView mTextView22 = (TextView) rootView.findViewById(R.id.texto22);
-            TextView mTextView23 = (TextView) rootView.findViewById(R.id.texto23);
+            TextView mTextView0 = rootView.findViewById(R.id.texto0);
+            TextView mTextView1 = rootView.findViewById(R.id.texto1);
+            TextView mTextView2 = rootView.findViewById(R.id.texto2);
+            TextView mTextView3 = rootView.findViewById(R.id.texto3);
+            TextView mTextView4 = rootView.findViewById(R.id.texto4);
+            TextView mTextView5 = rootView.findViewById(R.id.texto5);
+            TextView mTextView6 = rootView.findViewById(R.id.texto6);
+            TextView mTextView7 = rootView.findViewById(R.id.texto7);
+            TextView mTextView8 = rootView.findViewById(R.id.texto8);
+            TextView mTextView9 = rootView.findViewById(R.id.texto9);
+            TextView mTextView10 = rootView.findViewById(R.id.texto10);
+            TextView mTextView11 = rootView.findViewById(R.id.texto11);
+            TextView mTextView12 = rootView.findViewById(R.id.texto12);
+            TextView mTextView13 = rootView.findViewById(R.id.texto13);
+            TextView mTextView14 = rootView.findViewById(R.id.texto14);
+            TextView mTextView15 = rootView.findViewById(R.id.texto15);
+            TextView mTextView16 = rootView.findViewById(R.id.texto16);
+            TextView mTextView17 = rootView.findViewById(R.id.texto17);
+            TextView mTextView18 = rootView.findViewById(R.id.texto18);
+            TextView mTextView19 = rootView.findViewById(R.id.texto19);
+            TextView mTextView20 = rootView.findViewById(R.id.texto20);
+            TextView mTextView21 = rootView.findViewById(R.id.texto21);
+            TextView mTextView22 = rootView.findViewById(R.id.texto22);
+            TextView mTextView23 = rootView.findViewById(R.id.texto23);
 
 
             if (this.titulo.contains("hoy")) {
                 DateFormat df = new SimpleDateFormat("HH");
-                Integer hora = new Integer(df.format(Calendar.getInstance().getTime()));
+                Integer hora = Integer.valueOf(df.format(Calendar.getInstance().getTime()));
                 switch (hora) {
                     case 0:
                         mTextView0.setTextColor(getResources().getColor(R.color.Black));
@@ -646,36 +590,36 @@ public class GraficasFragment_Portrait extends Fragment {
                 }
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), "Exception en pinta_texto_horas " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     private void pinta_rayitas_semana_pasada(ViewGroup rootView) {
         try {
-            ImageView rayita_semana_pasada_00 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_00);
-            ImageView rayita_semana_pasada_01 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_01);
-            ImageView rayita_semana_pasada_02 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_02);
-            ImageView rayita_semana_pasada_03 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_03);
-            ImageView rayita_semana_pasada_04 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_04);
-            ImageView rayita_semana_pasada_05 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_05);
-            ImageView rayita_semana_pasada_06 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_06);
-            ImageView rayita_semana_pasada_07 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_07);
-            ImageView rayita_semana_pasada_08 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_08);
-            ImageView rayita_semana_pasada_09 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_09);
-            ImageView rayita_semana_pasada_10 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_10);
-            ImageView rayita_semana_pasada_11 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_11);
-            ImageView rayita_semana_pasada_12 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_12);
-            ImageView rayita_semana_pasada_13 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_13);
-            ImageView rayita_semana_pasada_14 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_14);
-            ImageView rayita_semana_pasada_15 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_15);
-            ImageView rayita_semana_pasada_16 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_16);
-            ImageView rayita_semana_pasada_17 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_17);
-            ImageView rayita_semana_pasada_18 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_18);
-            ImageView rayita_semana_pasada_19 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_19);
-            ImageView rayita_semana_pasada_20 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_20);
-            ImageView rayita_semana_pasada_21 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_21);
-            ImageView rayita_semana_pasada_22 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_22);
-            ImageView rayita_semana_pasada_23 = (ImageView) rootView.findViewById(R.id.rayita_semana_pasada_23);
+            ImageView rayita_semana_pasada_00 = rootView.findViewById(R.id.rayita_semana_pasada_00);
+            ImageView rayita_semana_pasada_01 = rootView.findViewById(R.id.rayita_semana_pasada_01);
+            ImageView rayita_semana_pasada_02 = rootView.findViewById(R.id.rayita_semana_pasada_02);
+            ImageView rayita_semana_pasada_03 = rootView.findViewById(R.id.rayita_semana_pasada_03);
+            ImageView rayita_semana_pasada_04 = rootView.findViewById(R.id.rayita_semana_pasada_04);
+            ImageView rayita_semana_pasada_05 = rootView.findViewById(R.id.rayita_semana_pasada_05);
+            ImageView rayita_semana_pasada_06 = rootView.findViewById(R.id.rayita_semana_pasada_06);
+            ImageView rayita_semana_pasada_07 = rootView.findViewById(R.id.rayita_semana_pasada_07);
+            ImageView rayita_semana_pasada_08 = rootView.findViewById(R.id.rayita_semana_pasada_08);
+            ImageView rayita_semana_pasada_09 = rootView.findViewById(R.id.rayita_semana_pasada_09);
+            ImageView rayita_semana_pasada_10 = rootView.findViewById(R.id.rayita_semana_pasada_10);
+            ImageView rayita_semana_pasada_11 = rootView.findViewById(R.id.rayita_semana_pasada_11);
+            ImageView rayita_semana_pasada_12 = rootView.findViewById(R.id.rayita_semana_pasada_12);
+            ImageView rayita_semana_pasada_13 = rootView.findViewById(R.id.rayita_semana_pasada_13);
+            ImageView rayita_semana_pasada_14 = rootView.findViewById(R.id.rayita_semana_pasada_14);
+            ImageView rayita_semana_pasada_15 = rootView.findViewById(R.id.rayita_semana_pasada_15);
+            ImageView rayita_semana_pasada_16 = rootView.findViewById(R.id.rayita_semana_pasada_16);
+            ImageView rayita_semana_pasada_17 = rootView.findViewById(R.id.rayita_semana_pasada_17);
+            ImageView rayita_semana_pasada_18 = rootView.findViewById(R.id.rayita_semana_pasada_18);
+            ImageView rayita_semana_pasada_19 = rootView.findViewById(R.id.rayita_semana_pasada_19);
+            ImageView rayita_semana_pasada_20 = rootView.findViewById(R.id.rayita_semana_pasada_20);
+            ImageView rayita_semana_pasada_21 = rootView.findViewById(R.id.rayita_semana_pasada_21);
+            ImageView rayita_semana_pasada_22 = rootView.findViewById(R.id.rayita_semana_pasada_22);
+            ImageView rayita_semana_pasada_23 = rootView.findViewById(R.id.rayita_semana_pasada_23);
 
             if (precios_semana_pasada_activado) {
                 rayita_semana_pasada_00.setVisibility(ImageView.VISIBLE);
@@ -779,36 +723,36 @@ public class GraficasFragment_Portrait extends Fragment {
                 rayita_semana_pasada_23.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Exception en pinta_rayitas_semana_pasada " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     private void pinta_rayitas_año_pasado(ViewGroup rootView) {
         try {
-            ImageView rayita_anyo_pasado_00 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_00);
-            ImageView rayita_anyo_pasado_01 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_01);
-            ImageView rayita_anyo_pasado_02 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_02);
-            ImageView rayita_anyo_pasado_03 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_03);
-            ImageView rayita_anyo_pasado_04 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_04);
-            ImageView rayita_anyo_pasado_05 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_05);
-            ImageView rayita_anyo_pasado_06 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_06);
-            ImageView rayita_anyo_pasado_07 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_07);
-            ImageView rayita_anyo_pasado_08 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_08);
-            ImageView rayita_anyo_pasado_09 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_09);
-            ImageView rayita_anyo_pasado_10 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_10);
-            ImageView rayita_anyo_pasado_11 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_11);
-            ImageView rayita_anyo_pasado_12 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_12);
-            ImageView rayita_anyo_pasado_13 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_13);
-            ImageView rayita_anyo_pasado_14 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_14);
-            ImageView rayita_anyo_pasado_15 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_15);
-            ImageView rayita_anyo_pasado_16 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_16);
-            ImageView rayita_anyo_pasado_17 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_17);
-            ImageView rayita_anyo_pasado_18 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_18);
-            ImageView rayita_anyo_pasado_19 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_19);
-            ImageView rayita_anyo_pasado_20 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_20);
-            ImageView rayita_anyo_pasado_21 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_21);
-            ImageView rayita_anyo_pasado_22 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_22);
-            ImageView rayita_anyo_pasado_23 = (ImageView) rootView.findViewById(R.id.rayita_anyo_pasado_23);
+            ImageView rayita_anyo_pasado_00 = rootView.findViewById(R.id.rayita_anyo_pasado_00);
+            ImageView rayita_anyo_pasado_01 = rootView.findViewById(R.id.rayita_anyo_pasado_01);
+            ImageView rayita_anyo_pasado_02 = rootView.findViewById(R.id.rayita_anyo_pasado_02);
+            ImageView rayita_anyo_pasado_03 = rootView.findViewById(R.id.rayita_anyo_pasado_03);
+            ImageView rayita_anyo_pasado_04 = rootView.findViewById(R.id.rayita_anyo_pasado_04);
+            ImageView rayita_anyo_pasado_05 = rootView.findViewById(R.id.rayita_anyo_pasado_05);
+            ImageView rayita_anyo_pasado_06 = rootView.findViewById(R.id.rayita_anyo_pasado_06);
+            ImageView rayita_anyo_pasado_07 = rootView.findViewById(R.id.rayita_anyo_pasado_07);
+            ImageView rayita_anyo_pasado_08 = rootView.findViewById(R.id.rayita_anyo_pasado_08);
+            ImageView rayita_anyo_pasado_09 = rootView.findViewById(R.id.rayita_anyo_pasado_09);
+            ImageView rayita_anyo_pasado_10 = rootView.findViewById(R.id.rayita_anyo_pasado_10);
+            ImageView rayita_anyo_pasado_11 = rootView.findViewById(R.id.rayita_anyo_pasado_11);
+            ImageView rayita_anyo_pasado_12 = rootView.findViewById(R.id.rayita_anyo_pasado_12);
+            ImageView rayita_anyo_pasado_13 = rootView.findViewById(R.id.rayita_anyo_pasado_13);
+            ImageView rayita_anyo_pasado_14 = rootView.findViewById(R.id.rayita_anyo_pasado_14);
+            ImageView rayita_anyo_pasado_15 = rootView.findViewById(R.id.rayita_anyo_pasado_15);
+            ImageView rayita_anyo_pasado_16 = rootView.findViewById(R.id.rayita_anyo_pasado_16);
+            ImageView rayita_anyo_pasado_17 = rootView.findViewById(R.id.rayita_anyo_pasado_17);
+            ImageView rayita_anyo_pasado_18 = rootView.findViewById(R.id.rayita_anyo_pasado_18);
+            ImageView rayita_anyo_pasado_19 = rootView.findViewById(R.id.rayita_anyo_pasado_19);
+            ImageView rayita_anyo_pasado_20 = rootView.findViewById(R.id.rayita_anyo_pasado_20);
+            ImageView rayita_anyo_pasado_21 = rootView.findViewById(R.id.rayita_anyo_pasado_21);
+            ImageView rayita_anyo_pasado_22 = rootView.findViewById(R.id.rayita_anyo_pasado_22);
+            ImageView rayita_anyo_pasado_23 = rootView.findViewById(R.id.rayita_anyo_pasado_23);
 
             if (precios_año_pasado_activado) {
                 rayita_anyo_pasado_00.setVisibility(ImageView.VISIBLE);
@@ -912,13 +856,13 @@ public class GraficasFragment_Portrait extends Fragment {
                 rayita_anyo_pasado_23.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Exception en pinta_rayitas_año_pasado " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     private void pinta_flechitas(ViewGroup rootView) {
-        ImageView flechita_derecha = (ImageView) rootView.findViewById(R.id.flechita_derecha);
-        ImageView flechita_izquierda = (ImageView) rootView.findViewById(R.id.flechita_izquierda);
+        ImageView flechita_derecha = rootView.findViewById(R.id.flechita_derecha);
+        ImageView flechita_izquierda = rootView.findViewById(R.id.flechita_izquierda);
         if (this.titulo.contains("hoy")) {
             flechita_derecha.setVisibility(ImageView.INVISIBLE);
             flechita_izquierda.setVisibility(ImageView.VISIBLE);
@@ -930,30 +874,30 @@ public class GraficasFragment_Portrait extends Fragment {
 
     private void pinta_texto_precios(ViewGroup rootView) {
         try {
-            TextView texto_precio0 = (TextView) rootView.findViewById(R.id.texto_precio0);
-            TextView texto_precio1 = (TextView) rootView.findViewById(R.id.texto_precio1);
-            TextView texto_precio2 = (TextView) rootView.findViewById(R.id.texto_precio2);
-            TextView texto_precio3 = (TextView) rootView.findViewById(R.id.texto_precio3);
-            TextView texto_precio4 = (TextView) rootView.findViewById(R.id.texto_precio4);
-            TextView texto_precio5 = (TextView) rootView.findViewById(R.id.texto_precio5);
-            TextView texto_precio6 = (TextView) rootView.findViewById(R.id.texto_precio6);
-            TextView texto_precio7 = (TextView) rootView.findViewById(R.id.texto_precio7);
-            TextView texto_precio8 = (TextView) rootView.findViewById(R.id.texto_precio8);
-            TextView texto_precio9 = (TextView) rootView.findViewById(R.id.texto_precio9);
-            TextView texto_precio10 = (TextView) rootView.findViewById(R.id.texto_precio10);
-            TextView texto_precio11 = (TextView) rootView.findViewById(R.id.texto_precio11);
-            TextView texto_precio12 = (TextView) rootView.findViewById(R.id.texto_precio12);
-            TextView texto_precio13 = (TextView) rootView.findViewById(R.id.texto_precio13);
-            TextView texto_precio14 = (TextView) rootView.findViewById(R.id.texto_precio14);
-            TextView texto_precio15 = (TextView) rootView.findViewById(R.id.texto_precio15);
-            TextView texto_precio16 = (TextView) rootView.findViewById(R.id.texto_precio16);
-            TextView texto_precio17 = (TextView) rootView.findViewById(R.id.texto_precio17);
-            TextView texto_precio18 = (TextView) rootView.findViewById(R.id.texto_precio18);
-            TextView texto_precio19 = (TextView) rootView.findViewById(R.id.texto_precio19);
-            TextView texto_precio20 = (TextView) rootView.findViewById(R.id.texto_precio20);
-            TextView texto_precio21 = (TextView) rootView.findViewById(R.id.texto_precio21);
-            TextView texto_precio22 = (TextView) rootView.findViewById(R.id.texto_precio22);
-            TextView texto_precio23 = (TextView) rootView.findViewById(R.id.texto_precio23);
+            TextView texto_precio0 = rootView.findViewById(R.id.texto_precio0);
+            TextView texto_precio1 = rootView.findViewById(R.id.texto_precio1);
+            TextView texto_precio2 = rootView.findViewById(R.id.texto_precio2);
+            TextView texto_precio3 = rootView.findViewById(R.id.texto_precio3);
+            TextView texto_precio4 = rootView.findViewById(R.id.texto_precio4);
+            TextView texto_precio5 = rootView.findViewById(R.id.texto_precio5);
+            TextView texto_precio6 = rootView.findViewById(R.id.texto_precio6);
+            TextView texto_precio7 = rootView.findViewById(R.id.texto_precio7);
+            TextView texto_precio8 = rootView.findViewById(R.id.texto_precio8);
+            TextView texto_precio9 = rootView.findViewById(R.id.texto_precio9);
+            TextView texto_precio10 = rootView.findViewById(R.id.texto_precio10);
+            TextView texto_precio11 = rootView.findViewById(R.id.texto_precio11);
+            TextView texto_precio12 = rootView.findViewById(R.id.texto_precio12);
+            TextView texto_precio13 = rootView.findViewById(R.id.texto_precio13);
+            TextView texto_precio14 = rootView.findViewById(R.id.texto_precio14);
+            TextView texto_precio15 = rootView.findViewById(R.id.texto_precio15);
+            TextView texto_precio16 = rootView.findViewById(R.id.texto_precio16);
+            TextView texto_precio17 = rootView.findViewById(R.id.texto_precio17);
+            TextView texto_precio18 = rootView.findViewById(R.id.texto_precio18);
+            TextView texto_precio19 = rootView.findViewById(R.id.texto_precio19);
+            TextView texto_precio20 = rootView.findViewById(R.id.texto_precio20);
+            TextView texto_precio21 = rootView.findViewById(R.id.texto_precio21);
+            TextView texto_precio22 = rootView.findViewById(R.id.texto_precio22);
+            TextView texto_precio23 = rootView.findViewById(R.id.texto_precio23);
 
             DecimalFormat df = new DecimalFormat("0.0000");
 
@@ -1079,12 +1023,12 @@ public class GraficasFragment_Portrait extends Fragment {
                 texto_precio23.setText(df.format(precios[23]));
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Exception en pinta_texto_precios " + e, Toast.LENGTH_LONG).show();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
         }
     }
 
     private int Px2DP(int px) {
-        Float pd = 0.0f;
+        Float pd;
         if (Resources.getSystem().getDisplayMetrics().density == 0.75f) {
             pd = px * 0.75f;
         } else if (Resources.getSystem().getDisplayMetrics().density == 1.0f) {
@@ -1102,11 +1046,6 @@ public class GraficasFragment_Portrait extends Fragment {
         }
 
         return pd.intValue();
-    }
-
-    public static int Px2SP(float px) {
-        float scaledDensity = Resources.getSystem().getDisplayMetrics().scaledDensity;
-        return Math.round(px / scaledDensity);
     }
 
     private int getColor(Float[] precios_ordenados, float precio) {
@@ -1168,17 +1107,10 @@ public class GraficasFragment_Portrait extends Fragment {
                     return getResources().getColor(R.color._0);
             }
         } catch (Exception e) {
-            e.toString();
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
             return R.color._0;
         }
     }
 
-    private float precio_de_ahora(Float[] precios){
-        Calendar rightNow = Calendar.getInstance();
-        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY);
-        Toast.makeText(getContext(), "El precio ahora es de  " + precios[currentHour], Toast.LENGTH_LONG).show();
-
-        return precios[currentHour];
-    }
 }
 

@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.provider.Settings;
 
-/**
- * Created by ruben on 2/5/18.
- */
 
 public class Alarma extends BroadcastReceiver {
 	@Override

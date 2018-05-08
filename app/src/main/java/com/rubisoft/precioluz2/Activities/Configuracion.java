@@ -1,99 +1,124 @@
 package com.rubisoft.precioluz2.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.Dialogs.tutorialDialog;
+import com.rubisoft.precioluz2.utils.utils;
 
 public class Configuracion extends AppCompatActivity {
 
-	SharedPreferences prefs;
-	RadioButton RadioButton_tarifa_20A=null;
-	RadioButton RadioButton_tarifa_20DHA=null;
-	RadioButton RadioButton_tarifa_20DHS=null;
-	CheckBox CheckBox_hace_una_semana=null;
-	CheckBox CheckBox_hace_un_año=null;
-	TextView TextView_Configuracion=null;
+	private SharedPreferences prefs;
+	private RadioButton RadioButton_tarifa_20A=null;
+	private RadioButton RadioButton_tarifa_20DHA=null;
+	private RadioButton RadioButton_tarifa_20DHS=null;
+	private RadioButton RadioButton_hace_una_semana=null;
+	private RadioButton RadioButton_hace_un_año=null;
+	private RadioButton RadioButton_no_comparar=null;
+
+	private TextView TextView_Configuracion=null;
+	private Button Button_aceptar=null;
 	private final int INDICADOR_TARIFA_20A = 1013;
 	private final int INDICADOR_TARIFA_20DHA = 1014;
 	private final int INDICADOR_TARIFA_20DHS = 1015;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_configuracion);
-		setTypefaces();
-		RadioButton_tarifa_20A= (RadioButton)findViewById(R.id.radioButton_tarifa20A);
-		 RadioButton_tarifa_20DHA= (RadioButton)findViewById(R.id.radioButton_tarifa20DHA);
-		 RadioButton_tarifa_20DHS= (RadioButton)findViewById(R.id.radioButton_tarifa20DHS);
-		TextView_Configuracion= (RadioButton)findViewById(R.id.TextView_Configuracion);
-		Button boton_aceptar= (Button)findViewById(R.id.boton_aceptar);
-		CheckBox_hace_una_semana=(CheckBox)findViewById(R.id.checkBox_hace_una_semana);
-		CheckBox_hace_un_año=(CheckBox)findViewById(R.id.checkBox_hace_un_año);
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		inicializa_radiobuttons();
-		inicializa_checkboxes();
-		boton_aceptar.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
+		try {
+			super.onCreate(savedInstanceState);
+			if (isNetworkAvailable()) {
+				setContentView(R.layout.activity_configuracion);
+
+				prefs = PreferenceManager.getDefaultSharedPreferences(this);
+				setup_views();
+				setTypefaces();
+
+				inicializa_radiobuttons();
+				Button_aceptar.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
+						mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(mIntent);
+						finish();
+					}
+				});
+				RadioButton_tarifa_20A.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20A);
+
+					}
+				});
+				RadioButton_tarifa_20DHA.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20DHA);
+
+					}
+				});
+				RadioButton_tarifa_20DHS.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20DHS);
+
+					}
+				});
+				RadioButton_no_comparar.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						SharedPreferences.Editor editor = prefs.edit();
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UNA_SEMANA), false);
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UN_AÑO), false);
+
+						editor.apply();
+
+					}
+				});
+				RadioButton_hace_una_semana.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						SharedPreferences.Editor editor = prefs.edit();
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UNA_SEMANA), true);
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UN_AÑO), false);
+
+						editor.apply();
+					}
+				});
+
+				RadioButton_hace_un_año.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						SharedPreferences.Editor editor = prefs.edit();
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UNA_SEMANA), false);
+						editor.putBoolean(getResources().getString(R.string.TAG_HACE_UN_AÑO), true);
+						editor.apply();
+					}
+				});
+			} else {
+				Intent mIntent = new Intent(this, Error.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(mIntent);
 				finish();
 			}
-		});
-		RadioButton_tarifa_20A.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20A);
+		} catch (Exception e){
+			new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
 
-			}
-		});
-		RadioButton_tarifa_20DHA.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20DHA);
+		}
 
-			}
-		});
-		RadioButton_tarifa_20DHS.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				set_Tarifa_SharedPreferences(INDICADOR_TARIFA_20DHS);
-
-			}
-		});
-
-		CheckBox_hace_una_semana.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CheckBox checkBox = (CheckBox)v;
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean(getResources().getString(R.string.TAG_HACE_UNA_SEMANA), checkBox.isChecked());
-				editor.apply();
-			}
-		});
-
-		CheckBox_hace_un_año.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CheckBox checkBox = (CheckBox)v;
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean(getResources().getString(R.string.TAG_HACE_UN_AÑO), checkBox.isChecked());
-				editor.apply();
-			}
-		});
 	}
 
 	@Override
@@ -123,13 +148,14 @@ public class Configuracion extends AppCompatActivity {
 					finish();
 					break;
 				case R.id.tutorial:
-					//lanzamos el tutorial
-					android.app.DialogFragment un_dialogo = new tutorialDialog();
-					un_dialogo.show(this.getFragmentManager(), "");
+					Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+					mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mIntent_tutorial);
+					finish();
 					break;
 			}
 		} catch (Exception e) {
-
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -141,20 +167,18 @@ public class Configuracion extends AppCompatActivity {
 		return true;
 	}
 
-	public  void set_Tarifa_SharedPreferences(int tarifa) {
-		/*********** guarda la ultima tarifa que ha seleccioado el usuario***********/
+	private void set_Tarifa_SharedPreferences(int tarifa) {
 		try {
 
 			SharedPreferences.Editor editor = prefs.edit();
 			editor.putInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), tarifa);
 			editor.apply();
 		} catch (Exception e) {
-			e.toString();
+			new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
 		}
 
 	}
-	public  String inicializa_radiobuttons() {
-		String tarifa_actual="";
+	private void inicializa_radiobuttons() {
 
 		try {
 			switch (prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A)) {
@@ -171,15 +195,42 @@ public class Configuracion extends AppCompatActivity {
 					RadioButton_tarifa_20A.setChecked(true);
 					break;
 			}
-		} catch (Exception e) {
-			e.toString();
-		}
-		return tarifa_actual;
 
+			if ((prefs.getBoolean(getResources().getString(R.string.TAG_HACE_UNA_SEMANA), false))){
+				RadioButton_hace_una_semana.setChecked(true);
+			}else if  ((prefs.getBoolean(getResources().getString(R.string.TAG_HACE_UN_AÑO), false))){
+				RadioButton_hace_un_año.setChecked(true);
+			}else{
+				RadioButton_no_comparar.setChecked(true);
+			}
+			switch (prefs.getInt(getResources().getString(R.string.TAG_TARIFA_ACTUAL), INDICADOR_TARIFA_20A)) {
+				case INDICADOR_TARIFA_20A:
+					RadioButton_tarifa_20A.setChecked(true);
+					break;
+				case INDICADOR_TARIFA_20DHA:
+					RadioButton_tarifa_20DHA.setChecked(true);
+					break;
+				case INDICADOR_TARIFA_20DHS:
+					RadioButton_tarifa_20DHS.setChecked(true);
+					break;
+				default:
+					RadioButton_tarifa_20A.setChecked(true);
+					break;
+			}
+		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
+		}
 	}
-	public void inicializa_checkboxes(){
-		CheckBox_hace_una_semana.setChecked(prefs.getBoolean(getString(R.string.TAG_HACE_UNA_SEMANA),false));
-		CheckBox_hace_un_año.setChecked(prefs.getBoolean(getString(R.string.TAG_HACE_UN_AÑO),false));
+
+	private void setup_views(){
+		RadioButton_tarifa_20A= findViewById(R.id.radioButton_tarifa20A);
+		RadioButton_tarifa_20DHA= findViewById(R.id.radioButton_tarifa20DHA);
+		RadioButton_tarifa_20DHS= findViewById(R.id.radioButton_tarifa20DHS);
+		TextView_Configuracion= findViewById(R.id.TextView_Configuracion);
+		Button_aceptar= findViewById(R.id.boton_aceptar);
+		RadioButton_hace_una_semana= findViewById(R.id.RadioButton_hace_una_semana);
+		RadioButton_hace_un_año= findViewById(R.id.RadioButton_hace_un_año);
+		RadioButton_no_comparar= findViewById(R.id.RadioButton_no_comparar);
 
 	}
 	private void setTypefaces() {
@@ -190,8 +241,16 @@ public class Configuracion extends AppCompatActivity {
 		RadioButton_tarifa_20A.setTypeface(typeFace_roboto_light);
 		RadioButton_tarifa_20DHA.setTypeface(typeFace_roboto_light);
 		RadioButton_tarifa_20DHS.setTypeface(typeFace_roboto_light);
-		CheckBox_hace_un_año.setTypeface(typeFace_roboto_light);
-		CheckBox_hace_una_semana.setTypeface(typeFace_roboto_light);
-	}
+		RadioButton_hace_un_año.setTypeface(typeFace_roboto_light);
+		RadioButton_hace_una_semana.setTypeface(typeFace_roboto_light);
+		RadioButton_no_comparar.setTypeface(typeFace_roboto_light);
 
+	}
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager
+				= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		assert connectivityManager != null;
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
 }

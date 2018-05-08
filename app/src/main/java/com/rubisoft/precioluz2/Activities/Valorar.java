@@ -1,11 +1,15 @@
 package com.rubisoft.precioluz2.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +26,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rubisoft.precioluz2.Clases.Sugerencia;
-import com.rubisoft.precioluz2.Dialogs.tutorialDialog;
+import com.rubisoft.precioluz2.utils.utils;
 
 import java.util.Calendar;
 
@@ -39,62 +43,73 @@ public class Valorar extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_valorar);
-		setTypefaces();
-		setup_Views();
-		FirebaseApp.initializeApp(this);
-		RadioGroup_me_gusta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup radioGroup, int i) {
-				switch (i) {
-					case R.id.Layout_feedback_RadioButton_si_me_gusta:
-						LinearLayout_mejorar.setVisibility(View.INVISIBLE);
-						LinearLayout_valorar.setVisibility(View.VISIBLE);
-						break;
-					case R.id.Layout_feedback_RadioButton_no_me_gusta:
-						LinearLayout_valorar.setVisibility(View.INVISIBLE);
-						LinearLayout_mejorar.setVisibility(View.VISIBLE);
-						break;
-				}
-			}
-		});
+		try {
+			super.onCreate(savedInstanceState);
+			if (isNetworkAvailable()) {
 
-		//Creamos un listener para el botón de rate app
-		Button_rate_app.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				try {
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("market://details?id="+getApplication().getPackageName()));
-					startActivity(intent);
-				} catch (Exception e) { //google play app is not installed
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("https://play.google.com/store/apps/details?id="+getApplication().getPackageName()));
-					startActivity(intent);
-				}
-			}
-		});
+				setContentView(R.layout.activity_valorar);
+				setup_Views();
+				setTypefaces();
 
-
-		Button_enviar_feedback.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-					if (EditText_Feedback.getText().toString().isEmpty()){
-						Toast.makeText(getApplicationContext(), "Por favor, escribe un comentario", Toast.LENGTH_LONG).show();
-					}else {
-						new AsyncTask_Guardar_Feedback().execute((EditText_Feedback.getText().toString()));//Actualizamos el numero de estrellas para que aparezca en el navigation drawer
-
-						Toast.makeText(getApplicationContext(), "Texto enviado", Toast.LENGTH_LONG).show();
-						Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
-						mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						startActivity(mIntent);
-						finish();
+				FirebaseApp.initializeApp(this);
+				RadioGroup_me_gusta.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup radioGroup, int i) {
+						switch (i) {
+							case R.id.Layout_feedback_RadioButton_si_me_gusta:
+								LinearLayout_mejorar.setVisibility(View.INVISIBLE);
+								LinearLayout_valorar.setVisibility(View.VISIBLE);
+								break;
+							case R.id.Layout_feedback_RadioButton_no_me_gusta:
+								LinearLayout_valorar.setVisibility(View.INVISIBLE);
+								LinearLayout_mejorar.setVisibility(View.VISIBLE);
+								break;
+						}
 					}
+				});
 
+				//Creamos un listener para el botón de rate app
+				Button_rate_app.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						try {
+							Intent intent = new Intent(Intent.ACTION_VIEW);
+							intent.setData(Uri.parse("market://details?id=" + getApplication().getPackageName()));
+							startActivity(intent);
+						} catch (Exception e) { //google play app is not installed
+							Intent intent = new Intent(Intent.ACTION_VIEW);
+							intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getApplication().getPackageName()));
+							startActivity(intent);
+						}
+					}
+				});
+
+				Button_enviar_feedback.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+
+						if (EditText_Feedback.getText().toString().isEmpty()) {
+							Toast.makeText(getApplicationContext(), "Por favor, escribe un comentario", Toast.LENGTH_LONG).show();
+						} else {
+							new AsyncTask_Guardar_Feedback().execute((EditText_Feedback.getText().toString()));//Actualizamos el numero de estrellas para que aparezca en el navigation drawer
+
+							Toast.makeText(getApplicationContext(), "Texto enviado", Toast.LENGTH_LONG).show();
+							Intent mIntent = new Intent(getApplicationContext(), MainActivity.class);
+							mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivity(mIntent);
+							finish();
+						}
+					}
+				});
+			} else {
+				Intent mIntent = new Intent(this, Error.class);
+				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(mIntent);
+				finish();
 			}
-		});
+		}catch (Exception e){
+			new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
+		}
 	}
 
 	@Override
@@ -124,12 +139,14 @@ public class Valorar extends AppCompatActivity {
 					finish();
 					break;
 				case R.id.tutorial:
-					//lanzamos el tutorial
-					android.app.DialogFragment un_dialogo = new tutorialDialog();
-					un_dialogo.show(this.getFragmentManager(), "");
+					Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+					mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(mIntent_tutorial);
+					finish();
 					break;
 			}
 		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair(this,e.toString()));
 
 		}
 		return super.onOptionsItemSelected(item);
@@ -155,12 +172,12 @@ public class Valorar extends AppCompatActivity {
 				Calendar hoy = Calendar.getInstance();
 				Long id= hoy.getTimeInMillis();
 				FirebaseDatabase database = FirebaseDatabase.getInstance();
-				DatabaseReference myRef = database.getReference();
+				DatabaseReference myRef = database.getReference("Sugerencias");
 				Sugerencia una_sugerencia= new Sugerencia(params[0],getResources().getString(R.string.version));
 				myRef.child(id.toString()).setValue(una_sugerencia);
 
 			} catch (Exception e) {
-				e.toString();
+				new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), e.toString()));
 			}
 			return null;
 		}
@@ -202,4 +219,11 @@ public class Valorar extends AppCompatActivity {
 		Button_rate_app.setTypeface(typeFace_roboto_light);
 	}
 
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager
+				= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		assert connectivityManager != null;
+		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
 }

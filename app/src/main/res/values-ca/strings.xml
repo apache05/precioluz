@@ -1,0 +1,47 @@
+<resources>
+    <string name="precio_no_disponible">Preus encara no disponibles</string>
+
+    <string name="action_settings">Opcions</string>
+    <string name="precios_hace_una_semana">Preu mateix dia fa una setmana</string>
+    <string name="precios_hace_un_año">Preu mateix dia fa un any</string>
+
+
+    <string name="tarifa_20A">Tarifa 2.0 A</string>
+    <string name="tarifa_20DHA">Tarifa 2.0 DHA</string>
+    <string name="tarifa_20DHS">Tarifa 2.0 DHS</string>
+    <string name="configuracion">Configuració</string>
+    <string name="avisos">Avisos</string>
+
+    <string name="texto_tutorial">PrecioLuz és una app que et permet conèixer els diferents preus de l\'electricitat tant
+     del dia d\'avui com els de demà. \n\n Hi ha una pantalla per als
+     preus d\'avui i una altra per als preus de demà. Per veure tota la gràfica sencera posa la pantalla en horitzontal. els
+     preus de l\'endemà es podran veure a partir de les 20:15h. Fes lliscar el dit per canviar d\'una pantalla a una altra. \n\n En cada barra apareix el preu exacte de l\'electricitat per a aquesta hora en euros/kW. \n\n En el menú d\'opcions podràs triar la tarifa a mostrar segons el teu sistema tarifari:\n\n
+    \t\t\t&#8226; 2.0 A Tarifa general.\n
+    \t\t\t&#8226; 2.0 DHA Tarifa amb discriminació horària.\n
+    \t\t\t&#8226; 2.0 DHS Tarifa cotxe elèctric. \n\n
+
+        També trobaràs opcions per comparar els preus amb els del mateix dia de la setmana passada o respecte al mateix dia de l\'any anterior. \n\n
+        Per informar-te sobre aquests temes i tot el relacionat amb les tarifes d\'electricitat consulta a www.esios.ree.es \n</string>
+
+    <string name="tutorial">Tutorial</string>
+    <string name="OK">OK</string>
+    <string name="valorar">Valorar</string>
+
+    <string name="Guardar">Desar</string>
+
+    <string name="Crear_aviso">Crear Avis</string>
+    <string name="Crear_aviso_mañana">Crear avis per a demà</string>
+    <string name="Mejor_precio">Millor preu</string>
+    <string name="Peor_precio">Pitjor preu</string>
+    <string name="Antelacion">Antelació</string>
+    <string name="No_comparar">No comparar</string>
+    <string name="Pregunta">T\'agrada l\'app?</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="Peticion">Si us plau, digueu-nos com podem millorar</string>
+    <string name="Enviar">Enviar</string>
+    <string name="valorenos">Si us plau, puntua\'ns positivament</string>
+    <string name="Valorar">Puntuar</string>
+
+
+</resources>

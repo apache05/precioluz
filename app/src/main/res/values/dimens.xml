@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- tamaño textos -->
+    <dimen name="tamaño_letra_titulos">35sp</dimen>
+    <dimen name="tamaño_letra_error">25sp</dimen>
+
+
+
+</resources>
