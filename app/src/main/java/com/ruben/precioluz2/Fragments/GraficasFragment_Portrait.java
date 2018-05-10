@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Fragments;
+package com.ruben.precioluz2.Fragments;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.Activities.R;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.Activities.R;
+import com.ruben.precioluz2.utils.utils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -1029,7 +1029,8 @@ public class GraficasFragment_Portrait extends Fragment {
 
     private int Px2DP(int px) {
         Float pd;
-        if (Resources.getSystem().getDisplayMetrics().density == 0.75f) {
+        pd = px * Resources.getSystem().getDisplayMetrics().density;
+        /*if (Resources.getSystem().getDisplayMetrics().density == 0.75f) {
             pd = px * 0.75f;
         } else if (Resources.getSystem().getDisplayMetrics().density == 1.0f) {
             pd = px * 1.0f;//Float.valueOf(px);
@@ -1043,7 +1044,7 @@ public class GraficasFragment_Portrait extends Fragment {
             pd = px * 3.5f;
         }else{
             pd = px * 4f;
-        }
+        }*/
 
         return pd.intValue();
     }

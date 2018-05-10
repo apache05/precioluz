@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.utils.utils;
 
 public class Tutorial extends AppCompatActivity {
 
@@ -58,7 +58,7 @@ public class Tutorial extends AppCompatActivity {
 					break;
 			}
 		} catch (Exception e) {
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 		}
 		return super.onOptionsItemSelected(item);
 	}

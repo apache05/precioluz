@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.utils;
+package com.ruben.precioluz2.utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,8 +7,8 @@ import android.support.v4.util.Pair;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.rubisoft.precioluz2.Activities.R;
-import com.rubisoft.precioluz2.Clases.Error;
+import com.ruben.precioluz2.Activities.R;
+import com.ruben.precioluz2.Clases.Error;
 
 import java.util.Calendar;
 

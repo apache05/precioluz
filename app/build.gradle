@@ -5,11 +5,11 @@ android {
     buildToolsVersion '27.0.3'
 
     defaultConfig {
-        applicationId "com.rubisoft.precioluz2"
+        applicationId "com.ruben.precioluz2"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 15
-        versionName "1.14"
+        versionCode 16
+        versionName "1.16"
     }
     buildTypes {
         release {
@@ -29,8 +29,14 @@ dependencies {
     implementation('com.google.api-client:google-api-client-android:1.23.0')
     implementation 'com.google.firebase:firebase-core:15.0.0'
 
-    implementation 'com.google.firebase:firebase-database:15.0.1'
+    implementation 'com.google.firebase:firebase-database:15.0.0'
 
     implementation files('libs/jxl.jar')
+}
+
+configurations {
+    all {
+        exclude module: 'httpclient'
+    }
 }
 apply plugin: 'com.google.gms.google-services'

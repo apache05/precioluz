@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.rubisoft.precioluz2.Clases.Sugerencia;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.Clases.Sugerencia;
+import com.ruben.precioluz2.utils.utils;
 
 import java.util.Calendar;
 

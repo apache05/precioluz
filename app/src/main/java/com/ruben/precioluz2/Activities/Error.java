@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

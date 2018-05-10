@@ -11,5 +11,6 @@
     <string name="FRAGMENT_ACTUAL" translatable="false">FRAGMENT_ACTUAL</string>
     <string name="ALARMA" translatable="false">ALARMA</string>
     <string name="ULTIMA_ALARMA" translatable="false">ULTIMA_ALARMA</string>
+    <string name="MENSAJE_ALARMA" translatable="false">MENSAJE_ALARMA</string>
 
 </resources>

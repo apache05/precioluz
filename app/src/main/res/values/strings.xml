@@ -6,7 +6,6 @@
 
 
     <string name="sin_precio" translatable="false">1.0</string>
-    <string name="action_settings">Opciones</string>
     <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
     <string name="precios_hace_un_año">Precio mismo día hace un año</string>
     <string name="h00_01" translatable="false">00&#8211;01</string>
@@ -52,7 +51,6 @@
         informarte  sobre estos temas y todo lo relacionado con las tarifas de electricidad consulta en www.esios.ree.es\n</string>
 
     <string name="tutorial">Tutorial</string>
-    <string name="OK">OK</string>
     <string name="valorar">Valorar</string>
 
     <string name="Guardar">Guardar</string>
@@ -70,4 +68,8 @@
     <string name="Enviar">Enviar</string>
     <string name="valorenos">Por favor, valórenos positivamente</string>
     <string name="Valorar">Valorar</string>
+
+    <string name="Aviso_mejor_precio">Aviso de mejor precio de la luz</string>
+    <string name="Aviso_peor_precio">Aviso de peor precio de la luz</string>
+
 </resources>

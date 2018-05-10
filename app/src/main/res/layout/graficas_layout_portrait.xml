@@ -43,6 +43,7 @@
         android:text="@string/precio_no_disponible"
         android:id="@+id/TextView_todavia_no_hay_precios"
         android:gravity="center"
+        android:layout_centerVertical="true"
         android:visibility="invisible"/>
     <!-- ************************* ESTO ES LA GRAFICA  *************************-->
     <ScrollView android:id="@+id/ScrlView"

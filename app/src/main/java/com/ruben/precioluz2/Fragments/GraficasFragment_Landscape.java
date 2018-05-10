@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Fragments;
+package com.ruben.precioluz2.Fragments;
 
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.Activities.R;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.Activities.R;
+import com.ruben.precioluz2.utils.utils;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -114,7 +114,7 @@ public class GraficasFragment_Landscape extends Fragment {
     private boolean precios_año_pasado_activado;
 
     private final int ESCALA=Px2DP(1200);//Altura de las barras
-    private final int ANCHURA=Px2DP(25);//anchura de las barras
+    private final int ANCHURA=Px2DP(26);//anchura de las barras
 
     public static GraficasFragment_Landscape newInstance(String titulo, Float[] precios,boolean boolean_precios_semana_pasada,boolean boolean_precios_año_pasado,Float[] precios_hace_un_año,Float[] precios_hace_una_semana) {
         // Instantiate a new fragment

@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.utils.utils;
 
 public class Configuracion extends AppCompatActivity {
 
@@ -155,7 +155,7 @@ public class Configuracion extends AppCompatActivity {
 					break;
 			}
 		} catch (Exception e) {
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 		}
 		return super.onOptionsItemSelected(item);
 	}

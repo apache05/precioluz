@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -23,8 +23,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rubisoft.precioluz2.BroadcastReceivers.Alarma;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.BroadcastReceivers.Alarma;
+import com.ruben.precioluz2.utils.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -87,7 +87,7 @@ public class Avisos extends AppCompatActivity {
 				finish();
 			}
 		}catch (Exception e){
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 		}
 	}
 
@@ -125,7 +125,7 @@ public class Avisos extends AppCompatActivity {
 					break;
 			}
 		} catch (Exception e) {
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 
 		}
 		return super.onOptionsItemSelected(item);
@@ -171,7 +171,7 @@ public class Avisos extends AppCompatActivity {
 
 
 			} catch (Exception e) {
-				new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(), e.toString()));
+				new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+ e.toString()));
 			}
 
 			return new Pair(indicador,mJSONObject);
@@ -251,12 +251,19 @@ public class Avisos extends AppCompatActivity {
 			int antelacion = Spinner_antelacion.getSelectedItemPosition();
 
 			Intent mIntent = new Intent(this, Alarma.class);
+
+			if (RadioButton_mejor_precio.isChecked()){
+				mIntent.putExtra(getResources().getString(R.string.MENSAJE_ALARMA), getResources().getString(R.string.Aviso_mejor_precio));
+			}else{
+				mIntent.putExtra(getResources().getString(R.string.MENSAJE_ALARMA), getResources().getString(R.string.Aviso_peor_precio));
+			}
+
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 			mAlarmManager.set(AlarmManager.RTC, TimeInMilis + (hora * 1000 * 60 * 60) - antelacion * 1000 * 60 * 60, mPendingIntent);
 			Toast.makeText(getApplicationContext(), "Alarma establecida ", Toast.LENGTH_LONG).show();
 		}catch (Exception e)
 		{
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 		}
 	}
 	private void check_alarma_caducada(){
@@ -276,7 +283,7 @@ public class Avisos extends AppCompatActivity {
 			mAlarmManager.cancel(mPendingIntent);
 			Toast.makeText(getApplicationContext(), "Alarma desestablecida ", Toast.LENGTH_LONG).show();
 		}catch (Exception e){
-			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 
 		}
 	}

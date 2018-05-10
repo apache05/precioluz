@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Clases;
+package com.ruben.precioluz2.Clases;
 
 
 public class Error {

@@ -9,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.rubisoft.precioluz2.Activities.Valorar">
+    tools:context="com.ruben.precioluz2.Activities.Valorar">
 
     <TextView
         android:id="@+id/Layout_feedback_TextView_titulo"

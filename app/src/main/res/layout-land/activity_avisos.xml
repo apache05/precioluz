@@ -9,7 +9,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rubisoft.precioluz2.Activities.Avisos">
+    tools:context="com.ruben.precioluz2.Activities.Avisos">
 
     <TextView
         android:id="@+id/TextView_Aviso"

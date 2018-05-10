@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Fragments;
+package com.ruben.precioluz2.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.rubisoft.precioluz2.Activities.R;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.Activities.R;
+import com.ruben.precioluz2.utils.utils;
 
 
 public class ErrorFragment extends Fragment {

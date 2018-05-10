@@ -1,4 +1,4 @@
-package com.rubisoft.precioluz2.Activities;
+package com.ruben.precioluz2.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,11 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.rubisoft.precioluz2.Adapters.MyFragmentPagerAdapter;
-import com.rubisoft.precioluz2.Fragments.ErrorFragment;
-import com.rubisoft.precioluz2.Fragments.GraficasFragment_Landscape;
-import com.rubisoft.precioluz2.Fragments.GraficasFragment_Portrait;
-import com.rubisoft.precioluz2.utils.utils;
+import com.ruben.precioluz2.Adapters.MyFragmentPagerAdapter;
+import com.ruben.precioluz2.Fragments.ErrorFragment;
+import com.ruben.precioluz2.Fragments.GraficasFragment_Landscape;
+import com.ruben.precioluz2.Fragments.GraficasFragment_Portrait;
+import com.ruben.precioluz2.utils.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(mIntent);
             finish();
         }catch (Exception e){
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 
         }
     }
@@ -144,49 +144,48 @@ public class MainActivity extends AppCompatActivity {
         Float[] array_vacio = new Float[24];
         try {
             boolean boolean_precios_semana_pasada = prefs.getBoolean(getString(R.string.TAG_HACE_UNA_SEMANA), false);
-            //boolean boolean_precios_semana_pasada_de_mañana = prefs.getBoolean(getString(R.string.TAG_HACE_UNA_SEMANA_DE_MAÑANA), false);
             boolean boolean_precios_año_pasado = prefs.getBoolean(getString(R.string.TAG_HACE_UN_AÑO), false);
-            //boolean boolean_precios_año_pasado_de_mañana = prefs.getBoolean(getString(R.string.TAG_HACE_UN_AÑO_DE_MAÑANA), false);
 
 			MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
 
-                for (int i = 0; i < 24; i++) {
-                    array_vacio[i] = -1.0f;
-                }
+            for (int i = 0; i < 24; i++) {
+                array_vacio[i] = -1.0f;
+            }
 
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    fragment_hoy_Landscape = GraficasFragment_Landscape.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
-                    fragment_mañana_Landscape = GraficasFragment_Landscape.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                fragment_hoy_Landscape = GraficasFragment_Landscape.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_mañana_Landscape = GraficasFragment_Landscape.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
 
-                    adapter.addFragment(fragment_hoy_Landscape);
-                    adapter.addFragment(fragment_mañana_Landscape);
-                } else {
-                    fragment_hoy_Portrait = GraficasFragment_Portrait.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
-                    fragment_mañana_Portrait = GraficasFragment_Portrait.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                adapter.addFragment(fragment_hoy_Landscape);
+                adapter.addFragment(fragment_mañana_Landscape);
+            } else {
+                fragment_hoy_Portrait = GraficasFragment_Portrait.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_mañana_Portrait = GraficasFragment_Portrait.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
 
-                    adapter.addFragment(fragment_hoy_Portrait);
-                    adapter.addFragment(fragment_mañana_Portrait);
-                }
-                pager.setAdapter(adapter);
+                adapter.addFragment(fragment_hoy_Portrait);
+                adapter.addFragment(fragment_mañana_Portrait);
+            }
+            pager.setAdapter(adapter);
 
             //PONEMOS EL PAGER QUE HABIA UTILIZADO POR ULTIMA VEZ EL USUARIO
             pager.setCurrentItem(get_Fragment_actual_SharedPreferences());
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
     }
 
     private void carga_datos_inicial_hoy(int tarifa_actual) {
         try {
-            if (getResources().getConfiguration().orientation ==Configuration.ORIENTATION_LANDSCAPE) {
+            if (getResources().getConfiguration().orientation ==Configuration.ORIENTATION_LANDSCAPE && fragment_hoy_Landscape!=null) {
                 fragment_hoy_Landscape.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa_actual));
-            } else {
+            }
+            if (getResources().getConfiguration().orientation ==Configuration.ORIENTATION_PORTRAIT && fragment_hoy_Portrait!=null) {
                 fragment_hoy_Portrait.set_todos_los_precios(getPrecios_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_un_año_de_hoy_segun_tarifa(tarifa_actual), getPrecios_hace_una_semana_de_hoy_segun_tarifa(tarifa_actual));
             }
             PagerAdapter un_adapter= pager.getAdapter();
 			if (un_adapter!= null){un_adapter.notifyDataSetChanged();}
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
     }
 
@@ -200,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 			PagerAdapter un_adapter= pager.getAdapter();
 			if (un_adapter!= null){un_adapter.notifyDataSetChanged();}
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
     }
 
@@ -210,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putInt(getResources().getString(R.string.FRAGMENT_ACTUAL), Fragment_actual);
             editor.apply();
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
     }
 
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             fragment_actual = prefs.getInt(getResources().getString(R.string.FRAGMENT_ACTUAL), 0);
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
         return fragment_actual;
 
@@ -350,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
         return tarifa_actual;
 
@@ -402,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -521,41 +520,46 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Pair mPair) {
             try {
-                Integer indicador= (Integer)mPair.first;
-                JSONArray[] mJSONArray= (JSONArray[])mPair.second;
-                ArrayList<Float> precios_hoy=new ArrayList<Float>() {};
-                ArrayList<Float> precios_hace_una_semana=new ArrayList<Float>() {};
-                ArrayList<Float> precios_hace_un_año=new ArrayList<Float>() {};
-                for (int i = 0; i < 24; i++) {
-                    JSONObject mJSONObject_0 = (JSONObject)mJSONArray[0].get(i);
-                    JSONObject mJSONObject_1 = (JSONObject)mJSONArray[1].get(i);
-                    JSONObject mJSONObject_2 = (JSONObject)mJSONArray[2].get(i);
+                Integer indicador = (Integer) mPair.first;
+                JSONArray[] mJSONArray = (JSONArray[]) mPair.second;
+                if (!isFinishing() && indicador!= null && mJSONArray!=null) {
 
-                    precios_hoy.add(i,((Double)mJSONObject_0.get("value")).floatValue()/1000);
-                    precios_hace_una_semana.add(i,((Double)mJSONObject_1.get("value")).floatValue()/1000);
-                    precios_hace_un_año.add(i,((Double)mJSONObject_2.get("value")).floatValue()/1000);
-                }
-                switch (indicador){
-                    case 1013:
-                        guarda_precios_20A(HOY,precios_hoy);
-                        guarda_precios_20A(HACE_UNA_SEMANA_DE_HOY,precios_hace_una_semana);
-                        guarda_precios_20A(HACE_UN_AÑO_DE_HOY,precios_hace_un_año);
-                        break;
-                    case 1014:
-                        guarda_precios_20DHA(HOY,precios_hoy);
-                        guarda_precios_20DHA(HACE_UNA_SEMANA_DE_HOY,precios_hace_una_semana);
-                        guarda_precios_20DHA(HACE_UN_AÑO_DE_HOY,precios_hace_un_año);
-                        break;
-                    case 1015:
-                        guarda_precios_20DHS(HOY,precios_hoy);
-                        guarda_precios_20DHS(HACE_UNA_SEMANA_DE_HOY,precios_hace_una_semana);
-                        guarda_precios_20DHS(HACE_UN_AÑO_DE_HOY,precios_hace_un_año);
-                        break;
-                }
-                carga_datos_inicial_hoy(indicador);
+                    ArrayList<Float> precios_hoy = new ArrayList<Float>() {
+                    };
+                    ArrayList<Float> precios_hace_una_semana = new ArrayList<Float>() {
+                    };
+                    ArrayList<Float> precios_hace_un_año = new ArrayList<Float>() {
+                    };
+                    for (int i = 0; i < 24; i++) {
+                        JSONObject mJSONObject_0 = (JSONObject) mJSONArray[0].get(i);
+                        JSONObject mJSONObject_1 = (JSONObject) mJSONArray[1].get(i);
+                        JSONObject mJSONObject_2 = (JSONObject) mJSONArray[2].get(i);
 
+                        precios_hoy.add(i, ((Double) mJSONObject_0.get("value")).floatValue() / 1000);
+                        precios_hace_una_semana.add(i, ((Double) mJSONObject_1.get("value")).floatValue() / 1000);
+                        precios_hace_un_año.add(i, ((Double) mJSONObject_2.get("value")).floatValue() / 1000);
+                    }
+                    switch (indicador) {
+                        case 1013:
+                            guarda_precios_20A(HOY, precios_hoy);
+                            guarda_precios_20A(HACE_UNA_SEMANA_DE_HOY, precios_hace_una_semana);
+                            guarda_precios_20A(HACE_UN_AÑO_DE_HOY, precios_hace_un_año);
+                            break;
+                        case 1014:
+                            guarda_precios_20DHA(HOY, precios_hoy);
+                            guarda_precios_20DHA(HACE_UNA_SEMANA_DE_HOY, precios_hace_una_semana);
+                            guarda_precios_20DHA(HACE_UN_AÑO_DE_HOY, precios_hace_un_año);
+                            break;
+                        case 1015:
+                            guarda_precios_20DHS(HOY, precios_hoy);
+                            guarda_precios_20DHS(HACE_UNA_SEMANA_DE_HOY, precios_hace_una_semana);
+                            guarda_precios_20DHS(HACE_UN_AÑO_DE_HOY, precios_hace_un_año);
+                            break;
+                    }
+                    carga_datos_inicial_hoy(indicador);
+                }
             }catch (Exception e){
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -614,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -668,7 +672,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -724,12 +728,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
     }
 
-    private class AsyncTask_getPrecios_mañana extends AsyncTask<Integer, Void, Pair> {
+    private  class AsyncTask_getPrecios_mañana extends AsyncTask<Integer, Void, Pair> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -823,46 +827,49 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Pair mPair) {
             try {
-                Integer indicador= (Integer)mPair.first;
-                JSONArray[] mJSONArray= (JSONArray[])mPair.second;
-                ArrayList<Float> precios_hoy=new ArrayList<Float>() {};
-                ArrayList<Float> precios_hace_una_semana=new ArrayList<Float>() {};
-                ArrayList<Float> precios_hace_un_año=new ArrayList<Float>() {};
-                for (int i = 0; i < 24; i++) {
+                Integer indicador = (Integer) mPair.first;
+                JSONArray[] mJSONArray = (JSONArray[]) mPair.second;
+                if (!isFinishing() && indicador!= null && mJSONArray!=null) {
 
-                    //Puede que aún no estén disponibles los precios de mañana
-                    if (mJSONArray[0].size()==24){
-                        JSONObject mJSONObject_0 = (JSONObject)mJSONArray[0].get(i);
-                        precios_hoy.add(i,((Double)mJSONObject_0.get("value")).floatValue()/1000);
+
+                    ArrayList<Float> precios_hoy = new ArrayList<Float>() {};
+                    ArrayList<Float> precios_hace_una_semana = new ArrayList<Float>() {};
+                    ArrayList<Float> precios_hace_un_año = new ArrayList<Float>() {};
+                    for (int i = 0; i < 24; i++) {
+
+                        //Puede que aún no estén disponibles los precios de mañana
+                        if (mJSONArray[0].size() == 24) {
+                            JSONObject mJSONObject_0 = (JSONObject) mJSONArray[0].get(i);
+                            precios_hoy.add(i, ((Double) mJSONObject_0.get("value")).floatValue() / 1000);
+                        }
+                        JSONObject mJSONObject_1 = (JSONObject) mJSONArray[1].get(i);
+                        JSONObject mJSONObject_2 = (JSONObject) mJSONArray[2].get(i);
+
+                        precios_hace_una_semana.add(i, ((Double) mJSONObject_1.get("value")).floatValue() / 1000);
+                        precios_hace_un_año.add(i, ((Double) mJSONObject_2.get("value")).floatValue() / 1000);
                     }
-                    JSONObject mJSONObject_1 = (JSONObject)mJSONArray[1].get(i);
-                    JSONObject mJSONObject_2 = (JSONObject)mJSONArray[2].get(i);
 
-                    precios_hace_una_semana.add(i,((Double)mJSONObject_1.get("value")).floatValue()/1000);
-                    precios_hace_un_año.add(i,((Double)mJSONObject_2.get("value")).floatValue()/1000);
+                    switch (indicador) {
+                        case 1013:
+                            guarda_precios_20A(MAÑANA, precios_hoy);
+                            guarda_precios_20A(HACE_UNA_SEMANA_DE_MAÑANA, precios_hace_una_semana);
+                            guarda_precios_20A(HACE_UN_AÑO_DE_MAÑANA, precios_hace_un_año);
+                            break;
+                        case 1014:
+                            guarda_precios_20DHA(MAÑANA, precios_hoy);
+                            guarda_precios_20DHA(HACE_UNA_SEMANA_DE_MAÑANA, precios_hace_una_semana);
+                            guarda_precios_20DHA(HACE_UN_AÑO_DE_MAÑANA, precios_hace_un_año);
+                            break;
+                        case 1015:
+                            guarda_precios_20DHS(MAÑANA, precios_hoy);
+                            guarda_precios_20DHS(HACE_UNA_SEMANA_DE_MAÑANA, precios_hace_una_semana);
+                            guarda_precios_20DHS(HACE_UN_AÑO_DE_MAÑANA, precios_hace_un_año);
+                            break;
+                    }
+                    carga_datos_inicial_mañana(indicador);
                 }
-
-                switch (indicador){
-                    case 1013:
-                        guarda_precios_20A(MAÑANA,precios_hoy);
-                        guarda_precios_20A(HACE_UNA_SEMANA_DE_MAÑANA,precios_hace_una_semana);
-                        guarda_precios_20A(HACE_UN_AÑO_DE_MAÑANA,precios_hace_un_año);
-                        break;
-                    case 1014:
-                        guarda_precios_20DHA(MAÑANA,precios_hoy);
-                        guarda_precios_20DHA(HACE_UNA_SEMANA_DE_MAÑANA,precios_hace_una_semana);
-                        guarda_precios_20DHA(HACE_UN_AÑO_DE_MAÑANA,precios_hace_un_año);
-                        break;
-                    case 1015:
-                        guarda_precios_20DHS(MAÑANA,precios_hoy);
-                        guarda_precios_20DHS(HACE_UNA_SEMANA_DE_MAÑANA,precios_hace_una_semana);
-                        guarda_precios_20DHS(HACE_UN_AÑO_DE_MAÑANA,precios_hace_un_año);
-                        break;
-                }
-                carga_datos_inicial_mañana(indicador);
-
             }catch (Exception e){
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -922,7 +929,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -978,7 +985,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -1034,7 +1041,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
             }
         }
     }
