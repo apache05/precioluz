@@ -25,12 +25,12 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ruben.precioluz2.Clases.Sugerencia;
+import com.ruben.precioluz2.Clases.SugerenciaClass;
 import com.ruben.precioluz2.utils.utils;
 
 import java.util.Calendar;
 
-public class Valorar extends AppCompatActivity {
+public class ValorarActivity extends AppCompatActivity {
 	private TextView TextView_titulo;
 	private RadioGroup RadioGroup_me_gusta;
 	private Button Button_enviar_feedback;
@@ -47,7 +47,7 @@ public class Valorar extends AppCompatActivity {
 			super.onCreate(savedInstanceState);
 			if (isNetworkAvailable()) {
 
-				setContentView(R.layout.activity_valorar);
+				setContentView(R.layout.layout_valorar);
 				setup_Views();
 				setTypefaces();
 
@@ -102,7 +102,7 @@ public class Valorar extends AppCompatActivity {
 					}
 				});
 			} else {
-				Intent mIntent = new Intent(this, Error.class);
+				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(mIntent);
 				finish();
@@ -121,25 +121,25 @@ public class Valorar extends AppCompatActivity {
 		try {
 			switch (item.getItemId()) {
 				case R.id.configuracion:
-					Intent mIntent_configuracion = new Intent(this, Configuracion.class);
+					Intent mIntent_configuracion = new Intent(this, ConfiguracionActivity.class);
 					mIntent_configuracion.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_configuracion);
 					finish();
 					break;
 				case R.id.avisos:
-					Intent mIntent_avisos = new Intent(this, Avisos.class);
+					Intent mIntent_avisos = new Intent(this, AvisosActivity.class);
 					mIntent_avisos.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_avisos);
 					finish();
 					break;
 				case R.id.valorar:
-					Intent mIntent_valorar = new Intent(this, Valorar.class);
+					Intent mIntent_valorar = new Intent(this, ValorarActivity.class);
 					mIntent_valorar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_valorar);
 					finish();
 					break;
 				case R.id.tutorial:
-					Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+					Intent mIntent_tutorial = new Intent(this, TutorialActivity.class);
 					mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_tutorial);
 					finish();
@@ -158,7 +158,14 @@ public class Valorar extends AppCompatActivity {
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
 	}
-
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent mIntent = new Intent(this, MainActivity.class);
+		mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(mIntent);
+		finish();
+	}
 	private class AsyncTask_Guardar_Feedback extends AsyncTask<String, Void, Void> {
 
 		@Override
@@ -173,7 +180,7 @@ public class Valorar extends AppCompatActivity {
 				Long id= hoy.getTimeInMillis();
 				FirebaseDatabase database = FirebaseDatabase.getInstance();
 				DatabaseReference myRef = database.getReference("Sugerencias");
-				Sugerencia una_sugerencia= new Sugerencia(params[0],getResources().getString(R.string.version));
+				SugerenciaClass una_sugerencia= new SugerenciaClass(params[0],getResources().getString(R.string.version));
 				myRef.child(id.toString()).setValue(una_sugerencia);
 
 			} catch (Exception e) {

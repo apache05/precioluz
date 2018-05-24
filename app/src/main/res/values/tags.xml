@@ -12,5 +12,6 @@
     <string name="ALARMA" translatable="false">ALARMA</string>
     <string name="ULTIMA_ALARMA" translatable="false">ULTIMA_ALARMA</string>
     <string name="MENSAJE_ALARMA" translatable="false">MENSAJE_ALARMA</string>
+    <string name="ANTELACION" translatable="false">ANTELACION</string>
 
 </resources>

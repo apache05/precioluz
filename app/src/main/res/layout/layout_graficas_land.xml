@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/graficas_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <!-- *************************  ESTO ES EL TITULO DE ARRIBA *************************-->
 
     <!-- ************************* ESTO ES LA GRAFICA  *************************-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
         <LinearLayout
@@ -19,7 +14,8 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:baselineAligned="false">
 
             <RelativeLayout
                 android:id="@+id/grafico0"
@@ -876,8 +872,7 @@
             android:typeface="monospace"
             android:textIsSelectable="false"
             android:gravity="center_horizontal"
-            android:textSize="20sp"
-            android:text="titulo"/>
+            android:textSize="20sp"/>
 
         <ImageView
             android:contentDescription="@string/contentdescription_flecha"
@@ -905,4 +900,3 @@
             android:visibility="invisible"/>
     </RelativeLayout>
 
-</LinearLayout>

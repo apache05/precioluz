@@ -20,8 +20,8 @@ import android.widget.ProgressBar;
 
 import com.ruben.precioluz2.Adapters.MyFragmentPagerAdapter;
 import com.ruben.precioluz2.Fragments.ErrorFragment;
-import com.ruben.precioluz2.Fragments.GraficasFragment_Landscape;
-import com.ruben.precioluz2.Fragments.GraficasFragment_Portrait;
+import com.ruben.precioluz2.Fragments.LandscapeFragment;
+import com.ruben.precioluz2.Fragments.PortraitFragment;
 import com.ruben.precioluz2.utils.utils;
 
 import org.json.simple.JSONArray;
@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences prefs = null;
 
     //private TutorialFragment fragment_tutorial;
-    private GraficasFragment_Landscape fragment_hoy_Landscape;
-    private GraficasFragment_Landscape fragment_mañana_Landscape;
-    private GraficasFragment_Portrait fragment_hoy_Portrait;
-    private GraficasFragment_Portrait fragment_mañana_Portrait;
+    private LandscapeFragment fragment_hoy_Landscape;
+    private LandscapeFragment fragment_mañana_Landscape;
+    private PortraitFragment fragment_hoy_Portrait;
+    private PortraitFragment fragment_mañana_Portrait;
 
     // private final Double version_de_esta_instancia= 1.1;
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.layout_main);
 
 
         try {
@@ -153,14 +153,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                fragment_hoy_Landscape = GraficasFragment_Landscape.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
-                fragment_mañana_Landscape = GraficasFragment_Landscape.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_hoy_Landscape = LandscapeFragment.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_mañana_Landscape = LandscapeFragment.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
 
                 adapter.addFragment(fragment_hoy_Landscape);
                 adapter.addFragment(fragment_mañana_Landscape);
             } else {
-                fragment_hoy_Portrait = GraficasFragment_Portrait.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
-                fragment_mañana_Portrait = GraficasFragment_Portrait.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_hoy_Portrait = PortraitFragment.newInstance("Precios para hoy " + hoy(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
+                fragment_mañana_Portrait = PortraitFragment.newInstance("Precios para mañana " + mañana(mSimpleDateFormat) + "\n" + get_Tarifa_SharedPreferences(), array_vacio, boolean_precios_semana_pasada, boolean_precios_año_pasado, array_vacio, array_vacio);
 
                 adapter.addFragment(fragment_hoy_Portrait);
                 adapter.addFragment(fragment_mañana_Portrait);
@@ -376,25 +376,25 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.configuracion:
-                    Intent mIntent_configuracion = new Intent(this, Configuracion.class);
+                    Intent mIntent_configuracion = new Intent(this, ConfiguracionActivity.class);
                     mIntent_configuracion.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mIntent_configuracion);
                     finish();
                     break;
                 case R.id.avisos:
-                    Intent mIntent_avisos = new Intent(this, Avisos.class);
+                    Intent mIntent_avisos = new Intent(this, AvisosActivity.class);
                     mIntent_avisos.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mIntent_avisos);
                     finish();
                     break;
                 case R.id.valorar:
-                    Intent mIntent_valorar = new Intent(this, Valorar.class);
+                    Intent mIntent_valorar = new Intent(this, ValorarActivity.class);
                     mIntent_valorar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mIntent_valorar);
                     finish();
                     break;
                 case R.id.tutorial:
-                    Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+                    Intent mIntent_tutorial = new Intent(this, TutorialActivity.class);
                     mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(mIntent_tutorial);
                     finish();
@@ -511,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } catch (Exception e) {
-                LOGGER.severe("Error en AsyncTask_getPrecios (doInBackground) de MainActivity " + e.toString());
+                LOGGER.severe("ErrorActivity en AsyncTask_getPrecios (doInBackground) de MainActivity " + e.toString());
             }
 
             return new Pair(indicador,mJSONObject);
@@ -559,7 +559,7 @@ public class MainActivity extends AppCompatActivity {
                     carga_datos_inicial_hoy(indicador);
                 }
             }catch (Exception e){
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -618,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -672,7 +672,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -728,7 +728,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
     }
@@ -818,7 +818,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } catch (Exception e) {
-                LOGGER.severe("Error en AsyncTask_getPrecios (doInBackground) de MainActivity " + e.toString());
+                LOGGER.severe("ErrorActivity en AsyncTask_getPrecios (doInBackground) de MainActivity " + e.toString());
             }
 
             return new Pair(indicador,mJSONObject);
@@ -869,7 +869,7 @@ public class MainActivity extends AppCompatActivity {
                     carga_datos_inicial_mañana(indicador);
                 }
             }catch (Exception e){
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }finally {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mProgressBar.invalidate();
@@ -929,7 +929,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
         void guarda_precios_20DHA(int dia, List<Float> precios) {
@@ -985,7 +985,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
         void guarda_precios_20DHS(int dia, List<Float> precios) {
@@ -1041,7 +1041,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //editor.commit();
             } catch (Exception e) {
-                new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+e.toString()));
+                new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
             }
         }
     }

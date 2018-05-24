@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 
-public class GraficasFragment_Portrait extends Fragment {
+public class PortraitFragment extends Fragment {
 
     private static final String TITULO = "TITULO";
 
@@ -114,10 +114,10 @@ public class GraficasFragment_Portrait extends Fragment {
     private boolean precios_semana_pasada_activado;
     private boolean precios_año_pasado_activado;
 
-    public static GraficasFragment_Portrait newInstance(String titulo, Float[] precios, boolean boolean_precios_semana_pasada, boolean boolean_precios_año_pasado, Float[] precios_hace_un_año, Float[] precios_hace_una_semana) {
+    public static PortraitFragment newInstance(String titulo, Float[] precios, boolean boolean_precios_semana_pasada, boolean boolean_precios_año_pasado, Float[] precios_hace_un_año, Float[] precios_hace_una_semana) {
 
         // Instantiate a new fragment
-        GraficasFragment_Portrait fragment = new GraficasFragment_Portrait();
+        PortraitFragment fragment = new PortraitFragment();
 
         // Save the parameters
         Bundle bundle = new Bundle();
@@ -300,7 +300,7 @@ public class GraficasFragment_Portrait extends Fragment {
             this.precios_semana_pasada_activado = (getArguments() != null) && getArguments().getBoolean(PRECIOS_SEMANA_PASADA);
             this.precios_año_pasado_activado = (getArguments() != null) && getArguments().getBoolean(PRECIOS_AÑO_PASADO);
         }catch (Exception e){
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -309,7 +309,7 @@ public class GraficasFragment_Portrait extends Fragment {
         //set_parametros_segun_screensize();
         ViewGroup rootView = null;
         try {
-            rootView = (ViewGroup) inflater.inflate(R.layout.graficas_layout_portrait, container, false);
+            rootView = (ViewGroup) inflater.inflate(R.layout.layout_graficas_portrait, container, false);
 
             pinta_titulo(rootView/*,TAMAÑO_TEXTO_TITULO*/);
             pinta_flechitas(rootView);
@@ -326,7 +326,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 TextView_todavia_no_hay_precios.setVisibility(View.VISIBLE);
             }
         }catch (Exception e){
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
         return rootView;
     }
@@ -340,7 +340,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 this.precios_hace_una_semana[i] = precios_hace_una_semana[i];
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -455,7 +455,7 @@ public class GraficasFragment_Portrait extends Fragment {
             barra22.setColorFilter(getColor(precios_ordenados, precios[22]));
             barra23.setColorFilter(getColor(precios_ordenados, precios[23]));
         }catch (Exception e){
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -590,7 +590,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 }
             }
         }catch (Exception e){
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -723,7 +723,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 rayita_semana_pasada_23.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -856,7 +856,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 rayita_anyo_pasado_23.setVisibility(View.INVISIBLE);
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -1023,7 +1023,7 @@ public class GraficasFragment_Portrait extends Fragment {
                 texto_precio23.setText(df.format(precios[23]));
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
         }
     }
 
@@ -1108,7 +1108,7 @@ public class GraficasFragment_Portrait extends Fragment {
                     return getResources().getColor(R.color._0);
             }
         } catch (Exception e) {
-            new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getContext(),e.toString()));
+            new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getContext(), e.toString()));
             return R.color._0;
         }
     }

@@ -8,7 +8,7 @@ import android.support.v4.util.Pair;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ruben.precioluz2.Activities.R;
-import com.ruben.precioluz2.Clases.Error;
+import com.ruben.precioluz2.Clases.ErrorClass;
 
 import java.util.Calendar;
 
@@ -33,7 +33,7 @@ public class utils {
 				Long id= hoy.getTimeInMillis();
 				FirebaseDatabase database = FirebaseDatabase.getInstance();
 				DatabaseReference myRef = database.getReference("Errores");
-				Error un_error= new Error(detalle_error, context != null ? context.getResources().getString(R.string.version) : null);
+				ErrorClass un_error= new ErrorClass(detalle_error, context != null ? context.getResources().getString(R.string.version) : null);
 				myRef.child(id.toString()).setValue(un_error);
 
 			} catch (Exception ignored) {

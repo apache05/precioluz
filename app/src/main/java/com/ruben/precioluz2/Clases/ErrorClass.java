@@ -1,16 +1,16 @@
 package com.ruben.precioluz2.Clases;
 
 
-public class Error {
+public class ErrorClass {
 
 	private String detalle;
 	private String version;
 
-	public Error(){
+	public ErrorClass(){
 		detalle="";
 		version="";
 	}
-	public Error( String un_detalle, String una_version) {
+	public ErrorClass(String un_detalle, String una_version) {
 		detalle= un_detalle;
 		version= una_version;
 	}

@@ -27,11 +27,17 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.googlecode.json-simple:json-simple:1.1'
     implementation('com.google.api-client:google-api-client-android:1.23.0')
-    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation ('com.google.firebase:firebase-core:15.0.0'){
+        force = true
+    }
 
-    implementation 'com.google.firebase:firebase-database:15.0.0'
 
-    implementation files('libs/jxl.jar')
+    implementation ('com.google.firebase:firebase-database:15.0.0'){
+        force = true
+    }
+
+
+    // implementation files('libs/jxl.jar')
 }
 
 configurations {

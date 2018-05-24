@@ -11,10 +11,12 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v4.util.Pair;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -23,7 +25,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ruben.precioluz2.BroadcastReceivers.Alarma;
+import com.ruben.precioluz2.BroadcastReceivers.AlarmaBroadcastReceiver;
 import com.ruben.precioluz2.utils.utils;
 
 import org.json.simple.JSONArray;
@@ -36,7 +38,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
-public class Avisos extends AppCompatActivity {
+public class AvisosActivity extends AppCompatActivity {
 	private SharedPreferences prefs = null;
 	private final int INDICADOR_TARIFA_20A = 1013;
 	private RadioButton RadioButton_mejor_precio;
@@ -47,17 +49,26 @@ public class Avisos extends AppCompatActivity {
 	private TextView TextView_Aviso;
 
 	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent mIntent = new Intent(this, MainActivity.class);
+		mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(mIntent);
+		finish();
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		try {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.activity_avisos);
+			setContentView(R.layout.layout_avisos);
 			prefs = PreferenceManager.getDefaultSharedPreferences(this);
 			mAlarmManager= (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 			if (isNetworkAvailable()) {
 				setupViews();
 				setTypefaces();
-
-				String[] arraySpinner = new String[]{"0", "1", "2", "3"};
+				Switch_aviso_activado.setChecked(prefs.getBoolean(getResources().getString(R.string.ALARMA), false));
+				String[] arraySpinner = new String[]{"0 horas", "1 hora", "2 horas", "3 horas"};
 				ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				Spinner_antelacion.setAdapter(adapter);
@@ -80,8 +91,23 @@ public class Avisos extends AppCompatActivity {
 						}
 					}
 				});
+				Spinner_antelacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+					@Override
+					public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+						if (Switch_aviso_activado.isChecked() && prefs.getInt(getResources().getString(R.string.ANTELACION),0)!= Spinner_antelacion.getSelectedItemPosition()) {
+							unsetAlarm();
+							Switch_aviso_activado.setChecked(false);
+							SharedPreferences.Editor editor = prefs.edit();
+							editor.putInt(getResources().getString(R.string.ANTELACION),Spinner_antelacion.getSelectedItemPosition());
+						}
+					}
+					@Override
+					public void onNothingSelected(AdapterView<?> parentView) {
+					}
+
+				});
 			}else{
-				Intent mIntent = new Intent(this, Error.class);
+				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(mIntent);
 				finish();
@@ -100,25 +126,25 @@ public class Avisos extends AppCompatActivity {
 		try {
 			switch (item.getItemId()) {
 				case R.id.configuracion:
-					Intent mIntent_configuracion = new Intent(this, Configuracion.class);
+					Intent mIntent_configuracion = new Intent(this, ConfiguracionActivity.class);
 					mIntent_configuracion.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_configuracion);
 					finish();
 					break;
 				case R.id.avisos:
-					Intent mIntent_avisos = new Intent(this, Avisos.class);
+					Intent mIntent_avisos = new Intent(this, AvisosActivity.class);
 					mIntent_avisos.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_avisos);
 					finish();
 					break;
 				case R.id.valorar:
-					Intent mIntent_valorar = new Intent(this, Valorar.class);
+					Intent mIntent_valorar = new Intent(this, ValorarActivity.class);
 					mIntent_valorar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_valorar);
 					finish();
 					break;
 				case R.id.tutorial:
-					Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+					Intent mIntent_tutorial = new Intent(this, TutorialActivity.class);
 					mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_tutorial);
 					finish();
@@ -171,7 +197,7 @@ public class Avisos extends AppCompatActivity {
 
 
 			} catch (Exception e) {
-				new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(getApplicationContext(),getClass().getName()+" "+ e.toString()));
+				new utils.AsyncTask_Guardar_Error().execute(new Pair<>(getApplicationContext(), getClass().getName() + " " + e.toString()));
 			}
 
 			return new Pair(indicador,mJSONObject);
@@ -184,12 +210,11 @@ public class Avisos extends AppCompatActivity {
 				Float[] precios_hoy=new Float[24];
 
 				//Puede que aún no estén disponibles los precios de mañana
-				if (mJSONArray.size()==24){
+				if (mJSONArray != null && mJSONArray.size()==24){
 					for (int i = 0; i < 24; i++) {
 						JSONObject mJSONObject_0 = (JSONObject)mJSONArray.get(i);
 						precios_hoy[i]= ((Double)mJSONObject_0.get("value")).floatValue()/1000;
 					}
-					//if (guarda_precios(precios_hoy)){
 						int offset;
 						if (RadioButton_mejor_precio.isChecked()){
 							offset= getIndexOfLargest(precios_hoy);
@@ -199,14 +224,17 @@ public class Avisos extends AppCompatActivity {
 
 						Calendar mCalendar= Calendar.getInstance();
 						mCalendar.set(Calendar.DAY_OF_YEAR, mCalendar.get(Calendar.DAY_OF_YEAR)+1);
-						mCalendar.set(Calendar.HOUR_OF_DAY, 0);
-						mCalendar.set(Calendar.MINUTE, 0);
-						setAlarm(mCalendar.getTimeInMillis(),offset);
-					//}
+					mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+
+					mCalendar.set(Calendar.MINUTE, 0);
+
+					setAlarm(mCalendar.getTimeInMillis(),offset);
 				}else{
 					Toast.makeText(getApplicationContext(), "Aún no están disponibles los precios de mañana ", Toast.LENGTH_LONG).show();
 					Switch_aviso_activado.setChecked(false);
 					Switch_aviso_activado.invalidate();
+
+
 				}
 
 
@@ -250,7 +278,7 @@ public class Avisos extends AppCompatActivity {
 		try {
 			int antelacion = Spinner_antelacion.getSelectedItemPosition();
 
-			Intent mIntent = new Intent(this, Alarma.class);
+			Intent mIntent = new Intent(this, AlarmaBroadcastReceiver.class);
 
 			if (RadioButton_mejor_precio.isChecked()){
 				mIntent.putExtra(getResources().getString(R.string.MENSAJE_ALARMA), getResources().getString(R.string.Aviso_mejor_precio));
@@ -260,7 +288,7 @@ public class Avisos extends AppCompatActivity {
 
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 			mAlarmManager.set(AlarmManager.RTC, TimeInMilis + (hora * 1000 * 60 * 60) - antelacion * 1000 * 60 * 60, mPendingIntent);
-			Toast.makeText(getApplicationContext(), "Alarma establecida ", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "AlarmaBroadcastReceiver establecida ", Toast.LENGTH_LONG).show();
 		}catch (Exception e)
 		{
 			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
@@ -278,10 +306,10 @@ public class Avisos extends AppCompatActivity {
 	}
 	private void unsetAlarm(){
 		try {
-			Intent mIntent = new Intent(this, Alarma.class);
+			Intent mIntent = new Intent(this, AlarmaBroadcastReceiver.class);
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 			mAlarmManager.cancel(mPendingIntent);
-			Toast.makeText(getApplicationContext(), "Alarma desestablecida ", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "AlarmaBroadcastReceiver desestablecida ", Toast.LENGTH_LONG).show();
 		}catch (Exception e){
 			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
 

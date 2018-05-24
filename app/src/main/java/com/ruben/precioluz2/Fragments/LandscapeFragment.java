@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Collections;
 
 
-public class GraficasFragment_Landscape extends Fragment {
+public class LandscapeFragment extends Fragment {
 
     private static final String TITULO = "TITULO";
 
@@ -116,9 +116,9 @@ public class GraficasFragment_Landscape extends Fragment {
     private final int ESCALA=Px2DP(1200);//Altura de las barras
     private final int ANCHURA=Px2DP(26);//anchura de las barras
 
-    public static GraficasFragment_Landscape newInstance(String titulo, Float[] precios,boolean boolean_precios_semana_pasada,boolean boolean_precios_año_pasado,Float[] precios_hace_un_año,Float[] precios_hace_una_semana) {
+    public static LandscapeFragment newInstance(String titulo, Float[] precios, boolean boolean_precios_semana_pasada, boolean boolean_precios_año_pasado, Float[] precios_hace_un_año, Float[] precios_hace_una_semana) {
         // Instantiate a new fragment
-        GraficasFragment_Landscape fragment = new GraficasFragment_Landscape();
+        LandscapeFragment fragment = new LandscapeFragment();
         // Save the parameters
         Bundle bundle = new Bundle();
         try {
@@ -306,7 +306,7 @@ public class GraficasFragment_Landscape extends Fragment {
 
        // set_parametros_segun_screensize();
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.graficas_layout_land, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.layout_graficas_land, container, false);
         try {
             TextView TextView_titulo = rootView.findViewById(R.id.precios);
             TextView_titulo.setText(this.titulo);

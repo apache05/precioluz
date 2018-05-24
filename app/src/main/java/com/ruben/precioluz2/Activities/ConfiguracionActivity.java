@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.ruben.precioluz2.utils.utils;
 
-public class Configuracion extends AppCompatActivity {
+public class ConfiguracionActivity extends AppCompatActivity {
 
 	private SharedPreferences prefs;
 	private RadioButton RadioButton_tarifa_20A=null;
@@ -40,7 +40,7 @@ public class Configuracion extends AppCompatActivity {
 		try {
 			super.onCreate(savedInstanceState);
 			if (isNetworkAvailable()) {
-				setContentView(R.layout.activity_configuracion);
+				setContentView(R.layout.layout_configuracion);
 
 				prefs = PreferenceManager.getDefaultSharedPreferences(this);
 				setup_views();
@@ -109,7 +109,7 @@ public class Configuracion extends AppCompatActivity {
 					}
 				});
 			} else {
-				Intent mIntent = new Intent(this, Error.class);
+				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(mIntent);
 				finish();
@@ -120,7 +120,14 @@ public class Configuracion extends AppCompatActivity {
 		}
 
 	}
-
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent mIntent = new Intent(this, MainActivity.class);
+		mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(mIntent);
+		finish();
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -130,25 +137,25 @@ public class Configuracion extends AppCompatActivity {
 		try {
 			switch (item.getItemId()) {
 				case R.id.configuracion:
-					Intent mIntent_configuracion = new Intent(this, Configuracion.class);
+					Intent mIntent_configuracion = new Intent(this, ConfiguracionActivity.class);
 					mIntent_configuracion.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_configuracion);
 					finish();
 					break;
 				case R.id.avisos:
-					Intent mIntent_avisos = new Intent(this, Avisos.class);
+					Intent mIntent_avisos = new Intent(this, AvisosActivity.class);
 					mIntent_avisos.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_avisos);
 					finish();
 					break;
 				case R.id.valorar:
-					Intent mIntent_valorar = new Intent(this, Valorar.class);
+					Intent mIntent_valorar = new Intent(this, ValorarActivity.class);
 					mIntent_valorar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_valorar);
 					finish();
 					break;
 				case R.id.tutorial:
-					Intent mIntent_tutorial = new Intent(this, Tutorial.class);
+					Intent mIntent_tutorial = new Intent(this, TutorialActivity.class);
 					mIntent_tutorial.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(mIntent_tutorial);
 					finish();

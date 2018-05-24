@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.ruben.precioluz2.Activities.Valorar">
+    android:layout_height="match_parent"
+    tools:context="com.ruben.precioluz2.Activities.ValorarActivity">
 
     <TextView
         android:id="@+id/Layout_feedback_TextView_titulo"
@@ -17,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
         android:text="@string/Pregunta"
         android:textIsSelectable="true"
@@ -25,19 +20,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <RadioGroup
         android:id="@+id/Layout_feedback_RadioGroup_me_gusta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="20dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_TextView_titulo">
 
         <RadioButton
             android:id="@+id/Layout_feedback_RadioButton_si_me_gusta"
@@ -63,13 +55,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical"
+        android:padding="20dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta">
+        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_RadioGroup_me_gusta">
 
         <EditText
             android:id="@+id/Layout_feedback_EditText_feedback"
@@ -78,17 +71,17 @@
             android:gravity="bottom"
             android:hint="@string/Peticion"
             android:inputType="textMultiLine"
-            android:lines="4"
-            android:maxLength="250"
+            android:lines="5"
+            android:maxLength="290"
             android:textColor="@color/black" />
 
         <Button
             android:id="@+id/Layout_feedback_Button_enviar_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:text="@string/Enviar"
             android:gravity="center"
-            android:text="@string/Enviar" />
+            android:layout_gravity="center"/>
     </LinearLayout>
 
     <LinearLayout
@@ -96,13 +89,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="130dp"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
+        android:padding="20dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Layout_feedback_RadioGroup_me_gusta"
-        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_RadioGroup_me_gusta">
 
         <TextView
             android:id="@+id/Layout_feedback_TextView_rate_app"
@@ -115,17 +109,14 @@
 
         <Button
             android:id="@+id/Layout_feedback_Button_rate_app"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:cropToPadding="false"
             android:focusable="false"
-            android:gravity="center"
             android:scaleType="centerInside"
-            android:text="@string/Valorar" />
+            android:text="@string/Valorar"/>
     </LinearLayout>
-
-
 </android.support.constraint.ConstraintLayout>
-</ScrollView>

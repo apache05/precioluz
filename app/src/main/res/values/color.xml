@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Verde -->
-    <!-- Amarillo -->
     <color name="gris">#777777</color>
     <color name="purple">#800080</color>
     <color name="black">#000000</color>

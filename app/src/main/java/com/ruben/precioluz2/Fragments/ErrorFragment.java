@@ -19,7 +19,6 @@ public class ErrorFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2="param2";
 
-    // TODO: Rename and change types of parameters
     private String texto_error;
     private int num_fragment;
 
@@ -31,11 +30,10 @@ public class ErrorFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment ErrorFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ErrorFragment newInstance( int param2) {
         ErrorFragment fragment = new ErrorFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, "Error \n no hay conexión a Internet");
+        args.putString(ARG_PARAM1, "ErrorActivity \n no hay conexión a Internet");
         args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -77,12 +75,6 @@ public class ErrorFragment extends Fragment {
             new utils.AsyncTask_Guardar_Error().execute(new android.support.v4.util.Pair<>(getContext(), e.toString()));
         }
         return rootView;
-    }
-
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
 

@@ -1,15 +1,15 @@
 package com.ruben.precioluz2.Clases;
 
-public class Sugerencia {
+public class SugerenciaClass {
 
 	private String sugerencia;
 	private String version;
 
-	public Sugerencia(){
+	public SugerenciaClass(){
 		sugerencia="";
 		version="";
 	}
-	public Sugerencia( String una_sugerencia, String una_version) {
+	public SugerenciaClass(String una_sugerencia, String una_version) {
 		sugerencia= una_sugerencia;
 		version= una_version;
 	}
