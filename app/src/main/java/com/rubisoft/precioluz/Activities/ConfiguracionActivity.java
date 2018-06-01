@@ -1,4 +1,4 @@
-package com.ruben.precioluz2.Activities;
+package com.rubisoft.precioluz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +18,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.ruben.precioluz2.utils.utils;
+import com.rubisoft.precioluz.utils.utils;
 
 public class ConfiguracionActivity extends AppCompatActivity {
 
@@ -34,6 +35,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
 	private final int INDICADOR_TARIFA_20A = 1013;
 	private final int INDICADOR_TARIFA_20DHA = 1014;
 	private final int INDICADOR_TARIFA_20DHS = 1015;
+	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,8 @@ public class ConfiguracionActivity extends AppCompatActivity {
 						editor.apply();
 					}
 				});
+				setup_toolbar();
+
 			} else {
 				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -259,5 +263,17 @@ public class ConfiguracionActivity extends AppCompatActivity {
 		assert connectivityManager != null;
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	private void setup_toolbar() {
+		try {
+			// Setup toolbar and statusBar (really FrameLayout)
+			toolbar = findViewById(R.id.mToolbar);
+			setSupportActionBar(toolbar);
+			getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+			getSupportActionBar().setHomeButtonEnabled(true);
+		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
+		}
 	}
 }

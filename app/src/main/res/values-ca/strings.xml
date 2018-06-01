@@ -1,4 +1,7 @@
 <resources>
+    <string name="titulo_hoy">Preus per a hui  %s \n %s</string>
+    <string name="titulo_mañana">Preus per a demà  %s \n %s</string>
+
     <string name="precio_no_disponible">Preus encara no disponibles</string>
 
     <string name="precios_hace_una_semana">Preu mateix dia fa una setmana</string>
@@ -41,8 +44,10 @@
     <string name="valorenos">Si us plau, puntua\'ns positivament</string>
     <string name="Valorar">Puntuar</string>
 
-
+    <string name="Aviso_establecido">Avís activat</string>
+    <string name="Aviso_desestablecido">Avís desactivat</string>
     <string name="Aviso_mejor_precio">Avís de millor preu de la llum</string>
     <string name="Aviso_peor_precio">Avís de pitjor preu de la llum</string>
+    <string name="Alarma">Alarma</string>
 
 </resources>

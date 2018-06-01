@@ -1,4 +1,4 @@
-package com.ruben.precioluz2.Activities;
+package com.rubisoft.precioluz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,13 +6,15 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.ruben.precioluz2.utils.utils;
+import com.rubisoft.precioluz.utils.utils;
 
 public class TutorialActivity extends AppCompatActivity {
+	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class TutorialActivity extends AppCompatActivity {
 
 		TextView_titulo.setTypeface(typeFace_roboto_bold);
 		TextView_tutorial.setTypeface(typeFace_roboto_light);
+		setup_toolbar();
+
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -69,5 +73,15 @@ public class TutorialActivity extends AppCompatActivity {
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 		return true;
 	}
-
+	private void setup_toolbar() {
+		try {
+			// Setup toolbar and statusBar (really FrameLayout)
+			toolbar = findViewById(R.id.mToolbar);
+			setSupportActionBar(toolbar);
+			getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+			getSupportActionBar().setHomeButtonEnabled(true);
+		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
+		}
+	}
 }

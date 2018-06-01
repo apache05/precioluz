@@ -9,7 +9,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.ruben.precioluz2.Activities.AvisosActivity">
+    tools:context="com.rubisoft.precioluz.Activities.AvisosActivity">
+    <include layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/TextView_Aviso"
@@ -17,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingTop="40dp"
         android:text="@string/Crear_aviso"
         android:textSize="@dimen/tamaño_letra_titulos"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,9 +41,11 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginStart="240dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="40dp"
 
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_Activa_Aviso">
 
@@ -56,8 +60,7 @@
             android:id="@+id/radioButton_peor_precio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Peor_precio"
-            />
+            android:text="@string/Peor_precio" />
 
     </RadioGroup>
 
@@ -66,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/Antelacion"
         app:layout_constraintEnd_toStartOf="@+id/spinner_antelacion"
         app:layout_constraintTop_toTopOf="@+id/radioGroup" />
@@ -75,8 +77,8 @@
         android:id="@+id/spinner_antelacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="120dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_Antelacion"
-        android:layout_marginEnd="240dp"/>
+        app:layout_constraintTop_toTopOf="@+id/textView_Antelacion" />
 </android.support.constraint.ConstraintLayout>
 </ScrollView>

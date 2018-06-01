@@ -3,9 +3,14 @@
     <string name="version" translatable="false">1.0</string>
     <string name="contentdescription_flecha" translatable="false">Flecha</string>
     <string name="contentdescription_barra" translatable="false">Barra</string>
+    <string name="anuncio_banner" translatable="false">ca-app-pub-7323079119104426/1448726587</string>
+    <string name="admob_id_aplicacion" translatable="false">ca-app-pub-7323079119104426~8297630994</string>
 
 
     <string name="sin_precio" translatable="false">1.0</string>
+    <string name="titulo_hoy">Precios para hoy  %s \n %s</string>
+    <string name="titulo_mañana">Precios para mañana  %s \n %s</string>
+
     <string name="precios_hace_una_semana">Precio mismo día hace una semana</string>
     <string name="precios_hace_un_año">Precio mismo día hace un año</string>
     <string name="h00_01" translatable="false">00&#8211;01</string>
@@ -68,8 +73,11 @@
     <string name="Enviar">Enviar</string>
     <string name="valorenos">Por favor, valórenos positivamente</string>
     <string name="Valorar">Valorar</string>
+    <string name="Aviso_establecido">Aviso activado</string>
+    <string name="Aviso_desestablecido">Aviso desactivado</string>
 
     <string name="Aviso_mejor_precio">Aviso de mejor precio de la luz</string>
     <string name="Aviso_peor_precio">Aviso de peor precio de la luz</string>
+    <string name="Alarma">Alarma</string>
 
 </resources>

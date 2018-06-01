@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.rubisoft.precioluz.Activities.AvisosActivity">
     <include layout="@layout/toolbar" />
 
@@ -14,7 +19,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="?attr/actionBarSize"
-        android:paddingTop="40dp"
+        android:paddingTop="120dp"
         android:text="@string/Crear_aviso"
         android:textSize="@dimen/tamaño_letra_titulos"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +30,7 @@
         android:id="@+id/switch_Activa_Aviso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="120dp"
         android:text="@string/Crear_aviso_mañana"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,8 +41,9 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="340dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_Activa_Aviso">
 
@@ -45,18 +51,15 @@
             android:id="@+id/radioButton_mejor_precio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Mejor_precio"
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="211dp"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="@string/Mejor_precio" />
 
         <RadioButton
             android:id="@+id/radioButton_peor_precio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Peor_precio"
-            tools:layout_editor_absoluteX="62dp"
-            tools:layout_editor_absoluteY="211dp" />
+            />
 
     </RadioGroup>
 
@@ -64,20 +67,18 @@
         android:id="@+id/textView_Antelacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/Antelacion"
         app:layout_constraintEnd_toStartOf="@+id/spinner_antelacion"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toTopOf="@+id/radioGroup" />
 
     <Spinner
         android:id="@+id/spinner_antelacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView_Antelacion"
-        app:layout_constraintTop_toTopOf="@+id/textView_Antelacion" />
-
+        app:layout_constraintTop_toTopOf="@+id/textView_Antelacion"
+        android:layout_marginEnd="340dp"/>
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

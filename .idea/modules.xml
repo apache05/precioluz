@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PrecioLuz.iml" filepath="$PROJECT_DIR$/PrecioLuz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PEC_FINAL_proyecto_AvendañoCaballeroRuben.iml" filepath="$PROJECT_DIR$/PEC_FINAL_proyecto_AvendañoCaballeroRuben.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

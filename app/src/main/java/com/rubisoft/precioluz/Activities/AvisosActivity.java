@@ -1,4 +1,4 @@
-package com.ruben.precioluz2.Activities;
+package com.rubisoft.precioluz.Activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +26,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ruben.precioluz2.BroadcastReceivers.AlarmaBroadcastReceiver;
-import com.ruben.precioluz2.utils.utils;
+import com.rubisoft.precioluz.BroadcastReceivers.AlarmaBroadcastReceiver;
+import com.rubisoft.precioluz.utils.utils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -47,6 +48,7 @@ public class AvisosActivity extends AppCompatActivity {
 	private  Spinner Spinner_antelacion;
 	private static AlarmManager mAlarmManager;
 	private TextView TextView_Aviso;
+	private Toolbar toolbar;
 
 	@Override
 	public void onBackPressed() {
@@ -106,6 +108,8 @@ public class AvisosActivity extends AppCompatActivity {
 					}
 
 				});
+				setup_toolbar();
+
 			}else{
 				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -288,7 +292,8 @@ public class AvisosActivity extends AppCompatActivity {
 
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 			mAlarmManager.set(AlarmManager.RTC, TimeInMilis + (hora * 1000 * 60 * 60) - antelacion * 1000 * 60 * 60, mPendingIntent);
-			Toast.makeText(getApplicationContext(), "AlarmaBroadcastReceiver establecida ", Toast.LENGTH_LONG).show();
+
+			Toast.makeText(getApplicationContext(), getResources().getString(R.string.Aviso_establecido), Toast.LENGTH_LONG).show();
 		}catch (Exception e)
 		{
 			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
@@ -309,10 +314,9 @@ public class AvisosActivity extends AppCompatActivity {
 			Intent mIntent = new Intent(this, AlarmaBroadcastReceiver.class);
 			PendingIntent mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, 0);
 			mAlarmManager.cancel(mPendingIntent);
-			Toast.makeText(getApplicationContext(), "AlarmaBroadcastReceiver desestablecida ", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), getResources().getString(R.string.Aviso_desestablecido), Toast.LENGTH_LONG).show();
 		}catch (Exception e){
 			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
-
 		}
 	}
 
@@ -332,5 +336,17 @@ public class AvisosActivity extends AppCompatActivity {
 		TextView_Aviso.setTypeface(typeFace_roboto_bold);
 		RadioButton_mejor_precio.setTypeface(typeFace_roboto_light);
 		RadioButton_peor_precio.setTypeface(typeFace_roboto_light);
+	}
+
+	private void setup_toolbar() {
+		try {
+			// Setup toolbar and statusBar (really FrameLayout)
+			toolbar = findViewById(R.id.mToolbar);
+			setSupportActionBar(toolbar);
+			getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+			getSupportActionBar().setHomeButtonEnabled(true);
+		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.ruben.precioluz2.Activities;
+package com.rubisoft.precioluz.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +11,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ruben.precioluz2.Clases.SugerenciaClass;
-import com.ruben.precioluz2.utils.utils;
+import com.rubisoft.precioluz.Clases.SugerenciaClass;
+import com.rubisoft.precioluz.utils.utils;
 
 import java.util.Calendar;
 
@@ -35,11 +35,11 @@ public class ValorarActivity extends AppCompatActivity {
 	private RadioGroup RadioGroup_me_gusta;
 	private Button Button_enviar_feedback;
 	private TextView Button_rate_app;
-	private LinearLayout LinearLayout_mejorar;
-	private LinearLayout LinearLayout_valorar;
 	private EditText EditText_Feedback;
 	private RadioButton RadioButton_si_me_gusta;
 	private RadioButton RadioButton_no_me_gusta;
+	private TextView TextView_rate_app;
+	private Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +57,19 @@ public class ValorarActivity extends AppCompatActivity {
 					public void onCheckedChanged(RadioGroup radioGroup, int i) {
 						switch (i) {
 							case R.id.Layout_feedback_RadioButton_si_me_gusta:
-								LinearLayout_mejorar.setVisibility(View.INVISIBLE);
-								LinearLayout_valorar.setVisibility(View.VISIBLE);
+								EditText_Feedback.setVisibility(View.INVISIBLE);
+								Button_enviar_feedback.setVisibility(View.INVISIBLE);
+
+								Button_rate_app.setVisibility(View.VISIBLE);
+								TextView_rate_app.setVisibility(View.VISIBLE);
+
 								break;
 							case R.id.Layout_feedback_RadioButton_no_me_gusta:
-								LinearLayout_valorar.setVisibility(View.INVISIBLE);
-								LinearLayout_mejorar.setVisibility(View.VISIBLE);
+								EditText_Feedback.setVisibility(View.VISIBLE);
+								Button_enviar_feedback.setVisibility(View.VISIBLE);
+
+								Button_rate_app.setVisibility(View.INVISIBLE);
+								TextView_rate_app.setVisibility(View.INVISIBLE);
 								break;
 						}
 					}
@@ -101,6 +108,8 @@ public class ValorarActivity extends AppCompatActivity {
 						}
 					}
 				});
+				setup_toolbar();
+
 			} else {
 				Intent mIntent = new Intent(this, ErrorActivity.class);
 				mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -204,9 +213,7 @@ public class ValorarActivity extends AppCompatActivity {
 		RadioButton_si_me_gusta = findViewById(R.id.Layout_feedback_RadioButton_si_me_gusta);
 		RadioButton_no_me_gusta = findViewById(R.id.Layout_feedback_RadioButton_no_me_gusta);
 
-		LinearLayout_mejorar = findViewById(R.id.LinearLayout_mejorar);
-		LinearLayout_valorar = findViewById(R.id.LinearLayout_Valorar);
-
+		TextView_rate_app= findViewById(R.id.Layout_feedback_TextView_rate_app);
 
 	}
 
@@ -232,5 +239,17 @@ public class ValorarActivity extends AppCompatActivity {
 		assert connectivityManager != null;
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	private void setup_toolbar() {
+		try {
+			// Setup toolbar and statusBar (really FrameLayout)
+			toolbar = findViewById(R.id.mToolbar);
+			setSupportActionBar(toolbar);
+			getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+			getSupportActionBar().setHomeButtonEnabled(true);
+		} catch (Exception e) {
+			new utils.AsyncTask_Guardar_Error().execute(new Pair<Context, String>(this,getClass().getName()+" "+e.toString()));
+		}
 	}
 }

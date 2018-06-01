@@ -13,5 +13,7 @@
     <string name="ULTIMA_ALARMA" translatable="false">ULTIMA_ALARMA</string>
     <string name="MENSAJE_ALARMA" translatable="false">MENSAJE_ALARMA</string>
     <string name="ANTELACION" translatable="false">ANTELACION</string>
+    <integer name="FRAGMENT_HOY" >0</integer>
+    <integer name="FRAGMENT_MAÑANA" >1</integer>
 
 </resources>

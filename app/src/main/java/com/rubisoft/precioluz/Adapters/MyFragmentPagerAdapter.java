@@ -1,4 +1,4 @@
-package com.ruben.precioluz2.Adapters;
+package com.rubisoft.precioluz.Adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

@@ -12,7 +12,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.ruben.precioluz2.Activities.ConfiguracionActivity">
+        tools:context="com.rubisoft.precioluz.Activities.ConfiguracionActivity">
+        <include layout="@layout/toolbar" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/RadioGroup_tarifa"
@@ -82,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:paddingTop="40dp"
             android:text="@string/configuracion"
             android:textSize="@dimen/tamaño_letra_titulos"
             app:layout_constraintEnd_toEndOf="parent"

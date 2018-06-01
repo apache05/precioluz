@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.rubisoft.precioluz.Activities.ValorarActivity">
     <include layout="@layout/toolbar" />
 
@@ -14,7 +19,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="?attr/actionBarSize"
-        android:paddingTop="40dp"
+        android:paddingTop="120dp"
         android:gravity="center_horizontal"
         android:text="@string/Pregunta"
         android:textIsSelectable="true"
@@ -22,12 +27,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <RadioGroup
         android:id="@+id/Layout_feedback_RadioGroup_me_gusta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="150dp"
         android:paddingEnd="15dp"
         android:paddingStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,68 +61,59 @@
 
     <EditText
         android:id="@+id/Layout_feedback_EditText_feedback"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:gravity="bottom"
         android:hint="@string/Peticion"
         android:inputType="textMultiLine"
-        android:lines="5"
-        android:visibility="invisible"
-        android:maxLength="290"
+        android:lines="4"
+        android:maxLength="250"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_RadioGroup_me_gusta" />
+        app:layout_constraintEnd_toStartOf="@+id/Layout_feedback_Button_enviar_feedback"
+        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/Layout_feedback_Button_enviar_feedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="90dp"
         android:gravity="center"
         android:text="@string/Enviar"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_EditText_feedback" />
-
+        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/Layout_feedback_TextView_rate_app"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:visibility="invisible"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="20dp"
+
         android:gravity="center_horizontal"
         android:text="@string/valorenos"
         android:textIsSelectable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_RadioGroup_me_gusta" />
+        app:layout_constraintEnd_toStartOf="@+id/Layout_feedback_Button_rate_app"
+        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/Layout_feedback_Button_rate_app"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="150dp"
         android:cropToPadding="false"
         android:focusable="false"
         android:gravity="center"
         android:scaleType="centerInside"
         android:text="@string/Valorar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Layout_feedback_TextView_rate_app"
+        app:layout_constraintTop_toTopOf="@+id/Layout_feedback_RadioGroup_me_gusta"
         android:visibility="invisible"/>
 
 </android.support.constraint.ConstraintLayout>
+</ScrollView>
